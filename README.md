@@ -1,15 +1,15 @@
 # Trabalhos à serem realizados durante o MBA de desenvolvimento Java, SOA e Internet das Coisas - Turma 29SCJ
 
+### Trabalho 1
+Projeto Final de Avaliação - Fundamentos da tecnologia Java e modelagem visual UML 2.0
+
+Prof. Michel P. Fernandes
+
 ## Integrantes
 - Everton Mendes
 - Pedro Nogueira
 - Rafael Lima
 - Victor Coimbra
-
-### Trabalho 1
-Projeto Final de Avaliação - Fundamentos da tecnologia Java e modelagem visual UML 2.0
-
-Prof. Michel P. Fernandes
 
 #### Opção 1 - Twitter Small Analytics
 
@@ -85,6 +85,42 @@ O trabalho deverá ser entregue como um relatório técnico completo, utilizando
 - Link do GitHub com o código-fonte enviado.
 
 Deverá ser entregue um arquivo PDF do relatório técnico no Portal do Aluno. Os códigos fontes deverão ser carregados na conta do GitHub do grupo ou de algum membro do grupo. Lembrando que código fonte da aplicação é obrigatório o desenvolvimento no IDE Eclipse para que sejam testadas e verificadas todas as funcionalidades.
+
+---
+
+### Trabalho 2
+Avaliação Final Prática - Persistência em Java (JDBC e JPA)
+
+Prof. Michel P. Fernandes
+
+## Integrantes
+- Pedro Nogueira
+- Rafael Lima
+
+Esta atividade prática poderá ser realizada em duplas ou individualmente com consulta aos recursos disponíveis.
+
+Deverá ser utilizado o ambiente de desenvolvimento baseado no Eclipse.
+
+Todos os códigos fontes deverão ser enviados a uma conta do GitHub. Em caso de eventuais problemas, compactar a pasta de projeto e enviá-la completa.
+
+O modelo de dados a seguir representa uma estrutura de banco de dados, cuja funcionalidade deverá ser criada pelos alunos. O importante é que seja mantida a coerência desta estrutura:
+
+![alt text](https://github.com/pedrohnog/Trabalhos-FIAP/tree/master/README/img/Trabalho2/img1.jpg "Modelo de dados")
+
+Nesta estrutura:
+1. Fornecer nomes adequados para Tabela1, Tabela2 e Tabela3.
+2. Estabelecer os relacionamentos indicados.
+3. Decidir pelas chaves primárias: se são ou não auto-incremento.
+4. Incluir o desenho do banco de dados que você decidiu no lugar do esboço anterior (este item também será avaliado)
+
+Com base nestas informações, criar uma aplicação JPA Project, e defini-la completamente, incluindo um programa para fornecer as informações para cada campo. Todas as informações deverão ser fornecidas pelo usuário. Como sugestão, usar a classe JOptionPane para receber e para exibir os dados.
+
+Deverá ser enviado ao Portal do Aluno, além da aplicação (no GitHub), um descritivo curto, contendo:
+1. Nome e número de matricula dos participantes
+2. Link do GitHub
+3. Diagrama de relacionamento das tabelas, nome das tabelas e qual banco de dados escolhido para realizar a persistência
+
+---
 
 [Twitter4J]: <http://twitter4j.org/en/index.html>
 [Pengrad Telegram Bot]: <https://github.com/pengrad/java-telegram-bot-api>
