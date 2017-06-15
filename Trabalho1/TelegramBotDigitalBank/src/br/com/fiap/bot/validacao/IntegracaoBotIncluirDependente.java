@@ -14,7 +14,7 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 		resposta = resposta.trim();
 		String [] respostas = resposta.split("-");
 		
-		if(resposta.length() != 3){
+		if(respostas.length != 3){
 			respostaOk = false;
 		}else{
 			for (int i = 0; i < respostas.length; i++) {

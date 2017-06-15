@@ -47,11 +47,14 @@ public class BotUtil {
 			for (Update update : updates) {
 				m = update.updateId() + 1;
 				
-				bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+				if(update.message() != null){
+					bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					
+					String mensagemRetorno = tratarMensagemBot(update.message().chat(), update.message().text());
+					
+					bot.execute(new SendMessage(update.message().chat().id(), mensagemRetorno.toString()));
+				}
 				
-				String mensagemRetorno = tratarMensagemBot(update.message().chat(), update.message().text());
-				
-				bot.execute(new SendMessage(update.message().chat().id(), mensagemRetorno.toString()));
 			}
 		}
 	}

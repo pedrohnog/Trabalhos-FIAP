@@ -14,7 +14,7 @@ public class IntegracaoBotModificarConta extends IntegracaoBotSolicitacao {
 		resposta = resposta.trim();
 		String [] respostas = resposta.split("-");
 		
-		if(resposta.length() != 2){
+		if(respostas.length != 2){
 			respostaOk = false;
 		}else{
 			for (int i = 0; i < respostas.length; i++) {
