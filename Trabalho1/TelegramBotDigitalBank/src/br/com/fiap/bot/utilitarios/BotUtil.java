@@ -31,7 +31,7 @@ import br.com.fiap.bot.validacao.IntegracaoBotStart;
 
 public class BotUtil {
 
-	private static final String TOKEN_ACESSO = "429980480:AAFwbHwaWaxa9BaLyOs_Er5FLPm37JRI-KQ";
+	private static final String TOKEN_ACESSO = "TOKEN";
 	private static Map<Long,EnumComandosBot> ULTIMO_COMANDO_DO_USUARIO = new HashMap<>();
 	
 	/**
