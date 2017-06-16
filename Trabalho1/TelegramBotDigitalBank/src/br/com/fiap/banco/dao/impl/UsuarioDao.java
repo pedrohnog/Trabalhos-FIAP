@@ -1,5 +1,6 @@
 package br.com.fiap.banco.dao.impl;
 
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.fiap.banco.dao.DaoGenerico;
@@ -25,6 +26,10 @@ public class UsuarioDao extends DaoGenerico<Usuario> {
 
 	public Usuario buscarUsuario(String cpf) {
 		TypedQuery<Usuario> query = super.em.createQuery("select u from Usuario u where cpf = '" + cpf + "'", Usuario.class);
-		return query.getSingleResult();
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 }
