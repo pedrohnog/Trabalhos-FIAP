@@ -1,7 +1,6 @@
 package br.com.fiap.banco.entidades;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "USUARIO", catalog = "DBBotBank")
 public class Usuario implements Serializable {
 
-	private static final long serialVersionUID = 5140495542866595006L;
+	private static final long serialVersionUID = 4327716843691525579L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +27,6 @@ public class Usuario implements Serializable {
 
 	@Column(name = "nome", unique = false, nullable = false, length = 50)
 	private String nome;
-
-	@Column(name = "data_nascimento", unique = false, nullable = false)
-	private LocalDate dataNascimento;
 
 	@Column(name = "cpf", unique = true, nullable = false, length = 11)
 	private String cpf;
@@ -64,14 +60,6 @@ public class Usuario implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
 	}
 
 	public String getCpf() {
