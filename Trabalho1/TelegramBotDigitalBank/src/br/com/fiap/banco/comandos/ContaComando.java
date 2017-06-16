@@ -65,6 +65,7 @@ public class ContaComando {
 	}
 
 	public List<Usuario> listarUsuarios(long idTelegram) {
+		//FIXME Revisar pois está dando erro de Lazy Initialization Collection
 		try (ContaDao contaDao = new ContaDao();) {
 			return contaDao.buscarConta(idTelegram).getUsuarios();
 		}
