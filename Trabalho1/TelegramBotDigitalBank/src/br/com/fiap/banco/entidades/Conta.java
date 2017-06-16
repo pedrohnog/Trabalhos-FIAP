@@ -16,15 +16,12 @@ import javax.persistence.Table;
 @Table(name = "CONTA", catalog = "DBBotBank")
 public class Conta implements Serializable {
 
-	private static final long serialVersionUID = 144574911265646529L;
+	private static final long serialVersionUID = 7825054394082131876L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "numero", unique = true, nullable = false)
 	private Long numero;
-
-	@Column(name = "digito", unique = false, nullable = false)
-	private Integer digito;
 
 	@Column(name = "data_abertura", unique = false, nullable = false)
 	private LocalDate dataAbertura;
@@ -44,14 +41,6 @@ public class Conta implements Serializable {
 
 	public void setNumero(Long numero) {
 		this.numero = numero;
-	}
-
-	public Integer getDigito() {
-		return digito;
-	}
-
-	public void setDigito(Integer digito) {
-		this.digito = digito;
 	}
 
 	public LocalDate getDataAbertura() {
@@ -90,7 +79,6 @@ public class Conta implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((digito == null) ? 0 : digito.hashCode());
 		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
 		return result;
 	}
@@ -107,13 +95,6 @@ public class Conta implements Serializable {
 			return false;
 		}
 		Conta other = (Conta) obj;
-		if (digito == null) {
-			if (other.digito != null) {
-				return false;
-			}
-		} else if (!digito.equals(other.digito)) {
-			return false;
-		}
 		if (numero == null) {
 			if (other.numero != null) {
 				return false;
