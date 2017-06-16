@@ -3,64 +3,59 @@ package br.com.fiap.banco.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-
-import br.com.fiap.banco.util.JpaUtil;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 public class DaoGenerico<T> implements Dao<T> {
-	private final Class<T> classe;
-	protected EntityManager em;
 
-	public DaoGenerico(Class<T> classe) {
+	private final Class<T> classe;
+
+	protected EntityManager em;
+	protected EntityManagerFactory emf;
+
+	protected DaoGenerico(Class<T> classe) {
 		this.classe = classe;
+		this.emf = Persistence.createEntityManagerFactory("TelegramBotDigitalBank");
+		this.em = this.emf.createEntityManager();
 	}
 
 	@Override
 	public void adicionar(T entidade) {
-		em = JpaUtil.getEntityManager();
-		em.getTransaction().begin();
-		em.persist(entidade);
-		em.getTransaction().commit();
-		close();
+		this.em.getTransaction().begin();
+		this.em.persist(entidade);
+		this.em.getTransaction().commit();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> listar() {
-		em = JpaUtil.getEntityManager();
-		return em.createQuery("From " + classe.getSimpleName()).getResultList();
+		TypedQuery<T> query = this.em.createQuery("SELECT * FROM " + this.classe.getSimpleName(), this.classe);
+		return query.getResultList();
 	}
 
 	@Override
 	public void atualizar(T entidade) {
-		em = JpaUtil.getEntityManager();
-		em.getTransaction().begin();
-		em.merge(entidade);
-		em.getTransaction().commit();
-		close();
+		this.em.getTransaction().begin();
+		this.em.merge(entidade);
+		this.em.getTransaction().commit();
 	}
 
 	@Override
 	public void remover(T entidade) {
-		em = JpaUtil.getEntityManager();
-		em.getTransaction().begin();
-		em.remove(em.merge(entidade));
-		em.getTransaction().commit();
-		close();
+		this.em.getTransaction().begin();
+		this.em.remove(this.em.merge(entidade));
+		this.em.getTransaction().commit();
 	}
 
 	@Override
-	public T buscar(int id) {
-		em = JpaUtil.getEntityManager();
-		em.getTransaction().begin();
-		T entidade = em.find(classe, id);
-		em.getTransaction().commit();
-		close();
-		return entidade;
+	public T buscar(long id) {
+		return this.em.find(this.classe, id);
 	}
-	
-	public void close(){
+
+	@Override
+	public void close() {
 		em.close();
-		JpaUtil.emfClose();
+		emf.close();
 	}
 
 }
