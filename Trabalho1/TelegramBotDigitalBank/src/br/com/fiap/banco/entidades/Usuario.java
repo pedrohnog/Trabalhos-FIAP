@@ -18,12 +18,12 @@ import javax.persistence.Table;
 @Table(name = "USUARIO", catalog = "DBBotBank")
 public class Usuario implements Serializable {
 
-	private static final long serialVersionUID = 4327716843691525579L;
+	private static final long serialVersionUID = -3380557092538722817L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "nome", unique = false, nullable = false, length = 50)
 	private String nome;
@@ -46,11 +46,11 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy = "usuario")
 	private List<Transacao> transacoes;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
