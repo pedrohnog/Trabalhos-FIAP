@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.fiap.banco.entidades.Usuario;
 
-public class Conta {
+public class ContaComando {
 	
 	public boolean temConta(long id) {
 		//TODO Verificar no BD se o ID existe

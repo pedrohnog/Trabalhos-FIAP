@@ -5,7 +5,7 @@ import java.util.List;
 import br.com.fiap.banco.constantes.Tarifas;
 import br.com.fiap.banco.entidades.Transacao;
 
-public class Operacoes {
+public class OperacoesComando {
 	
 	private double verificarSaldo(long id) {
 		//TODO retornar o saldo que o cliente tem em conta
