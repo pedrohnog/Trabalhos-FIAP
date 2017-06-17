@@ -1,4 +1,4 @@
-package br.com.fiap.bot.contantes;
+package br.com.fiap.bot.constantes;
 
 public enum EnumTipoIntegracaoBot {
 	CONSULTA,
