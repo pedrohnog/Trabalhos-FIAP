@@ -1,6 +1,6 @@
 package br.com.fiap.bot.validacao;
 
-import br.com.fiap.bot.contantes.EnumComandosBot;
+import br.com.fiap.bot.constantes.EnumComandosBot;
 
 public class IntegracaoBotRealizarSaque extends IntegracaoBotSolicitacao {
 

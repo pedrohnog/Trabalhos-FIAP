@@ -13,8 +13,10 @@ import com.pengrad.telegrambot.request.GetUpdates;
 import com.pengrad.telegrambot.request.SendChatAction;
 import com.pengrad.telegrambot.request.SendMessage;
 
-import br.com.fiap.bot.contantes.EnumComandosBot;
-import br.com.fiap.bot.contantes.EnumTipoIntegracaoBot;
+import br.com.fiap.bot.constantes.EnumComandosBot;
+import br.com.fiap.bot.constantes.EnumTipoIntegracaoBot;
+import br.com.fiap.bot.dao.impl.MensagemIntegracaoDao;
+import br.com.fiap.bot.entidades.MensagemIntegracao;
 import br.com.fiap.bot.validacao.IntegracaoBot;
 import br.com.fiap.bot.validacao.IntegracaoBotAjuda;
 import br.com.fiap.bot.validacao.IntegracaoBotConsultaDeposito;
@@ -107,6 +109,8 @@ public class BotUtil {
 
 		}
 		
+		salvarMensagens(usuario, mensagemRecebida, mensagemRetorno.toString());
+		
 		return mensagemRetorno.toString();
 	}
 	
@@ -173,5 +177,26 @@ public class BotUtil {
 	 */
 	private void adicionarHistoricoIntegracaoUsuario(Long id, EnumComandosBot comando){
 		ULTIMO_COMANDO_DO_USUARIO.put(id, comando);
+	}
+	/**
+	 * Metodo resposanvel por gravar na base todas as interaçoes do usuario
+	 * @param usuario informações usuario telegram
+	 * @param mensagemRecebida do usuario
+	 * @param mensagemEnviada para o usuario
+	 */
+	
+	private void salvarMensagens(Chat usuario, String mensagemRecebida, String mensagemEnviada ){
+		MensagemIntegracao mensagemIntegracao = new MensagemIntegracao();
+		MensagemIntegracaoDao mensagemIntegracaoDao = new MensagemIntegracaoDao();
+		
+		mensagemIntegracao.setIdTelegram(usuario.id());
+		mensagemIntegracao.setNomeTelegram(usuario.username());
+		mensagemIntegracao.setMensagemRecebida(mensagemRecebida);
+		mensagemIntegracao.setMensagemEnviada(mensagemEnviada);	
+		
+		mensagemIntegracaoDao.adicionar(mensagemIntegracao);
+		mensagemIntegracaoDao.close();
+		
+		
 	}
 }
