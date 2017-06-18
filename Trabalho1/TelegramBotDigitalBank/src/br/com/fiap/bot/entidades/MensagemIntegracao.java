@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +13,7 @@ public class MensagemIntegracao implements Serializable{
 
 	private static final long serialVersionUID = -1798591717859526500L;
 
+	@Id
 	@Column(name = "id", unique = false, nullable = false)
 	private Long idTelegram;
 
