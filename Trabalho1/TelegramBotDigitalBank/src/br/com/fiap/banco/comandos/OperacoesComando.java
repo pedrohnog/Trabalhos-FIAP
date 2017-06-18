@@ -49,8 +49,7 @@ public class OperacoesComando {
 					contaDao.alterarConta(conta);
 
 					this.transacoesComando.gravarTransacao(usuario, valor, TipoTransacao.SAQUE.getCodigo());
-					this.transacoesComando.gravarTransacao(usuario, Tarifas.SAQUE.getCustoServico(),
-							TipoTransacao.TARIFA.getCodigo());
+					this.transacoesComando.gravarTransacao(usuario, Tarifas.SAQUE.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
 
 				} else {
 					throw new SaldoInsuficienteExcecao();
@@ -80,8 +79,13 @@ public class OperacoesComando {
 	public List<Transacao> verificacaoExtrato(long idTelegram) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
 		if (this.contaComando.temConta(idTelegram)) {
 			if (Tarifas.EXTRATO.getCustoServico() <= this.verificarSaldo(idTelegram)) {
-				// TODO Buscar a lista de transações no BD
-				return null;
+				Usuario usuario = this.contaComando.buscarUsuarioConta(idTelegram);
+				
+				this.transacoesComando.gravarTransacao(usuario, Tarifas.EXTRATO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
+
+				try (ContaDao contaDao = new ContaDao();) {
+					return contaDao.buscarConta(usuario.getConta().getNumero()).getTransacoes();
+				}
 			} else {
 				throw new SaldoInsuficienteExcecao();
 			}

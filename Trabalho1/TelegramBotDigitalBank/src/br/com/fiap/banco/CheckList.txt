@@ -5,7 +5,7 @@
 [X] Depósito
 [X] Saque (custo do serviço R$ 2,50)
 [X] Solicitação de saldo 
-[ ] Solicitação de extrato (custo do serviço R$ 1,00)
+[X] Solicitação de extrato (custo do serviço R$ 1,00)
 [ ] Solicitação de empréstimo, cujo prazo máximo é de 3 anos e valor máximo é de 40 vezes o saldo da conta (custo do serviço R$ 15,00 além de juros de 5% a.m.)
 [ ] Exibição de saldo devedor do empréstimo e prazo de pagamento
 [ ] Exibição dos lançamentos detalhada, com somatória ao final
