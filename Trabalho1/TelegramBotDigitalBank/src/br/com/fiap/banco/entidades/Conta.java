@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,6 +20,7 @@ public class Conta implements Serializable {
 	private static final long serialVersionUID = 7825054394082131876L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "numero", unique = true, nullable = false)
 	private Long numero;
 
@@ -30,7 +33,7 @@ public class Conta implements Serializable {
 	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
 	private List<Usuario> usuarios;
 
-	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "conta")
 	private List<Transacao> transacoes;
 
 	public Long getNumero() {
