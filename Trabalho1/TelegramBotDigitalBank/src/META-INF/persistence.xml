@@ -7,24 +7,11 @@
 		<class>br.com.fiap.banco.entidades.Conta</class>
 		<class>br.com.fiap.banco.entidades.Usuario</class>
 		<class>br.com.fiap.banco.entidades.Transacao</class>
-		<properties>
-			<property name="javax.persistence.schemageneration.database.action" value="drop-and-create" />
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/DBBotBank?createDatabaseIfNotExist=true" />
-			<property name="javax.persistence.jdbc.user" value="fiap" />
-			<property name="javax.persistence.jdbc.password" value="fiap" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.format_sql" value="true" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-		</properties>
-	</persistence-unit>
-	<persistence-unit name="TelegramBot">
-		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>br.com.fiap.bot.entidades.MensagemIntegracao</class>
 		<properties>
 			<property name="javax.persistence.schemageneration.database.action" value="drop-and-create" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/DBBot?createDatabaseIfNotExist=true" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/DBBotBank?createDatabaseIfNotExist=true" />
 			<property name="javax.persistence.jdbc.user" value="fiap" />
 			<property name="javax.persistence.jdbc.password" value="fiap" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
