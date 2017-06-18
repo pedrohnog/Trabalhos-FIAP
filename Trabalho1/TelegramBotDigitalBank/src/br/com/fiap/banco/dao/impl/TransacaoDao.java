@@ -7,13 +7,10 @@ public class TransacaoDao extends DaoGenerico<Transacao>{
 
 	public TransacaoDao() {
 		super(Transacao.class);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void adicionarTransacao(Transacao transacao) {
 		super.adicionar(transacao);
 	}
-
-	
 
 }

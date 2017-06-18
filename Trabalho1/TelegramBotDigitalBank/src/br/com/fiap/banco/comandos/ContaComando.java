@@ -3,8 +3,6 @@ package br.com.fiap.banco.comandos;
 import java.time.LocalDate;
 import java.util.List;
 
-import br.com.fiap.banco.constantes.Tarifas;
-import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.constantes.TipoUsuario;
 import br.com.fiap.banco.dao.impl.ContaDao;
 import br.com.fiap.banco.dao.impl.UsuarioDao;
@@ -13,18 +11,16 @@ import br.com.fiap.banco.entidades.Usuario;
 
 public class ContaComando {
 
-	private TransacaoComando transacoes = new TransacaoComando();
-	
 	public boolean temConta(long idTelegram) {
 		try (ContaDao contaDao = new ContaDao();) {
-			Usuario usuario = usuarioConta(idTelegram);
+			Usuario usuario = buscarUsuarioConta(idTelegram);
 			return contaDao.temConta(usuario.getConta().getNumero());
 		}
 	}
-	
-	public Usuario usuarioConta(long idTelegram){
+
+	public Usuario buscarUsuarioConta(long idTelegram) {
 		try (UsuarioDao usuarioDao = new UsuarioDao();) {
-		 return usuarioDao.buscar(idTelegram);
+			return usuarioDao.buscar(idTelegram);
 		}
 	}
 
@@ -36,9 +32,8 @@ public class ContaComando {
 		usuario.setEmail(email);
 		usuario.setTipoUsuario(TipoUsuario.PRINCIPAL.getCodigo());
 		usuario.setId(idTelegram);
-		
+
 		Conta conta = new Conta();
-		//conta.setNumero(idTelegram);
 		conta.setDataAbertura(LocalDate.now());
 		conta.setSaldo(0.0d);
 
@@ -64,8 +59,7 @@ public class ContaComando {
 		}
 	}
 
-	public void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf,
-			String email, String cpfTitular) {
+	public void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email, String cpfTitular) {
 		Usuario usuario = new Usuario();
 		usuario.setNome(nome + " " + sobrenome);
 		usuario.setTelefone(telefone);
@@ -93,48 +87,4 @@ public class ContaComando {
 		}
 	}
 
-	public void deposito(long idTelegram, double valor) {
-		if (temConta(idTelegram)) {
-			Usuario usuario = usuarioConta(idTelegram);
-			try (ContaDao contaDao = new ContaDao();) {
-				Conta conta = contaDao.buscar(usuario.getConta().getNumero());
-				Double saldo = conta.getSaldo();
-				conta.setSaldo(saldo += valor);
-				contaDao.alterarConta(conta);
-				transacoes.gravarTransacao(usuario, valor, TipoTransacao.DEPOSITO.getCodigo());
-			}
-		}
-	}
-
-	public boolean sacar(long idTelegram, double valor) {
-		// TODO ver se o boolean como retorno atende a necessidade
-		// TODO retornar exception em caso de falta de saldo?
-		if (temConta(idTelegram)) {
-			Usuario usuario = usuarioConta(idTelegram);
-			try (ContaDao contaDao = new ContaDao();) {
-				Conta conta = contaDao.buscar(usuario.getConta().getNumero());
-				Double saldo = conta.getSaldo();
-				valor += Tarifas.SAQUE.getCustoServico();
-				if (saldo > valor) {
-					conta.setSaldo(saldo -= valor);
-					
-					contaDao.alterarConta(conta);
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public double saldo(long idTelegram) {
-		double saldo = 0;
-		if (temConta(idTelegram)) {
-			Usuario usuario = usuarioConta(idTelegram);
-			try (ContaDao contaDao = new ContaDao();) {
-				Conta conta = contaDao.buscar(usuario.getConta().getNumero());
-				saldo = conta.getSaldo();
-			}
-		}
-		return saldo;
-	}
 }
