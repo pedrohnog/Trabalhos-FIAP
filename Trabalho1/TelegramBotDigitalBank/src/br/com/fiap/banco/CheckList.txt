@@ -11,9 +11,13 @@
 [ ] Exibição dos lançamentos detalhada, com somatória ao final
 [ ] Exibição das retiradas, com somatória ao final
 [ ] Exibição das tarifas de serviço, com somatória ao final dos serviços que já foram utilizados na conta
+
 Duvidas:
 Nao teremos mais data de nascimento no usuario?
+	Não. É uma informação que não tem necessidade de existir e só vai dar mais trabalho pra eles tratarem na tela.
 
 Nao teremos mais o digito da conta?
+	Não vejo como sendo necessário. A gente não faz nenhum tipo de verificação pra validar a conta.
 
 alterarConta não deveriamos mudar somente os dados da conta e ter um novo para alterar o cadastro do usuario?
+	Entendo que o alterar conta é a alteração dos dados do usuário.
