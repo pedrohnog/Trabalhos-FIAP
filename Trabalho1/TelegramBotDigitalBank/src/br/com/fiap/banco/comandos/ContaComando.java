@@ -8,6 +8,7 @@ import br.com.fiap.banco.dao.impl.ContaDao;
 import br.com.fiap.banco.dao.impl.UsuarioDao;
 import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Usuario;
+import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 
 public class ContaComando {
 
@@ -46,7 +47,7 @@ public class ContaComando {
 		}
 	}
 
-	public void alterarConta(long idTelegram, String cpf, String email) {
+	public void alterarConta(long idTelegram, String cpf, String email) throws ContaInexistenteExcecao {
 		// TODO Descobrir qual o usuário que precisa ser alterado
 		// TODO esta alterando o usuario da conta
 		if (temConta(idTelegram)) {
@@ -56,34 +57,44 @@ public class ContaComando {
 				usuario.setEmail(email);
 				usuarioDao.alterarUsuario(usuario);
 			}
+		} else {
+			throw new ContaInexistenteExcecao();
 		}
 	}
 
-	public void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email, String cpfTitular) {
-		Usuario usuario = new Usuario();
-		usuario.setNome(nome + " " + sobrenome);
-		usuario.setTelefone(telefone);
-		usuario.setCpf(cpf);
-		usuario.setEmail(email);
-		usuario.setTipoUsuario(TipoUsuario.DEPENDENTE.getCodigo());
-		usuario.setId(idTelegram);
+	public void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email, String cpfTitular) throws ContaInexistenteExcecao {
+		if (temConta(idTelegram)) {
+			Usuario usuario = new Usuario();
+			usuario.setNome(nome + " " + sobrenome);
+			usuario.setTelefone(telefone);
+			usuario.setCpf(cpf);
+			usuario.setEmail(email);
+			usuario.setTipoUsuario(TipoUsuario.DEPENDENTE.getCodigo());
+			usuario.setId(idTelegram);
 
-		try (UsuarioDao usuarioDao = new UsuarioDao(); ContaDao contaDao = new ContaDao();) {
-			Usuario usuarioTitular = usuarioDao.buscarUsuario(cpfTitular);
-			if (usuarioTitular != null) {
+			try (UsuarioDao usuarioDao = new UsuarioDao(); ContaDao contaDao = new ContaDao();) {
+				Usuario usuarioTitular = usuarioDao.buscarUsuario(cpfTitular);
+				if (usuarioTitular != null) {
 
-				usuario.setConta(usuarioTitular.getConta());
+					usuario.setConta(usuarioTitular.getConta());
 
-				usuarioDao.criarUsuario(usuario);
+					usuarioDao.criarUsuario(usuario);
+				}
 			}
+		} else {
+			throw new ContaInexistenteExcecao();
 		}
 
 	}
 
-	public List<Usuario> listarUsuarios(long idTelegram) {
-		try (UsuarioDao usuarioDao = new UsuarioDao(); ContaDao contaDao = new ContaDao();) {
-			Usuario usuario = usuarioDao.buscar(idTelegram);
-			return contaDao.buscarConta(usuario.getConta().getNumero()).getUsuarios();
+	public List<Usuario> listarUsuarios(long idTelegram) throws ContaInexistenteExcecao {
+		if (temConta(idTelegram)) {
+			try (UsuarioDao usuarioDao = new UsuarioDao(); ContaDao contaDao = new ContaDao();) {
+				Usuario usuario = usuarioDao.buscar(idTelegram);
+				return contaDao.buscarConta(usuario.getConta().getNumero()).getUsuarios();
+			}
+		} else {
+			throw new ContaInexistenteExcecao();
 		}
 	}
 
