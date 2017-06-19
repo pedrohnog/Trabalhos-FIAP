@@ -9,7 +9,9 @@ import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
+import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
+import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 
 public class OperacoesComando {
 
@@ -80,7 +82,7 @@ public class OperacoesComando {
 		if (this.contaComando.temConta(idTelegram)) {
 			if (Tarifas.EXTRATO.getCustoServico() <= this.verificarSaldo(idTelegram)) {
 				Usuario usuario = this.contaComando.buscarUsuarioConta(idTelegram);
-				
+
 				this.transacoesComando.gravarTransacao(usuario, Tarifas.EXTRATO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
 
 				try (ContaDao contaDao = new ContaDao();) {
@@ -91,6 +93,37 @@ public class OperacoesComando {
 			}
 		} else {
 			throw new ContaInexistenteExcecao();
+		}
+	}
+
+	public double verificarValorMaximoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
+		if (this.contaComando.temConta(idTelegram)) {
+			return this.verificarSaldo(idTelegram) * 40.0d;
+		}
+		return 0.0d;
+	}
+
+	public void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao {
+		if (this.contaComando.temConta(idTelegram)) {
+			double saldo = this.verificarSaldo(idTelegram);
+
+			if (valor > this.verificarValorMaximoEmprestimo(idTelegram)) {
+				throw new ValorEmprestimoExcedidoExcecao();
+			}
+			if (prazo > 36) {
+				throw new PrazoEmprestimoExcedidoExcecao();
+			}
+			if (valor + Tarifas.EMPRESTIMO.getCustoServico() > saldo) {
+				throw new SaldoInsuficienteExcecao();
+			}
+
+			Usuario usuario = this.contaComando.buscarUsuarioConta(idTelegram);
+
+			this.transacoesComando.gravarTransacao(usuario, Tarifas.EMPRESTIMO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
+
+			// TODO Criar operações de empréstimo
+
+			this.transacoesComando.gravarTransacao(usuario, saldo + valor, TipoTransacao.EMPRESTIMO.getCodigo());
 		}
 	}
 
