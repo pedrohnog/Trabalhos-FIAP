@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "MensagensIntegracao", catalog = "DBBot")
+@Table(name = "MensagensIntegracao", catalog = "DBBotBank")
 public class MensagemIntegracao implements Serializable{
 
 	private static final long serialVersionUID = -1798591717859526500L;
