@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "CONTA", catalog = "DBBotBank")
 public class Conta implements Serializable {
@@ -31,9 +34,11 @@ public class Conta implements Serializable {
 	private double saldo;
 
 	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Usuario> usuarios;
 
-	@OneToMany(mappedBy = "conta")
+	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Transacao> transacoes;
 
 	public Long getNumero() {

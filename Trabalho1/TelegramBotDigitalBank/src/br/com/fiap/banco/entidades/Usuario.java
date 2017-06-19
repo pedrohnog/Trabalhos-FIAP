@@ -40,7 +40,7 @@ public class Usuario implements Serializable {
 	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	private Conta conta;
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
 	private List<Transacao> transacoes;
 
 	public Long getId() {

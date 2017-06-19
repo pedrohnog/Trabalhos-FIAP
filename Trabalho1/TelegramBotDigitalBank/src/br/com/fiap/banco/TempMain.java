@@ -121,7 +121,7 @@ public class TempMain {
 	}
 
 	public void solicitarExtrato() {
-		//FIXME Erro de Lazy
+
 		OperacoesComando operacoesComando = new OperacoesComando();
 		try {
 			List<Transacao> transacoes = operacoesComando.verificacaoExtrato(1234);
