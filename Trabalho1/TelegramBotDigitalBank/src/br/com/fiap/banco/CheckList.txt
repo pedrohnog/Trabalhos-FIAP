@@ -1,7 +1,7 @@
 [X] Criação de conta
 [X] Modificação de conta
 [X] Inclusão de dependentes (conta-conjunta)
-[ ] Exibição dos dados do titular e dependentes
+[X] Exibição dos dados do titular e dependentes
 [X] Depósito
 [X] Saque (custo do serviço R$ 2,50)
 [X] Solicitação de saldo 

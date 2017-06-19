@@ -8,8 +8,10 @@ import br.com.fiap.banco.comandos.ContaComando;
 import br.com.fiap.banco.comandos.OperacoesComando;
 import br.com.fiap.banco.comandos.TransacaoComando;
 import br.com.fiap.banco.constantes.TipoTransacao;
+import br.com.fiap.banco.constantes.TipoUsuario;
 import br.com.fiap.banco.dados.TransacaoDetalhe;
 import br.com.fiap.banco.entidades.Transacao;
+import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 
@@ -51,6 +53,9 @@ public class TempMain {
 			break;
 		case 11:
 			main.solicitarTarifas();
+			break;
+		case 12:
+			main.listarUsuarioDependente();
 			break;
 		default:
 			System.err.println("Opção inválida");
@@ -181,6 +186,18 @@ public class TempMain {
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("CONTA INEXISTENTE");
 		}
+	}
+	private void listarUsuarioDependente() {
+		ContaComando contaComando = new ContaComando();
+		try {
+			List<Usuario> usuarios = contaComando.listarUsuarios(1234);
+			for (Usuario usuario : usuarios) {
+				System.out.println(usuario.getNome() + " " + usuario.getCpf() + " " + usuario.getTelefone() + " " + TipoUsuario.getTipoUsuario(usuario.getTipoUsuario()));
+			}
+		} catch (ContaInexistenteExcecao e) {
+			System.err.println("USUARIO NAO TEM CONTA");
+		}
+		
 	}
 
 }
