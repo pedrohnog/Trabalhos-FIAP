@@ -119,11 +119,18 @@ public class OperacoesComando {
 
 			Usuario usuario = this.contaComando.buscarUsuarioConta(idTelegram);
 
-			this.transacoesComando.gravarTransacao(usuario, Tarifas.EMPRESTIMO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
-
 			// TODO Criar operações de empréstimo
 
-			this.transacoesComando.gravarTransacao(usuario, saldo + valor, TipoTransacao.EMPRESTIMO.getCodigo());
+			try (ContaDao contaDao = new ContaDao();) {
+				Conta conta = contaDao.buscar(usuario.getConta().getNumero());
+
+				conta.setSaldo((conta.getSaldo() - Tarifas.EMPRESTIMO.getCustoServico()) + valor);
+
+				contaDao.alterarConta(conta);
+
+				this.transacoesComando.gravarTransacao(usuario, Tarifas.EMPRESTIMO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
+				this.transacoesComando.gravarTransacao(usuario, valor, TipoTransacao.EMPRESTIMO.getCodigo());
+			}
 		}
 	}
 
