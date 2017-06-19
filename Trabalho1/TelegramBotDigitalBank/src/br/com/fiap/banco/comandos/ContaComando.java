@@ -12,9 +12,12 @@ import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 
 public class ContaComando {
 
-	public boolean temConta(long idTelegram) {
+	public boolean temConta(long idTelegram) throws ContaInexistenteExcecao {
 		try (ContaDao contaDao = new ContaDao();) {
 			Usuario usuario = buscarUsuarioConta(idTelegram);
+			if(usuario == null) {
+				throw new ContaInexistenteExcecao();
+			}
 			return contaDao.temConta(usuario.getConta().getNumero());
 		}
 	}
@@ -63,6 +66,7 @@ public class ContaComando {
 	}
 
 	public void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email, String cpfTitular) throws ContaInexistenteExcecao {
+		//FIXME Está dando erro na criação do dependente
 		if (temConta(idTelegram)) {
 			Usuario usuario = new Usuario();
 			usuario.setNome(nome + " " + sobrenome);

@@ -60,7 +60,7 @@ public class OperacoesComando {
 		}
 	}
 
-	private double verificarSaldo(long idTelegram) throws ContaInexistenteExcecao {
+	public double verificarSaldo(long idTelegram) throws ContaInexistenteExcecao {
 		double saldo = 0.0d;
 
 		if (this.contaComando.temConta(idTelegram)) {

@@ -10,7 +10,7 @@ public class ContaDao extends DaoGenerico<Conta> {
 	}
 
 	public boolean criarConta(Conta conta) {
-		if (!temConta(conta.getNumero())) {
+		if (conta.getNumero() == null || !temConta(conta.getNumero())) {
 			super.adicionar(conta);
 			return true;
 		}
