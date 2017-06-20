@@ -1,5 +1,9 @@
 package br.com.fiap.banco.excecao;
 
+/**
+ * Exceção para tratamento quando tentar realizar uma operação em uma conta não existente
+ *
+ */
 public class ContaInexistenteExcecao extends Exception {
 
 	private static final long serialVersionUID = 8985501046491187447L;
