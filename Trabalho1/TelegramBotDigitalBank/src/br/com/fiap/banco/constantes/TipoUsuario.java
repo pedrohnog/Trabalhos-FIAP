@@ -1,8 +1,19 @@
 package br.com.fiap.banco.constantes;
 
+/**
+ * Enum responsável por mapear os tipos de usuários existentes
+ *
+ */
 public enum TipoUsuario {
 
-	PRINCIPAL(1), DEPENDENTE(2);
+	/**
+	 * Constante que define o usuário principal da conta
+	 */
+	PRINCIPAL(1),
+	/**
+	 * Constante que define um usuário dependente da conta
+	 */
+	DEPENDENTE(2);
 
 	private int codigo;
 

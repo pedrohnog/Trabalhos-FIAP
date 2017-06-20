@@ -2,6 +2,10 @@ package br.com.fiap.banco.dados;
 
 import java.io.Serializable;
 
+/**
+ * Classe responsável por cuidar dos detalhes do Empréstimo
+ *
+ */
 public class EmprestimoDetalhe implements Serializable {
 
 	private static final long serialVersionUID = 6900632487562096621L;

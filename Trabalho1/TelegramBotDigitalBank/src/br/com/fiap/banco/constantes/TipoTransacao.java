@@ -1,8 +1,35 @@
 package br.com.fiap.banco.constantes;
 
+/**
+ * Enum responsável por mapear os tipos de transações existentes
+ *
+ */
 public enum TipoTransacao {
 
-	SAQUE(1), DEPOSITO(2), TARIFA(3), EMPRESTIMO(4), JUROS(5), PAGAMENTO_EMPRESTIMO(6);
+	/**
+	 * Constante que define a transação de saque
+	 */
+	SAQUE(1),
+	/**
+	 * Constante que define a transação de depósito
+	 */
+	DEPOSITO(2),
+	/**
+	 * Constante que define a transação de tarifas pagas nas operações
+	 */
+	TARIFA(3),
+	/**
+	 * Constante que define a transação de solicitação de empréstimo
+	 */
+	EMPRESTIMO(4),
+	/**
+	 * Constante que define a transação de juros pagos nas parcelas do empréstimo
+	 */
+	JUROS(5),
+	/**
+	 * Constante que define a transação de parcelas pagas do empréstimo
+	 */
+	PAGAMENTO_EMPRESTIMO(6);
 
 	private int codigo;
 

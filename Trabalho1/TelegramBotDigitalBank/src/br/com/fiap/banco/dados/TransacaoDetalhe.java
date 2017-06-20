@@ -5,6 +5,10 @@ import java.util.List;
 
 import br.com.fiap.banco.entidades.Transacao;
 
+/**
+ * Classe responsável por cuidar dos detalhes das transações
+ *
+ */
 public class TransacaoDetalhe implements Serializable {
 
 	private static final long serialVersionUID = -3191534842798150141L;

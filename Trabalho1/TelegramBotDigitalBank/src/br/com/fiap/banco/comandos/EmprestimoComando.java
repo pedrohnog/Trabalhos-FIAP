@@ -16,11 +16,35 @@ import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.util.CaluladorEmprestimoUtil;
 
+/**
+ * Classe responsável por organizar todos os comando que são utilizados no Empréstimo
+ *
+ */
 class EmprestimoComando {
 	
+	/**
+	 * Constante que define o prazo máximo (em meses) que o usuário pode pagar o empréstimo
+	 */
 	private static final int PRAZO_MAXIMO = 36;
+	
+	/**
+	 * Constante que define o multiplicado para calculo do valor máximo que o usuário pode solicitar de empréstimo
+	 */
 	private static final double MULTIPLICADOR_MAXIMO = 40.0d;
 
+	/**
+	 * Solicita um empréstimo ao banco que será pago mensalmente pelo usuário
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * @param valor Valor que está sendo solicitado de empréstimo
+	 * @param prazo Prazo para pagamento do empréstimo
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 * @throws ValorEmprestimoExcedidoExcecao Se exceder o valor máximo permitido para empréstimo
+	 * @throws PrazoEmprestimoExcedidoExcecao Se ultrapassar o prazo máximo permitido para pagamento do empréstimo
+	 * @throws SaldoInsuficienteExcecao Se não houver saldo suficiente para concluir a operação
+	 * @throws EmprestimoAbertoExcecao Se já houver algum empréstimo em aberto nessa conta
+	 */
 	public synchronized void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao, EmprestimoAbertoExcecao {
 		ContaComando contaComando = new ContaComando();
 		OperacoesComando operacoesComando = new OperacoesComando();
@@ -60,6 +84,15 @@ class EmprestimoComando {
 		}
 	}
 
+	/**
+	 * Verifica e informa o valor máximo que o usuário pode solicitar de empréstimo
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return Valor máximo que o usuário pode solicitar de empréstimo
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
 	public synchronized double verificarValorMaximoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
 		ContaComando contaComando = new ContaComando();
 		OperacoesComando operacoesComando = new OperacoesComando();
@@ -70,6 +103,16 @@ class EmprestimoComando {
 		return 0.0d;
 	}
 	
+	
+	/**
+	 * Verifica e informa o saldo devedor e o prazo restante para o pagamento de um empréstimo
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return O saldo devedor e o prazo restante para o pagamento de um empréstimo
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
 	public synchronized EmprestimoDetalhe buscarSaldoDevedorPrazoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
 		ContaComando contaComando = new ContaComando();
 		
@@ -98,6 +141,13 @@ class EmprestimoComando {
 		return emprestimoDetalhe;
 	}
 	
+	/**
+	 * Verifica se há algum empréstimo em aberto na conta
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return <code>true</code> se houver algum empréstimo em aberto, se não, <code>false</code>
+	 */
 	public synchronized boolean verificarEmprestimoAberto(long idTelegram) {
 		List<Emprestimo> emprestimosAberto = null;
 		
@@ -108,6 +158,11 @@ class EmprestimoComando {
 		return emprestimosAberto != null && !emprestimosAberto.isEmpty();
 	}
 	
+	/**
+	 * Verifica as parcelas do empréstimo que estão vencidas e tenta realizar o pagamento automaticamente
+	 * 
+	 * @param idTelegram Id do Telegram
+	 */
 	public synchronized void pagarEmprestimosVencidos(long idTelegram) {
 		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
 			List<Emprestimo> emprestimosVencidos = emprestimoDao.buscarEmprestimosVencidos(idTelegram);
@@ -119,6 +174,14 @@ class EmprestimoComando {
 		}
 	}
 	
+	/**
+	 * Realiza o pagamento da parcela de empréstimo que está vencida
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * @param emprestimo Parcela que está vencida
+	 * 
+	 * @return <code>true</code> se conseguir realizar o pagamento, se não <code>false</code>
+	 */
 	private synchronized boolean pagarEmprestimoVencido(long idTelegram, Emprestimo emprestimo) {
 		TransacaoComando transacaoComando = new TransacaoComando();
 		

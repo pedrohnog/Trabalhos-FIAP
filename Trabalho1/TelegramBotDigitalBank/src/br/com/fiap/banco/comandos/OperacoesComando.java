@@ -11,8 +11,20 @@ import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 
+/**
+ * Classe responsável por organizar todos os comando que são utilizados nas Operações
+ *
+ */
 class OperacoesComando {
 
+	/**
+	 * Realiza um depósito na conta do usuário
+	 * 
+	 * @param idTelegram ID do Telegram
+	 * @param valor Valor à ser depositado
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
 	public synchronized void realizarDeposito(long idTelegram, double valor) throws ContaInexistenteExcecao {
 		ContaComando contaComando = new ContaComando();
 		TransacaoComando transacaoComando = new TransacaoComando();
@@ -30,6 +42,15 @@ class OperacoesComando {
 		}
 	}
 
+	/**
+	 * Realiza um saque na conta do usuário
+	 * 
+	 * @param idTelegram ID do Telegram
+	 * @param valor Valor à ser sacado
+	 * 
+	 * @throws SaldoInsuficienteExcecao Se não houver saldo suficiente para concluir a operação
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
 	public synchronized void realizarSaque(long idTelegram, double valor) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
 		ContaComando contaComando = new ContaComando();
 		TransacaoComando transacaoComando = new TransacaoComando();
@@ -57,6 +78,15 @@ class OperacoesComando {
 		}
 	}
 
+	/**
+	 * Busca e devolve o saldo disponível na conta do usuário
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return O saldo disponível
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
 	public synchronized double verificarSaldo(long idTelegram) throws ContaInexistenteExcecao {
 		ContaComando contaComando = new ContaComando();
 		
@@ -72,6 +102,16 @@ class OperacoesComando {
 		return saldo;
 	}
 
+	/**
+	 * Busca e devolve todas as transações realizadas na conta do usuário
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return A lista com todas as transações
+	 * 
+	 * @throws SaldoInsuficienteExcecao Se não houver saldo suficiente para concluir a operação
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
 	public synchronized List<Transacao> verificacaoExtrato(long idTelegram) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
 		ContaComando contaComando = new ContaComando();
 		TransacaoComando transacaoComando = new TransacaoComando();
