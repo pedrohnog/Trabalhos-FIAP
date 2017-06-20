@@ -8,6 +8,7 @@
 		<class>br.com.fiap.banco.entidades.Usuario</class>
 		<class>br.com.fiap.banco.entidades.Transacao</class>
 		<class>br.com.fiap.bot.entidades.MensagemIntegracao</class>
+		<class>br.com.fiap.banco.entidades.Emprestimo</class>
 		<properties>
 			<property name="javax.persistence.schemageneration.database.action" value="drop-and-create" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
