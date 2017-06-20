@@ -7,6 +7,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+/**
+ * Classe responsável por definir a implementação básica do DAO
+ *
+ * @param <T> Objeto que será tratado
+ */
 public abstract class DaoGenerico<T> implements Dao<T> {
 
 	private final Class<T> classe;
