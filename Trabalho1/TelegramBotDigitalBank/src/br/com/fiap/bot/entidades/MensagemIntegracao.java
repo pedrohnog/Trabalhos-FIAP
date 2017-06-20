@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "MENSAGEM_INTEGRACAO", catalog = "DBBotBank")
 public class MensagemIntegracao implements Serializable{
 
-	private static final long serialVersionUID = -1798591717859526500L;
+	private static final long serialVersionUID = 2205725959674343189L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
