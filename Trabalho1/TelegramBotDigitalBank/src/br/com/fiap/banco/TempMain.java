@@ -15,6 +15,7 @@ import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.EmprestimoAbertoExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
+import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 
 class TempMain {
@@ -95,9 +96,11 @@ class TempMain {
 
 	private void incluirDependente() {
 		try {
-			this.comando.incluirDependente(1234, "Teste 2", "Teste", "1187654321", "01010101099", "teste2@teste.com.br");
+			this.comando.incluirDependente(1234, "Teste 2", "Teste", "1187654321", "13467925800", "teste2@teste.com.br");
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("CONTA INEXISTENTE");
+		} catch (UsuarioDuplicadoExcecao e) {
+			System.err.println("USUÁRIO DUPLICADO");
 		}
 	}
 

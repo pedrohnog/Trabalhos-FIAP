@@ -10,6 +10,7 @@ import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.EmprestimoAbertoExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
+import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 
 /**
@@ -58,8 +59,9 @@ public class BotComando {
 	 * @param email Email do dependente
 	 * 
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 * @throws UsuarioDuplicadoExcecao Se o usuário já existir no BD
 	 */
-	public synchronized void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) throws ContaInexistenteExcecao {
+	public synchronized void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) throws ContaInexistenteExcecao, UsuarioDuplicadoExcecao {
 		ContaComando contaComando = new ContaComando();
 		contaComando.incluirDependente(idTelegram, nome, sobrenome, telefone, cpf, email);
 	}

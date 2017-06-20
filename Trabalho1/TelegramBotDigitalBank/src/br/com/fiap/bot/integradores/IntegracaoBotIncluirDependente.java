@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
+import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
 
 public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 
@@ -40,6 +41,9 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 			retorno = "Parabéns! Dependente incluido com sucesso!";
 		} catch (ContaInexistenteExcecao e) {
 			retorno = "Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
+		} catch (UsuarioDuplicadoExcecao e) {
+			//TODO Tratar o retorno. Só coloquei a frase pra não ficar vazio.
+			retorno = "O dependente que você está tentando incluir já tem conta cadastrada no banco";
 		}
 		return retorno;
 	}

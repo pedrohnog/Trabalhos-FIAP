@@ -10,6 +10,7 @@ import br.com.fiap.banco.dao.impl.UsuarioDao;
 import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
+import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
 
 /**
  * Classe responsável por organizar todos os comando que são utilizados na Conta
@@ -108,18 +109,25 @@ class ContaComando {
 	 * @param email Email do dependente
 	 * 
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 * @throws UsuarioDuplicadoExcecao Se o dependente já existir no BD
 	 */
-	public synchronized void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) throws ContaInexistenteExcecao {
+	public synchronized void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) throws ContaInexistenteExcecao, UsuarioDuplicadoExcecao {
 		if (this.temConta(idTelegram)) {
 			try (UsuarioDao usuarioDao = new UsuarioDao(); ContaDao contaDao = new ContaDao();) {
 				Conta conta = contaDao.buscarConta(idTelegram);
-
-				Usuario usuario = this.criarUsuario(nome, sobrenome, telefone, cpf, email);
-				usuario.setTipoUsuario(TipoUsuario.DEPENDENTE.getCodigo());
 				
-				usuario.setConta(conta);
+				Usuario usuarioBD = usuarioDao.buscarUsuario(cpf);
 				
-				usuarioDao.criarUsuario(usuario);
+				if(usuarioBD == null) {
+					Usuario usuario = this.criarUsuario(nome, sobrenome, telefone, cpf, email);
+					usuario.setTipoUsuario(TipoUsuario.DEPENDENTE.getCodigo());
+					
+					usuario.setConta(conta);
+					
+					usuarioDao.criarUsuario(usuario);
+				} else {
+					throw new UsuarioDuplicadoExcecao();
+				}
 			}
 		}
 
