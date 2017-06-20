@@ -7,7 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-public class DaoGenerico<T> implements Dao<T> {
+public abstract class DaoGenerico<T> implements Dao<T> {
 
 	private final Class<T> classe;
 
