@@ -18,7 +18,7 @@ public class DaoGenericoBot<T> implements Dao<T> {
 
 	protected DaoGenericoBot(Class<T> classe) {
 		this.classe = classe;
-		this.emf = Persistence.createEntityManagerFactory("TelegramBot");
+		this.emf = Persistence.createEntityManagerFactory("TelegramBotDigitalBank");
 		this.em = this.emf.createEntityManager();
 	}
 

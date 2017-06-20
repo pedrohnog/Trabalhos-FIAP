@@ -1,15 +1,15 @@
-package br.com.fiap.bot.validacao;
+package br.com.fiap.bot.integradores;
 
-import br.com.fiap.bot.constantes.EnumComandosBot;
+import com.pengrad.telegrambot.model.Chat;
 
 public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 
-	IntegracaoBotSolicitarEmprestimo(String mensagemPrimeiraIntegracao, String dominioResposta) {
-		super(mensagemPrimeiraIntegracao, dominioResposta);
+	IntegracaoBotSolicitarEmprestimo() {
+		super("mensagemPrimeiraIntegracao", "dominioResposta");
 	}
 
 	@Override
-	public Boolean validarResposta(String resposta, EnumComandosBot comandoBot) {
+	public Boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
 		if(resposta != null){
 			resposta = resposta.trim();
@@ -25,8 +25,13 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 	}
 
 	@Override
-	public String integrarBanco(String resposta, EnumComandosBot comandoBot) {
+	public String integrarBanco(String resposta, Chat usuario) {
 		return "Emprestimo solicitado com sucesso!";
+	}
+	
+	@Override
+	public String tratarPrimeiraInteracao(Chat usuario) {
+		return "Verificar....";
 	}
 
 }

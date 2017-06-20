@@ -1,6 +1,6 @@
-package br.com.fiap.bot.validacao;
+package br.com.fiap.bot.integradores;
 
-import br.com.fiap.bot.constantes.EnumComandosBot;
+import com.pengrad.telegrambot.model.Chat;
 
 public abstract class IntegracaoBotSolicitacao implements IntegracaoBot{
 	
@@ -15,14 +15,14 @@ public abstract class IntegracaoBotSolicitacao implements IntegracaoBot{
 		this.dominioResposta = dominioResposta;
 	}
 	
-	public abstract Boolean validarResposta(String resposta, EnumComandosBot comandoBot);
-	public abstract String integrarBanco(String resposta, EnumComandosBot comandoBot);
+	public abstract Boolean validarResposta(String resposta);
+	public abstract String integrarBanco(String resposta, Chat usuario);
 	
 	public String informarErroNaResposta() {
 		return ERRO_RESPOSTA + this.dominioResposta;
 	}
 	
-	public String exibeMensagemPrimeiraIntegracao() {
+	public String tratarPrimeiraInteracao(Chat usuario) {
 		return mensagemPrimeiraIntegracao;
 	}
 	

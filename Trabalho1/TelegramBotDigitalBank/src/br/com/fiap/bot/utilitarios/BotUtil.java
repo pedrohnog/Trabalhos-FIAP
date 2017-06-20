@@ -17,19 +17,19 @@ import br.com.fiap.bot.constantes.EnumComandosBot;
 import br.com.fiap.bot.constantes.EnumTipoIntegracaoBot;
 import br.com.fiap.bot.dao.impl.MensagemIntegracaoDao;
 import br.com.fiap.bot.entidades.MensagemIntegracao;
-import br.com.fiap.bot.validacao.IntegracaoBot;
-import br.com.fiap.bot.validacao.IntegracaoBotAjuda;
-import br.com.fiap.bot.validacao.IntegracaoBotConsultaDeposito;
-import br.com.fiap.bot.validacao.IntegracaoBotConsultaExtrato;
-import br.com.fiap.bot.validacao.IntegracaoBotConsultaSaque;
-import br.com.fiap.bot.validacao.IntegracaoBotCriarConta;
-import br.com.fiap.bot.validacao.IntegracaoBotExibirDados;
-import br.com.fiap.bot.validacao.IntegracaoBotIncluirDependente;
-import br.com.fiap.bot.validacao.IntegracaoBotModificarConta;
-import br.com.fiap.bot.validacao.IntegracaoBotRealizarDeposito;
-import br.com.fiap.bot.validacao.IntegracaoBotRealizarSaque;
-import br.com.fiap.bot.validacao.IntegracaoBotSolicitacao;
-import br.com.fiap.bot.validacao.IntegracaoBotStart;
+import br.com.fiap.bot.integradores.IntegracaoBot;
+import br.com.fiap.bot.integradores.IntegracaoBotAjuda;
+import br.com.fiap.bot.integradores.IntegracaoBotConsultaDeposito;
+import br.com.fiap.bot.integradores.IntegracaoBotConsultaExtrato;
+import br.com.fiap.bot.integradores.IntegracaoBotConsultaSaque;
+import br.com.fiap.bot.integradores.IntegracaoBotCriarConta;
+import br.com.fiap.bot.integradores.IntegracaoBotExibirDados;
+import br.com.fiap.bot.integradores.IntegracaoBotIncluirDependente;
+import br.com.fiap.bot.integradores.IntegracaoBotModificarConta;
+import br.com.fiap.bot.integradores.IntegracaoBotRealizarDeposito;
+import br.com.fiap.bot.integradores.IntegracaoBotRealizarSaque;
+import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
+import br.com.fiap.bot.integradores.IntegracaoBotStart;
 
 public class BotUtil {
 
@@ -52,7 +52,7 @@ public class BotUtil {
 				if(update.message() != null){
 					bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
 					
-					String mensagemRetorno = tratarMensagemBot(update.message().chat(), update.message().text());
+					String mensagemRetorno = tratarMensagemBot(update);
 					
 					bot.execute(new SendMessage(update.message().chat().id(), mensagemRetorno.toString()));
 				}
@@ -63,25 +63,19 @@ public class BotUtil {
 
 	/**
 	 * Método resposável por entender a ação solicitada pelo usuário e realizar as tratativas
-	 * @param usuario
-	 * @param mensagemRecebida
+	 * @param update Requisicao recebida pelo telegram
 	 * @return Mensagem de resposta para o usuário
 	 */
-	private String tratarMensagemBot(Chat usuario, String mensagemRecebida) {
-		StringBuffer mensagemRetorno = new StringBuffer();
-		
-		if (EnumComandosBot.START.getComando().equals(mensagemRecebida)) {
+	private String tratarMensagemBot(Update update) {
+		String mensagemRetorno = "";
+
+		Chat usuario = update.message().chat();
+		String mensagemRecebida = update.message().text();
+
+		if (EnumComandosBot.LISTA_COMANDO_INTERACOES.containsKey(mensagemRecebida)) {
 			
 			IntegracaoBot resposta = BotUtil.definirClasseIntegracao(EnumComandosBot.LISTA_COMANDO_INTERACOES.get(mensagemRecebida));
-			mensagemRetorno.append(resposta.exibeMensagemPrimeiraIntegracao().replace("?", usuario.firstName()));
-			
-			//Remove do historico caso existe, pois foi iniciado uma nova integracao
-			removerHistoricoIntegracaoUsuario(usuario.id());
-			
-		} else if (EnumComandosBot.LISTA_COMANDO_INTERACOES.containsKey(mensagemRecebida)) {
-			
-			IntegracaoBot resposta = BotUtil.definirClasseIntegracao(EnumComandosBot.LISTA_COMANDO_INTERACOES.get(mensagemRecebida));
-			mensagemRetorno.append(resposta.exibeMensagemPrimeiraIntegracao());
+			mensagemRetorno = resposta.tratarPrimeiraInteracao(usuario);
 			
 			if(EnumComandosBot.LISTA_COMANDO_INTERACOES.get(mensagemRecebida).getEnumTipoIntegracaoBot().equals(EnumTipoIntegracaoBot.SOLICITACAO)){
 				//Adiciona no cache da aplicação a última interação realiza para tratamento posterior
@@ -97,21 +91,21 @@ public class BotUtil {
 			IntegracaoBotSolicitacao resposta = (IntegracaoBotSolicitacao) BotUtil.definirClasseIntegracao(ultimoComandoExecutado);
 			
 			//Valida se a resposta está correta, se estiver retorna e retira do historico
-			if (resposta.validarResposta(mensagemRecebida, ultimoComandoExecutado)) {
-				mensagemRetorno.append(resposta.integrarBanco(mensagemRecebida,	ultimoComandoExecutado));
+			if (resposta.validarResposta(mensagemRecebida)) {
+				mensagemRetorno = resposta.integrarBanco(mensagemRecebida,	usuario);
 				removerHistoricoIntegracaoUsuario(usuario.id());
 			} else {
-				mensagemRetorno.append(resposta.informarErroNaResposta());
+				mensagemRetorno = resposta.informarErroNaResposta();
 			}
 			
 		} else {
-			mensagemRetorno.append("Desculpe, não entendi... digite /ajuda para obter a lista de comandos conhecidos.");
+			mensagemRetorno = "Desculpe, não entendi... digite /ajuda para obter a lista de comandos conhecidos.";
 
 		}
 		
-		salvarMensagens(usuario, mensagemRecebida, mensagemRetorno.toString());
+		salvarMensagens(usuario, mensagemRecebida, mensagemRetorno);
 		
-		return mensagemRetorno.toString();
+		return mensagemRetorno;
 	}
 	
 	/**
@@ -189,8 +183,13 @@ public class BotUtil {
 		MensagemIntegracao mensagemIntegracao = new MensagemIntegracao();
 		MensagemIntegracaoDao mensagemIntegracaoDao = new MensagemIntegracaoDao();
 		
+		System.out.println(mensagemEnviada);
+		System.out.println("mensagemEnviada" + mensagemEnviada.length());
+		System.out.println(mensagemRecebida);
+		System.out.println("mensagemRecebida - " + mensagemRecebida.length());
+		
 		mensagemIntegracao.setIdTelegram(usuario.id());
-		mensagemIntegracao.setNomeTelegram(usuario.username());
+		mensagemIntegracao.setNomeTelegram(usuario.firstName());
 		mensagemIntegracao.setMensagemRecebida(mensagemRecebida);
 		mensagemIntegracao.setMensagemEnviada(mensagemEnviada);	
 		

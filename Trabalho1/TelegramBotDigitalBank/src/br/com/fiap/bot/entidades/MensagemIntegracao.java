@@ -4,26 +4,32 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "MensagensIntegracao", catalog = "DBBotBank")
+@Table(name = "MENSAGEM_INTEGRACAO", catalog = "DBBotBank")
 public class MensagemIntegracao implements Serializable{
 
 	private static final long serialVersionUID = -1798591717859526500L;
 
 	@Id
-	@Column(name = "id", unique = false, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	private Long id;
+	
+	@Column(name = "id_telegram", unique = false, nullable = false)
 	private Long idTelegram;
 
 	@Column(name = "nome", unique = false, nullable = false, length = 50)
 	private String nomeTelegram;
 	
-	@Column(name = "mensagemRecebida", unique = false, nullable = false, length = 300)
+	@Column(name = "mensagem_rec", unique = false, nullable = false, length = 5000)
 	private String mensagemRecebida;
 	
-	@Column(name = "mensagemEnviada", unique = false, nullable = false, length = 300)
+	@Column(name = "mensagem_env", unique = false, nullable = false, length = 5000)
 	private String mensagemEnviada;
 	
 	public Long getIdTelegram() {
