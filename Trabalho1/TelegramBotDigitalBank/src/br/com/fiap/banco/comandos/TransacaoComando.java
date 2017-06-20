@@ -12,9 +12,7 @@ import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 
 class TransacaoComando {
 
-	private ContaComando contaComando = new ContaComando();
-
-	public void gravarTransacao(Conta conta, double valor, int tipoTransacao) {
+	public synchronized void gravarTransacao(Conta conta, double valor, int tipoTransacao) {
 		try (TransacaoDao transacaoDao = new TransacaoDao();) {
 			Transacao transacao = new Transacao();
 			transacao.setConta(conta);
@@ -26,22 +24,24 @@ class TransacaoComando {
 		}
 	}
 
-	public TransacaoDetalhe listarLancamentos(long idTelegram) throws ContaInexistenteExcecao {
+	public synchronized TransacaoDetalhe listarLancamentos(long idTelegram) throws ContaInexistenteExcecao {
 		return this.listarTransacao(idTelegram, TipoTransacao.DEPOSITO);
 	}
 
-	public TransacaoDetalhe listarRetiradas(long idTelegram) throws ContaInexistenteExcecao {
+	public synchronized TransacaoDetalhe listarRetiradas(long idTelegram) throws ContaInexistenteExcecao {
 		return this.listarTransacao(idTelegram, TipoTransacao.SAQUE);
 	}
 
-	public TransacaoDetalhe listarTarifas(long idTelegram) throws ContaInexistenteExcecao {
+	public synchronized TransacaoDetalhe listarTarifas(long idTelegram) throws ContaInexistenteExcecao {
 		return this.listarTransacao(idTelegram, TipoTransacao.TARIFA);
 	}
 	
-	private TransacaoDetalhe listarTransacao(long idTelegram, TipoTransacao tipoTransacao) throws ContaInexistenteExcecao {
+	private synchronized TransacaoDetalhe listarTransacao(long idTelegram, TipoTransacao tipoTransacao) throws ContaInexistenteExcecao {
+		ContaComando contaComando = new ContaComando();
+		
 		TransacaoDetalhe transacaoDetalhe = new TransacaoDetalhe();
 		
-		if (this.contaComando.temConta(idTelegram)) {
+		if (contaComando.temConta(idTelegram)) {
 			try (ContaDao contaDao = new ContaDao(); TransacaoDao transacaoDao = new TransacaoDao();) {
 				Conta conta = contaDao.buscarConta(idTelegram);
 				

@@ -15,19 +15,22 @@ import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.util.CaluladorEmprestimoUtil;
 
 class EmprestimoComando {
+	
+	private static final int PRAZO_MAXIMO = 36;
+	private static final double MULTIPLICADOR_MAXIMO = 40.0d;
 
-	private ContaComando contaComando = new ContaComando();
-	private TransacaoComando transacoesComando = new TransacaoComando();
-	private OperacoesComando operacoesComando = new OperacoesComando();
-
-	public void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao {
-		if (this.contaComando.temConta(idTelegram)) {
-			double saldo = this.operacoesComando.verificarSaldo(idTelegram);
+	public synchronized void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao {
+		ContaComando contaComando = new ContaComando();
+		OperacoesComando operacoesComando = new OperacoesComando();
+		TransacaoComando transacaoComando = new TransacaoComando();
+		
+		if (contaComando.temConta(idTelegram)) {
+			double saldo = operacoesComando.verificarSaldo(idTelegram);
 
 			if (valor > this.verificarValorMaximoEmprestimo(idTelegram)) {
 				throw new ValorEmprestimoExcedidoExcecao();
 			}
-			if (prazo > 36) {
+			if (prazo > PRAZO_MAXIMO) {
 				throw new PrazoEmprestimoExcedidoExcecao();
 			}
 			if (valor + Tarifas.EMPRESTIMO.getCustoServico() > saldo) {
@@ -46,15 +49,18 @@ class EmprestimoComando {
 
 				contaDao.alterarConta(conta);
 
-				this.transacoesComando.gravarTransacao(conta, Tarifas.EMPRESTIMO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
-				this.transacoesComando.gravarTransacao(conta, valor, TipoTransacao.EMPRESTIMO.getCodigo());
+				transacaoComando.gravarTransacao(conta, Tarifas.EMPRESTIMO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
+				transacaoComando.gravarTransacao(conta, valor, TipoTransacao.EMPRESTIMO.getCodigo());
 			}
 		}
 	}
 
-	public double verificarValorMaximoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
-		if (this.contaComando.temConta(idTelegram)) {
-			return this.operacoesComando.verificarSaldo(idTelegram) * 40.0d;
+	public synchronized double verificarValorMaximoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
+		ContaComando contaComando = new ContaComando();
+		OperacoesComando operacoesComando = new OperacoesComando();
+		
+		if (contaComando.temConta(idTelegram)) {
+			return operacoesComando.verificarSaldo(idTelegram) * MULTIPLICADOR_MAXIMO;
 		}
 		return 0.0d;
 	}

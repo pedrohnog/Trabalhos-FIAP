@@ -13,11 +13,11 @@ import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 
 class OperacoesComando {
 
-	private ContaComando contaComando = new ContaComando();
-	private TransacaoComando transacoesComando = new TransacaoComando();
-
-	public void realizarDeposito(long idTelegram, double valor) throws ContaInexistenteExcecao {
-		if (this.contaComando.temConta(idTelegram)) {
+	public synchronized void realizarDeposito(long idTelegram, double valor) throws ContaInexistenteExcecao {
+		ContaComando contaComando = new ContaComando();
+		TransacaoComando transacaoComando = new TransacaoComando();
+		
+		if (contaComando.temConta(idTelegram)) {
 			try (ContaDao contaDao = new ContaDao();) {
 				Conta conta = contaDao.buscarConta(idTelegram);
 				
@@ -25,13 +25,16 @@ class OperacoesComando {
 
 				contaDao.alterarConta(conta);
 
-				this.transacoesComando.gravarTransacao(conta, valor, TipoTransacao.DEPOSITO.getCodigo());
+				transacaoComando.gravarTransacao(conta, valor, TipoTransacao.DEPOSITO.getCodigo());
 			}
 		}
 	}
 
-	public void realizarSaque(long idTelegram, double valor) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
-		if (this.contaComando.temConta(idTelegram)) {
+	public synchronized void realizarSaque(long idTelegram, double valor) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
+		ContaComando contaComando = new ContaComando();
+		TransacaoComando transacaoComando = new TransacaoComando();
+		
+		if (contaComando.temConta(idTelegram)) {
 			try (ContaDao contaDao = new ContaDao();) {
 				Conta conta = contaDao.buscarConta(idTelegram);
 
@@ -42,11 +45,11 @@ class OperacoesComando {
 					saldo -= valorComTarifa;
 
 					conta.setSaldo(saldo);
+					
 					contaDao.alterarConta(conta);
 
-					this.transacoesComando.gravarTransacao(conta, valor, TipoTransacao.SAQUE.getCodigo());
-					this.transacoesComando.gravarTransacao(conta, Tarifas.SAQUE.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
-
+					transacaoComando.gravarTransacao(conta, valor, TipoTransacao.SAQUE.getCodigo());
+					transacaoComando.gravarTransacao(conta, Tarifas.SAQUE.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
 				} else {
 					throw new SaldoInsuficienteExcecao();
 				}
@@ -54,10 +57,12 @@ class OperacoesComando {
 		}
 	}
 
-	public double verificarSaldo(long idTelegram) throws ContaInexistenteExcecao {
+	public synchronized double verificarSaldo(long idTelegram) throws ContaInexistenteExcecao {
+		ContaComando contaComando = new ContaComando();
+		
 		double saldo = 0.0d;
 
-		if (this.contaComando.temConta(idTelegram)) {
+		if (contaComando.temConta(idTelegram)) {
 			try (ContaDao contaDao = new ContaDao();) {
 				Conta conta = contaDao.buscarConta(idTelegram);
 				saldo = conta.getSaldo();
@@ -67,13 +72,16 @@ class OperacoesComando {
 		return saldo;
 	}
 
-	public List<Transacao> verificacaoExtrato(long idTelegram) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
-		if (this.contaComando.temConta(idTelegram)) {
+	public synchronized List<Transacao> verificacaoExtrato(long idTelegram) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
+		ContaComando contaComando = new ContaComando();
+		TransacaoComando transacaoComando = new TransacaoComando();
+		
+		if (contaComando.temConta(idTelegram)) {
 			if (Tarifas.EXTRATO.getCustoServico() <= this.verificarSaldo(idTelegram)) {
 				try (ContaDao contaDao = new ContaDao();) {
 					Conta conta = contaDao.buscarConta(idTelegram);
 	
-					this.transacoesComando.gravarTransacao(conta, Tarifas.EXTRATO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
+					transacaoComando.gravarTransacao(conta, Tarifas.EXTRATO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
 
 					return conta.getTransacoes();
 				}
