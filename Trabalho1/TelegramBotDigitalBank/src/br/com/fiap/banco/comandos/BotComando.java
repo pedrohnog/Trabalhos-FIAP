@@ -2,6 +2,7 @@ package br.com.fiap.banco.comandos;
 
 import java.util.List;
 
+import br.com.fiap.banco.dados.EmprestimoDetalhe;
 import br.com.fiap.banco.dados.TransacaoDetalhe;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
@@ -62,8 +63,9 @@ public class BotComando {
 		emprestimoComando.solicitarEmprestimo(idTelegram, valor, prazo);
 	}
 	
-	public synchronized void verificarSaldoDevedorPrazoEmprestimo(long idTelegram) {
-		//TODO
+	public synchronized EmprestimoDetalhe verificarSaldoDevedorPrazoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
+		EmprestimoComando emprestimoComando = new EmprestimoComando();
+		return emprestimoComando.buscarSaldoDevedorPrazoEmprestimo(idTelegram);
 	}
 	
 	public synchronized TransacaoDetalhe listarLancamentos(long idTelegram) throws ContaInexistenteExcecao {

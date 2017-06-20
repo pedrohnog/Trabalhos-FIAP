@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.fiap.banco.constantes.Tarifas;
 import br.com.fiap.banco.constantes.TipoTransacao;
+import br.com.fiap.banco.dados.EmprestimoDetalhe;
 import br.com.fiap.banco.dao.impl.ContaDao;
 import br.com.fiap.banco.dao.impl.EmprestimoDao;
 import br.com.fiap.banco.entidades.Conta;
@@ -63,6 +64,34 @@ class EmprestimoComando {
 			return operacoesComando.verificarSaldo(idTelegram) * MULTIPLICADOR_MAXIMO;
 		}
 		return 0.0d;
+	}
+	
+	public synchronized EmprestimoDetalhe buscarSaldoDevedorPrazoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
+		ContaComando contaComando = new ContaComando();
+		
+		EmprestimoDetalhe emprestimoDetalhe = new EmprestimoDetalhe();
+		
+		if (contaComando.temConta(idTelegram)) {
+			try (ContaDao contaDao = new ContaDao(); EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+				Conta conta = contaDao.buscarConta(idTelegram);
+				
+				List<Emprestimo> emprestimosAberto = emprestimoDao.buscarDadosEmprestimoAberto(conta.getNumero());
+				
+				double saldoDevedor = 0.0d;
+				
+				if(emprestimosAberto != null && !emprestimosAberto.isEmpty()) {
+					emprestimoDetalhe.setPrazoPagamento(emprestimosAberto.size());
+					
+					for (Emprestimo emprestimo : emprestimosAberto) {
+						saldoDevedor += emprestimo.getValorParcela();
+					}
+					
+					emprestimoDetalhe.setSaldoDevedor(saldoDevedor);
+				}
+			}
+		}
+		
+		return emprestimoDetalhe;
 	}
 
 }

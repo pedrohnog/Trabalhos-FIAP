@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.constantes.TipoUsuario;
+import br.com.fiap.banco.dados.EmprestimoDetalhe;
 import br.com.fiap.banco.dados.TransacaoDetalhe;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
@@ -15,7 +16,7 @@ import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 
-public class TempMain {
+class TempMain {
 	
 	private BotComando comando = new BotComando();
 
@@ -62,17 +63,20 @@ public class TempMain {
 		case 13:
 			main.solicitarEmprestimo();
 			break;
+		case 14:
+			main.buscarDadosDevedorEmprestimo();
+			break;
 		default:
 			System.err.println("Opção inválida");
 			break;
 		}
 	}
 
-	public void criarConta() {
+	private void criarConta() {
 		this.comando.criarConta(1234, "Teste 1", "Teste", "1112345678", "12345678900", "teste1@teste.com.br");
 	}
 
-	public void modificarContaExistente() {
+	private void modificarContaExistente() {
 		try {
 			this.comando.modificarConta(1234, "98765432100", "novoteste@teste.com.br");
 		} catch (ContaInexistenteExcecao e) {
@@ -80,7 +84,7 @@ public class TempMain {
 		}
 	}
 
-	public void modificarContaInexistente() {
+	private void modificarContaInexistente() {
 		try {
 			this.comando.modificarConta(9999, "98765432100", "novoteste@teste.com.br");
 		} catch (ContaInexistenteExcecao e) {
@@ -88,7 +92,7 @@ public class TempMain {
 		}
 	}
 
-	public void incluirDependente() {
+	private void incluirDependente() {
 		try {
 			this.comando.incluirDependente(1234, "Teste 2", "Teste", "1187654321", "01010101099", "teste2@teste.com.br");
 		} catch (ContaInexistenteExcecao e) {
@@ -96,7 +100,7 @@ public class TempMain {
 		}
 	}
 
-	public void depositar() {
+	private void depositar() {
 		try {
 			this.comando.realizarDeposito(1234, 100000d);
 		} catch (ContaInexistenteExcecao e) {
@@ -104,7 +108,7 @@ public class TempMain {
 		}
 	}
 
-	public void sacar() {
+	private void sacar() {
 		try {
 			this.comando.realizarSaque(1234, 50d);
 		} catch (SaldoInsuficienteExcecao e) {
@@ -114,7 +118,7 @@ public class TempMain {
 		}
 	}
 
-	public void solicitarSaldo() {
+	private void solicitarSaldo() {
 		try {
 			System.out.println(this.comando.verificarSaldo(1234));
 		} catch (ContaInexistenteExcecao e) {
@@ -122,7 +126,7 @@ public class TempMain {
 		}
 	}
 
-	public void solicitarExtrato() {
+	private void solicitarExtrato() {
 		try {
 			List<Transacao> transacoes = this.comando.verificarExtrato(1234);
 
@@ -136,7 +140,7 @@ public class TempMain {
 		}
 	}
 
-	public void solicitarLancamentos() {
+	private void solicitarLancamentos() {
 		try {
 			TransacaoDetalhe transacaoDetalhe = this.comando.listarLancamentos(1234);
 			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
@@ -148,7 +152,7 @@ public class TempMain {
 		}
 	}
 
-	public void solicitarRetiradas() {
+	private void solicitarRetiradas() {
 		try {
 			TransacaoDetalhe transacaoDetalhe = this.comando.listarRetiradas(1234);
 			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
@@ -160,7 +164,7 @@ public class TempMain {
 		}
 	}
 
-	public void solicitarTarifas() {
+	private void solicitarTarifas() {
 		try {
 			TransacaoDetalhe transacaoDetalhe = this.comando.listarTarifas(1234);
 			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
@@ -194,6 +198,16 @@ public class TempMain {
 			System.err.println("PRAZO SOLICITADO EXCEDE LIMITE");
 		} catch (SaldoInsuficienteExcecao e) {
 			System.err.println("SALDO INSUFICIENTE");
+		}
+	}
+	
+	private void buscarDadosDevedorEmprestimo() {
+		try {
+			EmprestimoDetalhe emprestimoDetalhe = this.comando.verificarSaldoDevedorPrazoEmprestimo(1234);
+			System.out.println("SALDO DEVEDOR = " + emprestimoDetalhe.getSaldoDevedor());
+			System.out.println("PRAZO PAGAMENTO = " + emprestimoDetalhe.getPrazoPagamento());
+		} catch (ContaInexistenteExcecao e) {
+			System.err.println("USUARIO NAO TEM CONTA");
 		}
 	}
 
