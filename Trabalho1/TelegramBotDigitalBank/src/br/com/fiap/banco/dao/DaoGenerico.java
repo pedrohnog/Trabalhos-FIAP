@@ -28,6 +28,15 @@ public class DaoGenerico<T> implements Dao<T> {
 	}
 
 	@Override
+	public void adicionarLista(List<T> entidades) {
+		this.em.getTransaction().begin();
+		for (T entidade : entidades) {
+			this.em.persist(entidade);
+		}
+		this.em.getTransaction().commit();
+	}
+
+	@Override
 	public List<T> listar() {
 		TypedQuery<T> query = this.em.createQuery("SELECT * FROM " + this.classe.getSimpleName(), this.classe);
 		return query.getResultList();
