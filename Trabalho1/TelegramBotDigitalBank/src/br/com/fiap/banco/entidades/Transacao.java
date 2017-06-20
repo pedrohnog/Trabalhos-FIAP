@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "TRANSACAO", catalog = "DBBotBank")
 public class Transacao implements Serializable {
 
-	private static final long serialVersionUID = -2468847941236123158L;
+	private static final long serialVersionUID = -3857943629706631875L;
 
 	/**
 	 * Id auto-gerado
@@ -29,7 +29,7 @@ public class Transacao implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private Integer id;
+	private int id;
 	
 	/**
 	 * Relacionamento com a conta à qual essa transação pertence
@@ -47,19 +47,19 @@ public class Transacao implements Serializable {
 	 * Valor da transação
 	 */
 	@Column(name = "valor", unique = false, nullable = false)
-	private Double valor;
+	private double valor;
 
 	/**
 	 * Tipo de transação (saque, depósito, etc.)
 	 */
 	@Column(name = "tipo_transacao", unique = false, nullable = false)
-	private Integer tipoTransacao;
+	private int tipoTransacao;
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -79,19 +79,19 @@ public class Transacao implements Serializable {
 		this.dataHora = dataHora;
 	}
 
-	public Double getValor() {
+	public double getValor() {
 		return valor;
 	}
 
-	public void setValor(Double valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
-	public Integer getTipoTransacao() {
+	public int getTipoTransacao() {
 		return tipoTransacao;
 	}
 
-	public void setTipoTransacao(Integer tipoTransacao) {
+	public void setTipoTransacao(int tipoTransacao) {
 		this.tipoTransacao = tipoTransacao;
 	}
 
@@ -100,9 +100,7 @@ public class Transacao implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((conta == null) ? 0 : conta.hashCode());
-		result = prime * result + ((dataHora == null) ? 0 : dataHora.hashCode());
-		result = prime * result + ((tipoTransacao == null) ? 0 : tipoTransacao.hashCode());
-		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		result = prime * result + id;
 		return result;
 	}
 
@@ -125,25 +123,7 @@ public class Transacao implements Serializable {
 		} else if (!conta.equals(other.conta)) {
 			return false;
 		}
-		if (dataHora == null) {
-			if (other.dataHora != null) {
-				return false;
-			}
-		} else if (!dataHora.equals(other.dataHora)) {
-			return false;
-		}
-		if (tipoTransacao == null) {
-			if (other.tipoTransacao != null) {
-				return false;
-			}
-		} else if (!tipoTransacao.equals(other.tipoTransacao)) {
-			return false;
-		}
-		if (valor == null) {
-			if (other.valor != null) {
-				return false;
-			}
-		} else if (!valor.equals(other.valor)) {
+		if (id != other.id) {
 			return false;
 		}
 		return true;

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "USUARIO", catalog = "DBBotBank")
 public class Usuario implements Serializable {
 
-	private static final long serialVersionUID = 5436741759944908851L;
+	private static final long serialVersionUID = 7674732064100562675L;
 
 	/**
 	 * Id auto-gerado
@@ -28,7 +28,7 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private Long id;
+	private long id;
 
 	/**
 	 * Nome e sobrenome do usuário
@@ -58,7 +58,7 @@ public class Usuario implements Serializable {
 	 * Tipo de usuário (principal ou dependente)
 	 */
 	@Column(name = "tipo_usuario", unique = false, nullable = true, length = 1)
-	private Integer tipoUsuario;
+	private int tipoUsuario;
 
 	/**
 	 * Relacionamento com a conta à qual esse usuário está atrelado
@@ -66,11 +66,11 @@ public class Usuario implements Serializable {
 	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	private Conta conta;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -106,11 +106,11 @@ public class Usuario implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public Integer getTipoUsuario() {
+	public int getTipoUsuario() {
 		return tipoUsuario;
 	}
 
-	public void setTipoUsuario(Integer tipoUsuario) {
+	public void setTipoUsuario(int tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
 
@@ -126,9 +126,8 @@ public class Usuario implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((telefone == null) ? 0 : telefone.hashCode());
+		result = prime * result + ((conta == null) ? 0 : conta.hashCode());
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		return result;
 	}
 
@@ -144,25 +143,18 @@ public class Usuario implements Serializable {
 			return false;
 		}
 		Usuario other = (Usuario) obj;
-		if (id == null) {
-			if (other.id != null) {
+		if (conta == null) {
+			if (other.conta != null) {
 				return false;
 			}
-		} else if (!id.equals(other.id)) {
+		} else if (!conta.equals(other.conta)) {
 			return false;
 		}
-		if (nome == null) {
-			if (other.nome != null) {
+		if (cpf == null) {
+			if (other.cpf != null) {
 				return false;
 			}
-		} else if (!nome.equals(other.nome)) {
-			return false;
-		}
-		if (telefone == null) {
-			if (other.telefone != null) {
-				return false;
-			}
-		} else if (!telefone.equals(other.telefone)) {
+		} else if (!cpf.equals(other.cpf)) {
 			return false;
 		}
 		return true;

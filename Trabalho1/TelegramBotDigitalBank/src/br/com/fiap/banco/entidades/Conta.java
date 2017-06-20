@@ -22,14 +22,14 @@ import org.hibernate.annotations.FetchMode;
 @Table(name = "CONTA", catalog = "DBBotBank")
 public class Conta implements Serializable {
 
-	private static final long serialVersionUID = 7825054394082131876L;
+	private static final long serialVersionUID = 430455852172035774L;
 
 	/**
 	 * Número da conta que é criada a partir do Id do Telegram do usuário
 	 */
 	@Id
 	@Column(name = "numero", unique = true, nullable = false)
-	private Long numero;
+	private long numero;
 
 	/**
 	 * Data de abertura da conta
@@ -57,11 +57,11 @@ public class Conta implements Serializable {
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Transacao> transacoes;
 
-	public Long getNumero() {
+	public long getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Long numero) {
+	public void setNumero(long numero) {
 		this.numero = numero;
 	}
 
@@ -101,7 +101,7 @@ public class Conta implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+		result = prime * result + (int) (numero ^ (numero >>> 32));
 		return result;
 	}
 
@@ -117,11 +117,7 @@ public class Conta implements Serializable {
 			return false;
 		}
 		Conta other = (Conta) obj;
-		if (numero == null) {
-			if (other.numero != null) {
-				return false;
-			}
-		} else if (!numero.equals(other.numero)) {
+		if (numero != other.numero) {
 			return false;
 		}
 		return true;

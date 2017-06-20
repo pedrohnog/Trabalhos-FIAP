@@ -21,7 +21,7 @@ public class ContaDao extends DaoGenerico<Conta> {
 	 * @return <code>true</code> se a conta não existir e conseguir criar a nova conta, se não <code>false</code>
 	 */
 	public boolean criarConta(Conta conta) {
-		if (conta.getNumero() == null || !temConta(conta.getNumero())) {
+		if (!temConta(conta.getNumero())) {
 			super.adicionar(conta);
 			return true;
 		}

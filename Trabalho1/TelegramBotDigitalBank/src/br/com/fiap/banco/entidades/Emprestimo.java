@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Cacheable(true)
 public class Emprestimo implements Serializable {
 
-	private static final long serialVersionUID = -926890707876508258L;
+	private static final long serialVersionUID = -1004540327268742079L;
 
 	/**
 	 * Id auto-gerado
@@ -31,7 +31,7 @@ public class Emprestimo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private Long id;
+	private long id;
 
 	/**
 	 * Relacionamento com a conta à qual esse empréstimo pertence
@@ -43,7 +43,7 @@ public class Emprestimo implements Serializable {
 	 * Número da parcela do empréstimo
 	 */
 	@Column(name = "numero_parcela", unique = false, nullable = false, length = 1)
-	private Integer numeroParcela;
+	private int numeroParcela;
 
 	/**
 	 * Valor da parcela do empréstimo
@@ -69,11 +69,11 @@ public class Emprestimo implements Serializable {
 	@Column(name = "parcela_paga", unique = false, nullable = false)
 	private boolean parcelaPaga;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -85,11 +85,11 @@ public class Emprestimo implements Serializable {
 		this.conta = conta;
 	}
 
-	public Integer getNumeroParcela() {
+	public int getNumeroParcela() {
 		return numeroParcela;
 	}
 
-	public void setNumeroParcela(Integer numeroParcela) {
+	public void setNumeroParcela(int numeroParcela) {
 		this.numeroParcela = numeroParcela;
 	}
 
@@ -130,8 +130,7 @@ public class Emprestimo implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((conta == null) ? 0 : conta.hashCode());
-		result = prime * result + ((dataVencimento == null) ? 0 : dataVencimento.hashCode());
-		result = prime * result + ((numeroParcela == null) ? 0 : numeroParcela.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -154,20 +153,10 @@ public class Emprestimo implements Serializable {
 		} else if (!conta.equals(other.conta)) {
 			return false;
 		}
-		if (dataVencimento == null) {
-			if (other.dataVencimento != null) {
-				return false;
-			}
-		} else if (!dataVencimento.equals(other.dataVencimento)) {
-			return false;
-		}
-		if (numeroParcela == null) {
-			if (other.numeroParcela != null) {
-				return false;
-			}
-		} else if (!numeroParcela.equals(other.numeroParcela)) {
+		if (id != other.id) {
 			return false;
 		}
 		return true;
 	}
+
 }
