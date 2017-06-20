@@ -59,4 +59,13 @@ public class DaoGenericoBot<T> implements Dao<T> {
 		em.close();
 		emf.close();
 	}
+
+	@Override
+	public void adicionarLista(List<T> entidades) {
+		this.em.getTransaction().begin();
+		for (T entidade : entidades) {
+			this.em.persist(entidade);
+		}
+		this.em.getTransaction().commit();
+	}
 }
