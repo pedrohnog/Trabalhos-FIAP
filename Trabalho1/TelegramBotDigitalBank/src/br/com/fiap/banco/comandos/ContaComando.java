@@ -14,9 +14,15 @@ import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 class ContaComando {
 
 	public synchronized boolean temConta(long idTelegram) throws ContaInexistenteExcecao {
+		EmprestimoComando emprestimoComando = new EmprestimoComando();
+		
 		try (ContaDao contaDao = new ContaDao();) {
 			if(!contaDao.temConta(idTelegram)) {
 				throw new ContaInexistenteExcecao();
+			} else {
+				if(emprestimoComando.verificarEmprestimoAberto(idTelegram)) {
+					emprestimoComando.pagarEmprestimosVencidos(idTelegram);
+				}
 			}
 		}
 		return true;

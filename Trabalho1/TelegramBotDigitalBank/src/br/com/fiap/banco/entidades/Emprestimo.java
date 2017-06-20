@@ -3,6 +3,7 @@ package br.com.fiap.banco.entidades;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +16,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "EMPRESTIMO", catalog = "DBBotBank")
-//TODO Adicionar cache para não ir ao banco toda hora
+@Cacheable(true)
 public class Emprestimo implements Serializable {
 
-	private static final long serialVersionUID = -4073379003689070757L;
+	private static final long serialVersionUID = -926890707876508258L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,9 @@ public class Emprestimo implements Serializable {
 
 	@Column(name = "valor_parcela", unique = false, nullable = false)
 	private double valorParcela;
+
+	@Column(name = "juros", unique = false, nullable = false)
+	private double juros;
 
 	@Column(name = "data_vencimento", unique = false, nullable = false)
 	private LocalDate dataVencimento;
@@ -70,6 +74,14 @@ public class Emprestimo implements Serializable {
 
 	public void setValorParcela(double valorParcela) {
 		this.valorParcela = valorParcela;
+	}
+
+	public double getJuros() {
+		return juros;
+	}
+
+	public void setJuros(double juros) {
+		this.juros = juros;
 	}
 
 	public LocalDate getDataVencimento() {

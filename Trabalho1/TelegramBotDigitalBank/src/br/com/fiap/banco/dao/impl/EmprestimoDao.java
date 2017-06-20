@@ -18,8 +18,22 @@ public class EmprestimoDao extends DaoGenerico<Emprestimo> {
 		super.adicionarLista(listaEmprestimos);
 	}
 	
+	public void marcarEmprestimoPago(Emprestimo emprestimo) {
+		emprestimo.setParcelaPaga(true);
+		super.atualizar(emprestimo);
+	}
+	
 	public List<Emprestimo> buscarDadosEmprestimoAberto(long conta) {
 		TypedQuery<Emprestimo> query = super.em.createQuery("select e from Emprestimo e where parcela_paga = 0 and conta = " + conta, Emprestimo.class);
+		try {
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	public List<Emprestimo> buscarEmprestimosVencidos(long conta) {
+		TypedQuery<Emprestimo> query = super.em.createQuery("select e from Emprestimo e where parcela_paga = 0 and data_vencimento <= curdate() and conta_numero = " + conta, Emprestimo.class);
 		try {
 			return query.getResultList();
 		} catch (NoResultException e) {

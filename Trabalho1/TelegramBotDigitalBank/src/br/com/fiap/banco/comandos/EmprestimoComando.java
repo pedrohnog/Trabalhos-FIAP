@@ -42,9 +42,7 @@ class EmprestimoComando {
 			try (ContaDao contaDao = new ContaDao(); EmprestimoDao emprestimoDao = new EmprestimoDao();) {
 				Conta conta = contaDao.buscarConta(idTelegram);
 				
-				List<Emprestimo> emprestimosAberto = emprestimoDao.buscarDadosEmprestimoAberto(conta.getNumero());
-				
-				if(emprestimosAberto != null && !emprestimosAberto.isEmpty()) {
+				if(verificarEmprestimoAberto(idTelegram)) {
 					throw new EmprestimoAbertoExcecao();
 				}
 
@@ -89,7 +87,7 @@ class EmprestimoComando {
 					emprestimoDetalhe.setPrazoPagamento(emprestimosAberto.size());
 					
 					for (Emprestimo emprestimo : emprestimosAberto) {
-						saldoDevedor += emprestimo.getValorParcela();
+						saldoDevedor += emprestimo.getValorParcela() + emprestimo.getJuros();
 					}
 					
 					emprestimoDetalhe.setSaldoDevedor(saldoDevedor);
@@ -98,6 +96,54 @@ class EmprestimoComando {
 		}
 		
 		return emprestimoDetalhe;
+	}
+	
+	public synchronized boolean verificarEmprestimoAberto(long idTelegram) {
+		List<Emprestimo> emprestimosAberto = null;
+		
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			emprestimosAberto = emprestimoDao.buscarDadosEmprestimoAberto(idTelegram);
+		}
+		
+		return emprestimosAberto != null && !emprestimosAberto.isEmpty();
+	}
+	
+	public synchronized void pagarEmprestimosVencidos(long idTelegram) {
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			List<Emprestimo> emprestimosVencidos = emprestimoDao.buscarEmprestimosVencidos(idTelegram);
+			for (Emprestimo emprestimo : emprestimosVencidos) {
+				if(!this.pagarEmprestimoVencido(idTelegram, emprestimo)) {
+					break;
+				}
+			}
+		}
+	}
+	
+	private synchronized boolean pagarEmprestimoVencido(long idTelegram, Emprestimo emprestimo) {
+		TransacaoComando transacaoComando = new TransacaoComando();
+		
+		try (ContaDao contaDao = new ContaDao(); EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			Conta conta = contaDao.buscarConta(idTelegram);
+
+			Double saldo = conta.getSaldo();
+			
+			if(saldo >= (emprestimo.getValorParcela() + emprestimo.getJuros())) {
+				saldo -= (emprestimo.getValorParcela() + emprestimo.getJuros());
+				
+				conta.setSaldo(saldo);
+
+				transacaoComando.gravarTransacao(conta, emprestimo.getValorParcela(), TipoTransacao.PAGAMENTO_EMPRESTIMO.getCodigo());
+				transacaoComando.gravarTransacao(conta, emprestimo.getJuros(), TipoTransacao.JUROS.getCodigo());
+				
+				//FIXME Por algum motivo que não consegui entender, não está gravando o saldo corretamente
+				contaDao.alterarConta(conta);
+				emprestimoDao.marcarEmprestimoPago(emprestimo);
+			} else {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 }

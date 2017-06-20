@@ -19,6 +19,7 @@ public class CaluladorEmprestimoUtil {
 		List<Emprestimo> parcelas = new ArrayList<>();
 
 		double valorParcela = valor / qtdeParcelas;
+		double valorJuros = valorParcela;
 
 		for (int i = 1; i <= qtdeParcelas; i++) {
 			Emprestimo emprestimo = new Emprestimo();
@@ -29,9 +30,10 @@ public class CaluladorEmprestimoUtil {
 			emprestimo.setNumeroParcela(i);
 			emprestimo.setDataVencimento(LocalDate.now().plusMonths(i));
 
-			valorParcela += valorParcela * ((double) Tarifas.EMPRESTIMO.getJurosMensais() / 100);
+			valorJuros += valorJuros * ((double) Tarifas.EMPRESTIMO.getJurosMensais() / 100);
 
 			emprestimo.setValorParcela(Double.valueOf(df2.format(valorParcela)));
+			emprestimo.setJuros(Double.valueOf(df2.format(valorJuros - valorParcela)));
 
 			parcelas.add(emprestimo);
 		}
