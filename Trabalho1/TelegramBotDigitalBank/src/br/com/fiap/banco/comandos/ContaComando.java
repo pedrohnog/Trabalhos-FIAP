@@ -11,7 +11,7 @@ import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 
-public class ContaComando {
+class ContaComando {
 
 	public boolean temConta(long idTelegram) throws ContaInexistenteExcecao {
 		try (ContaDao contaDao = new ContaDao();) {
@@ -68,7 +68,7 @@ public class ContaComando {
 		}
 	}
 
-	public void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email, String cpfTitular) throws ContaInexistenteExcecao {
+	public void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) throws ContaInexistenteExcecao {
 		if (temConta(idTelegram)) {
 			try (UsuarioDao usuarioDao = new UsuarioDao(); ContaDao contaDao = new ContaDao();) {
 				Conta conta = contaDao.buscarConta(idTelegram);

@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import com.pengrad.telegrambot.model.Chat;
 
-import br.com.fiap.banco.comandos.OperacoesComando;
+import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
@@ -18,10 +18,10 @@ public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 	@Override
 	public String integrarBanco(String resposta, Chat usuario) {
 		StringBuffer retorno = new StringBuffer();
-		OperacoesComando operacoesComando = new OperacoesComando();
+		BotComando botComando = new BotComando();
 		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		try {
-			List<Transacao> transacoes = operacoesComando.verificacaoExtrato(usuario.id());
+			List<Transacao> transacoes = botComando.verificarExtrato(usuario.id());
 			retorno.append("EXTRATO DA CONTA")
 			.append("\n")
 			.append("----------------------")

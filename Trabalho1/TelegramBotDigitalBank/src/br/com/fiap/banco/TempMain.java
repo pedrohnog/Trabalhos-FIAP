@@ -4,9 +4,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import br.com.fiap.banco.comandos.ContaComando;
-import br.com.fiap.banco.comandos.OperacoesComando;
-import br.com.fiap.banco.comandos.TransacaoComando;
+import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.constantes.TipoUsuario;
 import br.com.fiap.banco.dados.TransacaoDetalhe;
@@ -18,6 +16,8 @@ import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 
 public class TempMain {
+	
+	private BotComando comando = new BotComando();
 
 	public static void main(String[] args) {
 		TempMain main = new TempMain();
@@ -69,50 +69,44 @@ public class TempMain {
 	}
 
 	public void criarConta() {
-		ContaComando contaComando = new ContaComando();
-		contaComando.criarConta(1234, "Teste 1", "Teste", "1112345678", "12345678900", "teste1@teste.com.br");
+		this.comando.criarConta(1234, "Teste 1", "Teste", "1112345678", "12345678900", "teste1@teste.com.br");
 	}
 
 	public void modificarContaExistente() {
-		ContaComando contaComando = new ContaComando();
 		try {
-			contaComando.alterarConta(1234, "98765432100", "novoteste@teste.com.br");
+			this.comando.modificarConta(1234, "98765432100", "novoteste@teste.com.br");
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("CONTA INEXISTENTE");
 		}
 	}
 
 	public void modificarContaInexistente() {
-		ContaComando contaComando = new ContaComando();
 		try {
-			contaComando.alterarConta(9999, "98765432100", "novoteste@teste.com.br");
+			this.comando.modificarConta(9999, "98765432100", "novoteste@teste.com.br");
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("CONTA INEXISTENTE");
 		}
 	}
 
 	public void incluirDependente() {
-		ContaComando contaComando = new ContaComando();
 		try {
-			contaComando.incluirDependente(1234, "Teste 2", "Teste", "1187654321", "01010101099", "teste2@teste.com.br", "98765432100");
+			this.comando.incluirDependente(1234, "Teste 2", "Teste", "1187654321", "01010101099", "teste2@teste.com.br");
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("CONTA INEXISTENTE");
 		}
 	}
 
 	public void depositar() {
-		OperacoesComando operacoesComando = new OperacoesComando();
 		try {
-			operacoesComando.realizarDeposito(1234, 100000d);
+			this.comando.realizarDeposito(1234, 100000d);
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("CONTA INEXISTENTE");
 		}
 	}
 
 	public void sacar() {
-		OperacoesComando operacoesComando = new OperacoesComando();
 		try {
-			operacoesComando.realizarSaque(1234, 50d);
+			this.comando.realizarSaque(1234, 50d);
 		} catch (SaldoInsuficienteExcecao e) {
 			System.err.println("SALDO INSUFICIENTE");
 		} catch (ContaInexistenteExcecao e) {
@@ -121,24 +115,19 @@ public class TempMain {
 	}
 
 	public void solicitarSaldo() {
-		OperacoesComando operacoesComando = new OperacoesComando();
 		try {
-			System.out.println(operacoesComando.verificarSaldo(1234));
+			System.out.println(this.comando.verificarSaldo(1234));
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("CONTA INEXISTENTE");
 		}
 	}
 
 	public void solicitarExtrato() {
-
-		OperacoesComando operacoesComando = new OperacoesComando();
 		try {
-			List<Transacao> transacoes = operacoesComando.verificacaoExtrato(1234);
+			List<Transacao> transacoes = this.comando.verificarExtrato(1234);
 
 			for (Transacao transacao : transacoes) {
-				System.out.println(transacao.getDataHora() + " "
-						+ TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " "
-						+ transacao.getValor());
+				System.out.println(transacao.getDataHora() + " " + TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " " + transacao.getValor());
 			}
 		} catch (SaldoInsuficienteExcecao e) {
 			System.err.println("SALDO INSUFICIENTE");
@@ -148,13 +137,10 @@ public class TempMain {
 	}
 
 	public void solicitarLancamentos() {
-		TransacaoComando transacaoComando = new TransacaoComando();
 		try {
-			TransacaoDetalhe transacaoDetalhe = transacaoComando.listarLancamentos(1234);
+			TransacaoDetalhe transacaoDetalhe = this.comando.listarLancamentos(1234);
 			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
-				System.out.println(transacao.getDataHora() + " "
-						+ TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " "
-						+ transacao.getValor());
+				System.out.println(transacao.getDataHora() + " " + TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " " + transacao.getValor());
 			}
 			System.out.println("SOMATORIO: " + transacaoDetalhe.getSomatorio());
 		} catch (ContaInexistenteExcecao e) {
@@ -163,13 +149,10 @@ public class TempMain {
 	}
 
 	public void solicitarRetiradas() {
-		TransacaoComando transacaoComando = new TransacaoComando();
 		try {
-			TransacaoDetalhe transacaoDetalhe = transacaoComando.listarRetiradas(1234);
+			TransacaoDetalhe transacaoDetalhe = this.comando.listarRetiradas(1234);
 			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
-				System.out.println(transacao.getDataHora() + " "
-						+ TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " "
-						+ transacao.getValor());
+				System.out.println(transacao.getDataHora() + " " + TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " " + transacao.getValor());
 			}
 			System.out.println("SOMATORIO: " + transacaoDetalhe.getSomatorio());
 		} catch (ContaInexistenteExcecao e) {
@@ -178,13 +161,10 @@ public class TempMain {
 	}
 
 	public void solicitarTarifas() {
-		TransacaoComando transacaoComando = new TransacaoComando();
 		try {
-			TransacaoDetalhe transacaoDetalhe = transacaoComando.listarTarifas(1234);
+			TransacaoDetalhe transacaoDetalhe = this.comando.listarTarifas(1234);
 			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
-				System.out.println(transacao.getDataHora() + " "
-						+ TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " "
-						+ transacao.getValor());
+				System.out.println(transacao.getDataHora() + " " + TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " " + transacao.getValor());
 			}
 			System.out.println("SOMATORIO: " + transacaoDetalhe.getSomatorio());
 		} catch (ContaInexistenteExcecao e) {
@@ -193,9 +173,8 @@ public class TempMain {
 	}
 
 	private void listarUsuarioDependente() {
-		ContaComando contaComando = new ContaComando();
 		try {
-			List<Usuario> usuarios = contaComando.listarUsuarios(1234);
+			List<Usuario> usuarios = this.comando.listarUsuariosEDependentes(1234);
 			for (Usuario usuario : usuarios) {
 				System.out.println(usuario.getNome() + " " + usuario.getCpf() + " " + usuario.getTelefone() + " " + TipoUsuario.getTipoUsuario(usuario.getTipoUsuario()));
 			}
@@ -205,9 +184,8 @@ public class TempMain {
 	}
 	
 	private void solicitarEmprestimo() {
-		OperacoesComando operacoesComando = new OperacoesComando();
 		try {
-			operacoesComando.solicitarEmprestimo(1234, 2000d, 36);
+			this.comando.solicitarEmprestimo(1234, 2000d, 36);
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("USUARIO NAO TEM CONTA");
 		} catch (ValorEmprestimoExcedidoExcecao e) {

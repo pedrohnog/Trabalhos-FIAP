@@ -10,7 +10,7 @@ import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 
-public class TransacaoComando {
+class TransacaoComando {
 
 	private ContaComando contaComando = new ContaComando();
 

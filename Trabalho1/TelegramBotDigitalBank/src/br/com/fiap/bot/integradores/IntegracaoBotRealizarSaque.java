@@ -2,7 +2,7 @@ package br.com.fiap.bot.integradores;
 
 import com.pengrad.telegrambot.model.Chat;
 
-import br.com.fiap.banco.comandos.OperacoesComando;
+import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 
@@ -32,11 +32,11 @@ public class IntegracaoBotRealizarSaque extends IntegracaoBotSolicitacao {
 	public String integrarBanco(String resposta, Chat usuario) {
 		String retorno = "";
 		Double saldoAnterior = 0D;
-		OperacoesComando operacoesComando = new OperacoesComando();
+		BotComando botComando = new BotComando();
 		try {			
-			saldoAnterior = operacoesComando.verificarSaldo(usuario.id());
-			operacoesComando.realizarSaque(usuario.id(), Double.valueOf(resposta));			
-			retorno = "Saque realizado com sucesso! Seu novo saldo é " + operacoesComando.verificarSaldo(usuario.id());
+			saldoAnterior = botComando.verificarSaldo(usuario.id());
+			botComando.realizarSaque(usuario.id(), Double.valueOf(resposta));			
+			retorno = "Saque realizado com sucesso! Seu novo saldo é " + botComando.verificarSaldo(usuario.id());
 		} catch (SaldoInsuficienteExcecao e) {
 			retorno = "Saque não realizado! Seu saldo é insuficiente! Saldo na conta: " + saldoAnterior;			
 		} catch (ContaInexistenteExcecao e) {

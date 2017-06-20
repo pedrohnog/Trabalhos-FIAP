@@ -2,7 +2,7 @@ package br.com.fiap.bot.integradores;
 
 import com.pengrad.telegrambot.model.Chat;
 
-import br.com.fiap.banco.comandos.ContaComando;
+import br.com.fiap.banco.comandos.BotComando;
 
 public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao{
 	
@@ -39,12 +39,12 @@ public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao{
 
 	@Override
 	public String integrarBanco(String resposta, Chat usuario) {
-		ContaComando contaComando = new ContaComando();
+		BotComando botComando = new BotComando();
 		String [] respostas = resposta.split("-");
 		String cpf = respostas[0].trim();
 		String telefone = respostas[1].trim();
 		String email = respostas[2].trim();
-		contaComando.criarConta(usuario.id(), usuario.firstName(), usuario.lastName(), telefone, cpf, email);
+		botComando.criarConta(usuario.id(), usuario.firstName(), usuario.lastName(), telefone, cpf, email);
 		return "Parabéns! Conta criada com sucesso!";
 	}
 }

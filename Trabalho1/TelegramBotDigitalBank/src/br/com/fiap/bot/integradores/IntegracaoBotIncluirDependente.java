@@ -2,7 +2,7 @@ package br.com.fiap.bot.integradores;
 
 import com.pengrad.telegrambot.model.Chat;
 
-import br.com.fiap.banco.comandos.ContaComando;
+import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 
 public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
@@ -32,12 +32,11 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 
 	@Override
 	public String integrarBanco(String resposta, Chat usuario) {
-		ContaComando contaComando = new ContaComando();
+		BotComando botComando = new BotComando();
 		String retorno = "";
 		try {
 			//TODO aguardar ajuste no banco
-			contaComando.incluirDependente(usuario.id(), "Teste 2", "Teste", "1187654321", "01010101099", "teste2@teste.com.br",
-					"98765432100");
+			botComando.incluirDependente(usuario.id(), "Teste 2", "Teste", "1187654321", "01010101099", "teste2@teste.com.br");
 			retorno = "Parabéns! Dependente incluido com sucesso!";
 		} catch (ContaInexistenteExcecao e) {
 			retorno = "Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
