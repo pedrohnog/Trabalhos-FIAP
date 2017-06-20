@@ -1,7 +1,7 @@
 package br.com.fiap.banco.dao.impl;
 
-import br.com.fiap.banco.dao.DaoGenerico;
 import br.com.fiap.banco.entidades.Conta;
+import br.com.fiap.generico.dao.DaoGenerico;
 
 public class ContaDao extends DaoGenerico<Conta> {
 

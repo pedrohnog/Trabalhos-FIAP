@@ -1,4 +1,4 @@
-package br.com.fiap.banco.dao;
+package br.com.fiap.generico.dao;
 
 import java.util.List;
 

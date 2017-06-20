@@ -6,8 +6,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.fiap.banco.constantes.TipoTransacao;
-import br.com.fiap.banco.dao.DaoGenerico;
 import br.com.fiap.banco.entidades.Transacao;
+import br.com.fiap.generico.dao.DaoGenerico;
 
 public class TransacaoDao extends DaoGenerico<Transacao>{
 

@@ -3,8 +3,8 @@ package br.com.fiap.banco.dao.impl;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
-import br.com.fiap.banco.dao.DaoGenerico;
 import br.com.fiap.banco.entidades.Usuario;
+import br.com.fiap.generico.dao.DaoGenerico;
 
 public class UsuarioDao extends DaoGenerico<Usuario> {
 
