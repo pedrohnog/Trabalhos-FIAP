@@ -12,32 +12,57 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Entidade que representa a tabela Usuario no BD
+ *
+ */
 @Entity
 @Table(name = "USUARIO", catalog = "DBBotBank")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 5436741759944908851L;
 
+	/**
+	 * Id auto-gerado
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
+	/**
+	 * Nome e sobrenome do usuário
+	 */
 	@Column(name = "nome", unique = false, nullable = false, length = 50)
 	private String nome;
 
+	/**
+	 * Número de CPF do usuário
+	 */
 	@Column(name = "cpf", unique = true, nullable = false, length = 11)
 	private String cpf;
 
+	/**
+	 * Email do usuário
+	 */
 	@Column(name = "email", unique = false, nullable = true, length = 50)
 	private String email;
 
+	/**
+	 * Número de telefone do usuário
+	 */
 	@Column(name = "telefone", unique = false, nullable = true, length = 11)
 	private String telefone;
 
+	/**
+	 * Tipo de usuário (principal ou dependente)
+	 */
 	@Column(name = "tipo_usuario", unique = false, nullable = true, length = 1)
 	private Integer tipoUsuario;
 
+	/**
+	 * Relacionamento com a conta à qual esse usuário está atrelado
+	 */
 	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	private Conta conta;
 

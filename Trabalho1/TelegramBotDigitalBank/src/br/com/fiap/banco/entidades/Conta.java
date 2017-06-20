@@ -14,26 +14,45 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+/**
+ * Entidade que representa a tabela Conta no BD
+ *
+ */
 @Entity
 @Table(name = "CONTA", catalog = "DBBotBank")
 public class Conta implements Serializable {
 
 	private static final long serialVersionUID = 7825054394082131876L;
 
+	/**
+	 * Número da conta que é criada a partir do Id do Telegram do usuário
+	 */
 	@Id
 	@Column(name = "numero", unique = true, nullable = false)
 	private Long numero;
 
+	/**
+	 * Data de abertura da conta
+	 */
 	@Column(name = "data_abertura", unique = false, nullable = false)
 	private LocalDate dataAbertura;
 
+	/**
+	 * Saldo do cliente na conta
+	 */
 	@Column(name = "saldo")
 	private double saldo;
 
+	/**
+	 * Relacionamento com os usuários da conta
+	 */
 	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Usuario> usuarios;
 
+	/**
+	 * Relacionamento com as transações da conta
+	 */
 	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Transacao> transacoes;

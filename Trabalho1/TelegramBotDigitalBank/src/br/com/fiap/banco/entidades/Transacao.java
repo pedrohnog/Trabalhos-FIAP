@@ -13,26 +13,45 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Entidade que representa a tabela Transacao no BD
+ *
+ */
 @Entity
 @Table(name = "TRANSACAO", catalog = "DBBotBank")
 public class Transacao implements Serializable {
 
 	private static final long serialVersionUID = -2468847941236123158L;
 
+	/**
+	 * Id auto-gerado
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
-
+	
+	/**
+	 * Relacionamento com a conta à qual essa transação pertence
+	 */
 	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	private Conta conta;
 
+	/**
+	 * Data e hora em que a transação ocorreu
+	 */
 	@Column(name = "data_hora", unique = false, nullable = false)
 	private LocalDateTime dataHora;
 
+	/**
+	 * Valor da transação
+	 */
 	@Column(name = "valor", unique = false, nullable = false)
 	private Double valor;
 
+	/**
+	 * Tipo de transação (saque, depósito, etc.)
+	 */
 	@Column(name = "tipo_transacao", unique = false, nullable = false)
 	private Integer tipoTransacao;
 

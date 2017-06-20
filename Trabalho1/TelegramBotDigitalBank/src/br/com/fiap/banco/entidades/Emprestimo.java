@@ -14,6 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Entidade que representa a tabela Emprestimo no BD
+ *
+ */
 @Entity
 @Table(name = "EMPRESTIMO", catalog = "DBBotBank")
 @Cacheable(true)
@@ -21,26 +25,47 @@ public class Emprestimo implements Serializable {
 
 	private static final long serialVersionUID = -926890707876508258L;
 
+	/**
+	 * Id auto-gerado
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
+	/**
+	 * Relacionamento com a conta à qual esse empréstimo pertence
+	 */
 	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	private Conta conta;
 
+	/**
+	 * Número da parcela do empréstimo
+	 */
 	@Column(name = "numero_parcela", unique = false, nullable = false, length = 1)
 	private Integer numeroParcela;
 
+	/**
+	 * Valor da parcela do empréstimo
+	 */
 	@Column(name = "valor_parcela", unique = false, nullable = false)
 	private double valorParcela;
 
+	/**
+	 * Juros da parcela do empréstimo
+	 */
 	@Column(name = "juros", unique = false, nullable = false)
 	private double juros;
 
+	/**
+	 * Data de vencimento da parcela do empréstimo
+	 */
 	@Column(name = "data_vencimento", unique = false, nullable = false)
 	private LocalDate dataVencimento;
 
+	/**
+	 * Indicador se a parcela já foi paga
+	 */
 	@Column(name = "parcela_paga", unique = false, nullable = false)
 	private boolean parcelaPaga;
 
