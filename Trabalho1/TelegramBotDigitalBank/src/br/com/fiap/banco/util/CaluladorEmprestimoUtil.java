@@ -11,10 +11,23 @@ import br.com.fiap.banco.constantes.Tarifas;
 import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Emprestimo;
 
+/**
+ * Classe utilitária para auxiliar no cálculo das parcelas de empréstimo e seus devidos juros
+ *
+ */
 public class CaluladorEmprestimoUtil {
 	
 	private static DecimalFormat df2 = new DecimalFormat(".##", DecimalFormatSymbols.getInstance(new Locale("en", "US")));
 
+	/**
+	 * Calcula o empréstimo, juros e as datas de vencimento
+	 * 
+	 * @param conta Objeto conta que está solicitando o empréstimo
+	 * @param valor Valor total do empréstimo
+	 * @param qtdeParcelas Prazo para pagamento (em meses)
+	 * 
+	 * @return Lista com todas as parcelas e juros calculados e as datas de vencimento
+	 */
 	public static List<Emprestimo> calcularEmprestimo(Conta conta, double valor, int qtdeParcelas) {
 		List<Emprestimo> parcelas = new ArrayList<>();
 
