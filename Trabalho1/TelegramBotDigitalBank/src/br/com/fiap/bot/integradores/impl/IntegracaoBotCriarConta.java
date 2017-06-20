@@ -1,8 +1,9 @@
-package br.com.fiap.bot.integradores;
+package br.com.fiap.bot.integradores.impl;
 
 import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
+import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 
 public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao{
 	

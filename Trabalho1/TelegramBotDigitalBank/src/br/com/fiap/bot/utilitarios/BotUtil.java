@@ -18,18 +18,18 @@ import br.com.fiap.bot.constantes.EnumTipoIntegracaoBot;
 import br.com.fiap.bot.dao.impl.MensagemIntegracaoDao;
 import br.com.fiap.bot.entidades.MensagemIntegracao;
 import br.com.fiap.bot.integradores.IntegracaoBot;
-import br.com.fiap.bot.integradores.IntegracaoBotAjuda;
-import br.com.fiap.bot.integradores.IntegracaoBotConsultaDeposito;
-import br.com.fiap.bot.integradores.IntegracaoBotConsultaExtrato;
-import br.com.fiap.bot.integradores.IntegracaoBotConsultaSaque;
-import br.com.fiap.bot.integradores.IntegracaoBotCriarConta;
-import br.com.fiap.bot.integradores.IntegracaoBotExibirDados;
-import br.com.fiap.bot.integradores.IntegracaoBotIncluirDependente;
-import br.com.fiap.bot.integradores.IntegracaoBotModificarConta;
-import br.com.fiap.bot.integradores.IntegracaoBotRealizarDeposito;
-import br.com.fiap.bot.integradores.IntegracaoBotRealizarSaque;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
-import br.com.fiap.bot.integradores.IntegracaoBotStart;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotAjuda;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaDeposito;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaExtrato;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaque;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotCriarConta;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotExibirDados;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotIncluirDependente;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotModificarConta;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotRealizarDeposito;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotRealizarSaque;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotStart;
 
 public class BotUtil {
 
