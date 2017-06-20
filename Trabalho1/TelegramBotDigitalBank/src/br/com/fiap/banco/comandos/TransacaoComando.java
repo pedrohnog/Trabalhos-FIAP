@@ -8,20 +8,18 @@ import br.com.fiap.banco.dao.impl.ContaDao;
 import br.com.fiap.banco.dao.impl.TransacaoDao;
 import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Transacao;
-import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 
 public class TransacaoComando {
 
 	private ContaComando contaComando = new ContaComando();
 
-	public void gravarTransacao(Usuario usuario, double valor, int tipoTransacao) {
+	public void gravarTransacao(Conta conta, double valor, int tipoTransacao) {
 		try (TransacaoDao transacaoDao = new TransacaoDao();) {
 			Transacao transacao = new Transacao();
-			transacao.setConta(usuario.getConta());
+			transacao.setConta(conta);
 			transacao.setDataHora(LocalDateTime.now());
 			transacao.setTipoTransacao(tipoTransacao);
-			transacao.setUsuario(usuario);
 			transacao.setValor(valor);
 
 			transacaoDao.adicionarTransacao(transacao);
@@ -45,9 +43,7 @@ public class TransacaoComando {
 		
 		if (this.contaComando.temConta(idTelegram)) {
 			try (ContaDao contaDao = new ContaDao(); TransacaoDao transacaoDao = new TransacaoDao();) {
-				Usuario usuario = this.contaComando.buscarUsuarioConta(idTelegram);
-				
-				Conta conta = contaDao.buscar(usuario.getConta().getNumero());
+				Conta conta = contaDao.buscarConta(idTelegram);
 				
 				transacaoDetalhe.setTransacoes(transacaoDao.buscarTransacoes(conta.getNumero(), tipoTransacao));
 				
@@ -59,9 +55,8 @@ public class TransacaoComando {
 				
 				transacaoDetalhe.setSomatorio(somatorio);
 			}
-		} else {
-			throw new ContaInexistenteExcecao();
 		}
+		
 		return transacaoDetalhe;
 	}
 

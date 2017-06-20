@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "TRANSACAO", catalog = "DBBotBank")
 public class Transacao implements Serializable {
 
-	private static final long serialVersionUID = -3015310073795777409L;
+	private static final long serialVersionUID = -2468847941236123158L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +35,6 @@ public class Transacao implements Serializable {
 
 	@Column(name = "tipo_transacao", unique = false, nullable = false)
 	private Integer tipoTransacao;
-
-	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
-	private Usuario usuario;
 
 	public Integer getId() {
 		return id;
@@ -77,14 +74,6 @@ public class Transacao implements Serializable {
 
 	public void setTipoTransacao(Integer tipoTransacao) {
 		this.tipoTransacao = tipoTransacao;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	@Override

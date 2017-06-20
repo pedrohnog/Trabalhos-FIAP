@@ -1,24 +1,25 @@
 package br.com.fiap.banco.entidades;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "USUARIO", catalog = "DBBotBank")
 public class Usuario implements Serializable {
 
-	private static final long serialVersionUID = -3380557092538722817L;
+	private static final long serialVersionUID = 5436741759944908851L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -39,9 +40,6 @@ public class Usuario implements Serializable {
 
 	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	private Conta conta;
-
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
-	private List<Transacao> transacoes;
 
 	public Long getId() {
 		return id;
@@ -97,14 +95,6 @@ public class Usuario implements Serializable {
 
 	public void setConta(Conta conta) {
 		this.conta = conta;
-	}
-
-	public List<Transacao> getTransacoes() {
-		return transacoes;
-	}
-
-	public void setTransacoes(List<Transacao> transacoes) {
-		this.transacoes = transacoes;
 	}
 
 	@Override

@@ -94,8 +94,7 @@ public class TempMain {
 	public void incluirDependente() {
 		ContaComando contaComando = new ContaComando();
 		try {
-			contaComando.incluirDependente(1234, "Teste 2", "Teste", "1187654321", "01010101099", "teste2@teste.com.br",
-					"98765432100");
+			contaComando.incluirDependente(1234, "Teste 2", "Teste", "1187654321", "01010101099", "teste2@teste.com.br", "98765432100");
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("CONTA INEXISTENTE");
 		}
@@ -198,8 +197,7 @@ public class TempMain {
 		try {
 			List<Usuario> usuarios = contaComando.listarUsuarios(1234);
 			for (Usuario usuario : usuarios) {
-				System.out.println(usuario.getNome() + " " + usuario.getCpf() + " " + usuario.getTelefone() + " "
-						+ TipoUsuario.getTipoUsuario(usuario.getTipoUsuario()));
+				System.out.println(usuario.getNome() + " " + usuario.getCpf() + " " + usuario.getTelefone() + " " + TipoUsuario.getTipoUsuario(usuario.getTipoUsuario()));
 			}
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("USUARIO NAO TEM CONTA");
