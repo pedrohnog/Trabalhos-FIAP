@@ -10,6 +10,7 @@ import br.com.fiap.banco.dao.impl.EmprestimoDao;
 import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Emprestimo;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
+import br.com.fiap.banco.excecao.EmprestimoAbertoExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
@@ -20,7 +21,7 @@ class EmprestimoComando {
 	private static final int PRAZO_MAXIMO = 36;
 	private static final double MULTIPLICADOR_MAXIMO = 40.0d;
 
-	public synchronized void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao {
+	public synchronized void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao, EmprestimoAbertoExcecao {
 		ContaComando contaComando = new ContaComando();
 		OperacoesComando operacoesComando = new OperacoesComando();
 		TransacaoComando transacaoComando = new TransacaoComando();
@@ -38,9 +39,14 @@ class EmprestimoComando {
 				throw new SaldoInsuficienteExcecao();
 			}
 
-
 			try (ContaDao contaDao = new ContaDao(); EmprestimoDao emprestimoDao = new EmprestimoDao();) {
 				Conta conta = contaDao.buscarConta(idTelegram);
+				
+				List<Emprestimo> emprestimosAberto = emprestimoDao.buscarDadosEmprestimoAberto(conta.getNumero());
+				
+				if(emprestimosAberto != null && !emprestimosAberto.isEmpty()) {
+					throw new EmprestimoAbertoExcecao();
+				}
 
 				List<Emprestimo> listaParcelas = CaluladorEmprestimoUtil.calcularEmprestimo(conta, valor, prazo);
 				

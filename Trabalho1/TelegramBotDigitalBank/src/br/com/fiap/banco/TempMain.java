@@ -12,6 +12,7 @@ import br.com.fiap.banco.dados.TransacaoDetalhe;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
+import br.com.fiap.banco.excecao.EmprestimoAbertoExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
@@ -198,6 +199,8 @@ class TempMain {
 			System.err.println("PRAZO SOLICITADO EXCEDE LIMITE");
 		} catch (SaldoInsuficienteExcecao e) {
 			System.err.println("SALDO INSUFICIENTE");
+		} catch (EmprestimoAbertoExcecao e) {
+			System.err.println("EMPRESTIMO EM ABERTO");
 		}
 	}
 	

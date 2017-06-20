@@ -7,6 +7,7 @@ import br.com.fiap.banco.dados.TransacaoDetalhe;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
+import br.com.fiap.banco.excecao.EmprestimoAbertoExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
@@ -58,7 +59,7 @@ public class BotComando {
 		return emprestimoComando.verificarValorMaximoEmprestimo(idTelegram);
 	}
 	
-	public synchronized void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao {
+	public synchronized void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao, EmprestimoAbertoExcecao {
 		EmprestimoComando emprestimoComando = new EmprestimoComando();
 		emprestimoComando.solicitarEmprestimo(idTelegram, valor, prazo);
 	}
