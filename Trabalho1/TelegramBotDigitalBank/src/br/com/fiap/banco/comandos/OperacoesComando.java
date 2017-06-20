@@ -5,13 +5,16 @@ import java.util.List;
 import br.com.fiap.banco.constantes.Tarifas;
 import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.dao.impl.ContaDao;
+import br.com.fiap.banco.dao.impl.EmprestimoDao;
 import br.com.fiap.banco.entidades.Conta;
+import br.com.fiap.banco.entidades.Emprestimo;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
+import br.com.fiap.banco.util.CaluladorEmprestimoUtil;
 
 public class OperacoesComando {
 
@@ -119,11 +122,14 @@ public class OperacoesComando {
 
 			Usuario usuario = this.contaComando.buscarUsuarioConta(idTelegram);
 
-			// TODO Criar operações de empréstimo
 
-			try (ContaDao contaDao = new ContaDao();) {
+			try (ContaDao contaDao = new ContaDao(); EmprestimoDao emprestimoDao = new EmprestimoDao();) {
 				Conta conta = contaDao.buscar(usuario.getConta().getNumero());
 
+				List<Emprestimo> listaParcelas = CaluladorEmprestimoUtil.calcularEmprestimo(conta, valor, prazo);
+				
+				emprestimoDao.adicionarLista(listaParcelas);
+						
 				conta.setSaldo((conta.getSaldo() - Tarifas.EMPRESTIMO.getCustoServico()) + valor);
 
 				contaDao.alterarConta(conta);

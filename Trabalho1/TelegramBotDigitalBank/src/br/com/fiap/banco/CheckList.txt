@@ -6,18 +6,8 @@
 [X] Saque (custo do serviço R$ 2,50)
 [X] Solicitação de saldo 
 [X] Solicitação de extrato (custo do serviço R$ 1,00)
-[ ] Solicitação de empréstimo, cujo prazo máximo é de 3 anos e valor máximo é de 40 vezes o saldo da conta (custo do serviço R$ 15,00 além de juros de 5% a.m.)
+[X] Solicitação de empréstimo, cujo prazo máximo é de 3 anos e valor máximo é de 40 vezes o saldo da conta (custo do serviço R$ 15,00 além de juros de 5% a.m.)
 [ ] Exibição de saldo devedor do empréstimo e prazo de pagamento
 [X] Exibição dos lançamentos detalhada, com somatória ao final
 [X] Exibição das retiradas, com somatória ao final
 [X] Exibição das tarifas de serviço, com somatória ao final dos serviços que já foram utilizados na conta
-
-Duvidas:
-Nao teremos mais data de nascimento no usuario?
-	Não. É uma informação que não tem necessidade de existir e só vai dar mais trabalho pra eles tratarem na tela.
-
-Nao teremos mais o digito da conta?
-	Não vejo como sendo necessário. A gente não faz nenhum tipo de verificação pra validar a conta.
-
-alterarConta não deveriamos mudar somente os dados da conta e ter um novo para alterar o cadastro do usuario?
-	Entendo que o alterar conta é a alteração dos dados do usuário.

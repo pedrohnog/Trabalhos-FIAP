@@ -13,7 +13,9 @@ import br.com.fiap.banco.dados.TransacaoDetalhe;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
+import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
+import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 
 public class TempMain {
 
@@ -56,6 +58,9 @@ public class TempMain {
 			break;
 		case 12:
 			main.listarUsuarioDependente();
+			break;
+		case 13:
+			main.solicitarEmprestimo();
 			break;
 		default:
 			System.err.println("Opção inválida");
@@ -187,17 +192,33 @@ public class TempMain {
 			System.err.println("CONTA INEXISTENTE");
 		}
 	}
+
 	private void listarUsuarioDependente() {
 		ContaComando contaComando = new ContaComando();
 		try {
 			List<Usuario> usuarios = contaComando.listarUsuarios(1234);
 			for (Usuario usuario : usuarios) {
-				System.out.println(usuario.getNome() + " " + usuario.getCpf() + " " + usuario.getTelefone() + " " + TipoUsuario.getTipoUsuario(usuario.getTipoUsuario()));
+				System.out.println(usuario.getNome() + " " + usuario.getCpf() + " " + usuario.getTelefone() + " "
+						+ TipoUsuario.getTipoUsuario(usuario.getTipoUsuario()));
 			}
 		} catch (ContaInexistenteExcecao e) {
 			System.err.println("USUARIO NAO TEM CONTA");
 		}
-		
+	}
+	
+	private void solicitarEmprestimo() {
+		OperacoesComando operacoesComando = new OperacoesComando();
+		try {
+			operacoesComando.solicitarEmprestimo(1234, 2000d, 36);
+		} catch (ContaInexistenteExcecao e) {
+			System.err.println("USUARIO NAO TEM CONTA");
+		} catch (ValorEmprestimoExcedidoExcecao e) {
+			System.err.println("VALOR EMPRESTIMO EXCEDE SALDO");
+		} catch (PrazoEmprestimoExcedidoExcecao e) {
+			System.err.println("PRAZO SOLICITADO EXCEDE LIMITE");
+		} catch (SaldoInsuficienteExcecao e) {
+			System.err.println("SALDO INSUFICIENTE");
+		}
 	}
 
 }
