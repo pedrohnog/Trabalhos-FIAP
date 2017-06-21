@@ -18,7 +18,7 @@ import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
  *
  */
 public class BotComando {
-
+	
 	/**
 	 * Cria uma nova conta para o usuário
 	 * 
@@ -30,8 +30,7 @@ public class BotComando {
 	 * @param email Email do usuário
 	 */
 	public synchronized void criarConta(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) {
-		ContaComando contaComando = new ContaComando();
-		contaComando.criarConta(idTelegram, nome, sobrenome, telefone, cpf, email);
+		(new ContaComando()).criarConta(idTelegram, nome, sobrenome, telefone, cpf, email);
 	}
 
 	/**
@@ -44,8 +43,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized void modificarConta(long idTelegram, String cpf, String email) throws ContaInexistenteExcecao {
-		ContaComando contaComando = new ContaComando();
-		contaComando.alterarConta(idTelegram, cpf, email);
+		(new ContaComando()).alterarConta(idTelegram, cpf, email);
 	}
 
 	/**
@@ -62,8 +60,7 @@ public class BotComando {
 	 * @throws UsuarioDuplicadoExcecao Se o usuário já existir no BD
 	 */
 	public synchronized void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) throws ContaInexistenteExcecao, UsuarioDuplicadoExcecao {
-		ContaComando contaComando = new ContaComando();
-		contaComando.incluirDependente(idTelegram, nome, sobrenome, telefone, cpf, email);
+		(new ContaComando()).incluirDependente(idTelegram, nome, sobrenome, telefone, cpf, email);
 	}
 
 	/**
@@ -76,8 +73,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized List<Usuario> listarUsuariosEDependentes(long idTelegram) throws ContaInexistenteExcecao {
-		ContaComando contaComando = new ContaComando();
-		return contaComando.listarUsuarios(idTelegram);
+		return (new ContaComando()).listarUsuarios(idTelegram);
 	}
 
 	/**
@@ -89,8 +85,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized void realizarDeposito(long idTelegram, double valor) throws ContaInexistenteExcecao {
-		OperacoesComando operacoesComando = new OperacoesComando();
-		operacoesComando.realizarDeposito(idTelegram, valor);
+		(new ContaComando()).realizarDeposito(idTelegram, valor);
 	}
 	
 	/**
@@ -103,8 +98,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized void realizarSaque(long idTelegram, double valor) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
-		OperacoesComando operacoesComando = new OperacoesComando();
-		operacoesComando.realizarSaque(idTelegram, valor);
+		(new ContaComando()).realizarSaque(idTelegram, valor);
 	}
 	
 	/**
@@ -117,8 +111,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized double verificarSaldo(long idTelegram) throws ContaInexistenteExcecao {
-		OperacoesComando operacoesComando = new OperacoesComando();
-		return operacoesComando.verificarSaldo(idTelegram);
+		return (new ContaComando()).verificarSaldo(idTelegram);
 	}
 	
 	/**
@@ -132,8 +125,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized List<Transacao> verificarExtrato(long idTelegram) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
-		OperacoesComando operacoesComando = new OperacoesComando();
-		return operacoesComando.verificacaoExtrato(idTelegram);
+		return (new ContaComando()).verificacaoExtrato(idTelegram);
 	}
 	
 	/**
@@ -146,8 +138,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized double verificarValorMaximoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
-		EmprestimoComando emprestimoComando = new EmprestimoComando();
-		return emprestimoComando.verificarValorMaximoEmprestimo(idTelegram);
+		return (new EmprestimoComando()).verificarValorMaximoEmprestimo(idTelegram);
 	}
 	
 	/**
@@ -164,8 +155,7 @@ public class BotComando {
 	 * @throws EmprestimoAbertoExcecao Se já houver algum empréstimo em aberto nessa conta
 	 */
 	public synchronized void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao, EmprestimoAbertoExcecao {
-		EmprestimoComando emprestimoComando = new EmprestimoComando();
-		emprestimoComando.solicitarEmprestimo(idTelegram, valor, prazo);
+		(new EmprestimoComando()).solicitarEmprestimo(idTelegram, valor, prazo);
 	}
 	
 	/**
@@ -174,12 +164,9 @@ public class BotComando {
 	 * @param idTelegram Id do Telegram
 	 * 
 	 * @return O saldo devedor e o prazo restante para o pagamento de um empréstimo
-	 * 
-	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
-	public synchronized EmprestimoDetalhe verificarSaldoDevedorPrazoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
-		EmprestimoComando emprestimoComando = new EmprestimoComando();
-		return emprestimoComando.buscarSaldoDevedorPrazoEmprestimo(idTelegram);
+	public synchronized EmprestimoDetalhe verificarSaldoDevedorPrazoEmprestimo(long idTelegram) {
+		return (new EmprestimoComando()).buscarSaldoDevedorPrazoEmprestimo(idTelegram);
 	}
 	
 	/**
@@ -192,8 +179,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized TransacaoDetalhe listarLancamentos(long idTelegram) throws ContaInexistenteExcecao {
-		TransacaoComando transacaoComando = new TransacaoComando();
-		return transacaoComando.listarLancamentos(idTelegram);
+		return (new TransacaoComando()).listarLancamentos(idTelegram);
 	}
 	
 	/**
@@ -206,8 +192,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized TransacaoDetalhe listarRetiradas(long idTelegram) throws ContaInexistenteExcecao {
-		TransacaoComando transacaoComando = new TransacaoComando();
-		return transacaoComando.listarRetiradas(idTelegram);
+		return (new TransacaoComando()).listarRetiradas(idTelegram);
 	}
 	
 	/**
@@ -220,8 +205,7 @@ public class BotComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized TransacaoDetalhe listarTarifas(long idTelegram) throws ContaInexistenteExcecao {
-		TransacaoComando transacaoComando = new TransacaoComando();
-		return transacaoComando.listarTarifas(idTelegram);
+		return (new TransacaoComando()).listarTarifas(idTelegram);
 	}
 
 }

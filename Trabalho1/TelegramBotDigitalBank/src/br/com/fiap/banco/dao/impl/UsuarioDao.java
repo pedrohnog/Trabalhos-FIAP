@@ -20,9 +20,15 @@ public class UsuarioDao extends DaoGenerico<Usuario> {
 	 * Cria um novo usuário
 	 * 
 	 * @param usuario Objeto Usuario que será persistido em BD
+	 * 
+	 * @return <code>true</code> se o usuário não existir e conseguir criar um novo, se não <code>false</code>
 	 */
-	public void criarUsuario(Usuario usuario) {
-		super.adicionar(usuario);
+	public boolean criarUsuario(Usuario usuario) {
+		if (this.buscarUsuario(usuario.getCpf()) == null) {
+			super.adicionar(usuario);
+			return true;
+		}
+		return false;
 	}
 
 	/**

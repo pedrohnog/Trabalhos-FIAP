@@ -21,7 +21,7 @@ public class ContaDao extends DaoGenerico<Conta> {
 	 * @return <code>true</code> se a conta não existir e conseguir criar a nova conta, se não <code>false</code>
 	 */
 	public boolean criarConta(Conta conta) {
-		if (!temConta(conta.getNumero())) {
+		if (this.buscarConta(conta.getNumero()) == null) {
 			super.adicionar(conta);
 			return true;
 		}
@@ -35,17 +35,6 @@ public class ContaDao extends DaoGenerico<Conta> {
 	 */
 	public void alterarConta(Conta conta) {
 		super.atualizar(conta);
-	}
-
-	/**
-	 * Verifica se a conta existe no BD
-	 * 
-	 * @param id Id do Telegram
-	 * 
-	 * @return <code>true</code> se a conta existir, se não <code>false</code>
-	 */
-	public boolean temConta(long id) {
-		return (super.buscar(id) != null);
 	}
 
 	/**

@@ -37,6 +37,7 @@ public class TransacaoDao extends DaoGenerico<Transacao>{
 	 * @return Lista das transações
 	 */
 	public List<Transacao> buscarTransacoes(long conta, TipoTransacao tipoTransacao) {
+		//TODO Revisar para incluir empréstimo
 		TypedQuery<Transacao> query = super.em.createQuery("select t from Transacao t where conta = " + conta + " and tipo_transacao = " + tipoTransacao.getCodigo(), Transacao.class);
 		try {
 			return query.getResultList();

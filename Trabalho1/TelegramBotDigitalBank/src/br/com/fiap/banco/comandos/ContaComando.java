@@ -1,15 +1,20 @@
 package br.com.fiap.banco.comandos;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import br.com.fiap.banco.constantes.Tarifas;
+import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.constantes.TipoUsuario;
 import br.com.fiap.banco.dao.impl.ContaDao;
+import br.com.fiap.banco.dao.impl.TransacaoDao;
 import br.com.fiap.banco.dao.impl.UsuarioDao;
 import br.com.fiap.banco.entidades.Conta;
+import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
+import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
 
 /**
@@ -19,27 +24,26 @@ import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
 class ContaComando {
 
 	/**
-	 * Verifica se um usuário já tem uma conta no banco
+	 * Retorna a conta a partir do Id do Telegram
 	 * 
 	 * @param idTelegram Id do Telegram
 	 * 
-	 * @return <code>true</code> se a conta existir
+	 * @return O Objeto Conta referente ao id informado
 	 * 
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
-	public synchronized boolean temConta(long idTelegram) throws ContaInexistenteExcecao {
-		EmprestimoComando emprestimoComando = new EmprestimoComando();
+	public synchronized Conta buscarConta(long idTelegram) throws ContaInexistenteExcecao {
+		Conta conta = null;
 		
 		try (ContaDao contaDao = new ContaDao();) {
-			if(!contaDao.temConta(idTelegram)) {
+			conta = contaDao.buscarConta(idTelegram);
+			
+			if(conta == null) {
 				throw new ContaInexistenteExcecao();
-			} else {
-				if(emprestimoComando.verificarEmprestimoAberto(idTelegram)) {
-					emprestimoComando.pagarEmprestimosVencidos(idTelegram);
-				}
 			}
 		}
-		return true;
+		
+		return conta;
 	}
 
 	/**
@@ -53,19 +57,18 @@ class ContaComando {
 	 * @param email Email do usuário
 	 */
 	public synchronized void criarConta(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) {
-		Usuario usuario = this.criarUsuario(nome, sobrenome, telefone, cpf, email);
-		usuario.setTipoUsuario(TipoUsuario.PRINCIPAL.getCodigo());
-
 		Conta conta = new Conta();
 		conta.setNumero(idTelegram);
 		conta.setDataAbertura(LocalDate.now());
 		conta.setSaldo(0.0d);
 
-		usuario.setConta(conta);
-
-		try (UsuarioDao usuarioDao = new UsuarioDao(); ContaDao contaDao = new ContaDao();) {
+		try (ContaDao contaDao = new ContaDao();) {
 			if (contaDao.criarConta(conta)) {
-				usuarioDao.criarUsuario(usuario);
+				try (UsuarioDao usuarioDao = new UsuarioDao();) {
+					Usuario usuario = this.criarUsuario(nome, sobrenome, telefone, cpf, email, TipoUsuario.PRINCIPAL, conta);
+					
+					usuarioDao.criarUsuario(usuario);
+				}
 			}
 		}
 	}
@@ -80,19 +83,17 @@ class ContaComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized void alterarConta(long idTelegram, String cpf, String email) throws ContaInexistenteExcecao {
-		if (this.temConta(idTelegram)) {
-			try (ContaDao contaDao = new ContaDao(); UsuarioDao usuarioDao = new UsuarioDao()) {
-				Conta conta = contaDao.buscarConta(idTelegram);
-				
-				List<Usuario> usuarios = conta.getUsuarios();
-				
-				for (Usuario usuario : usuarios) {
-					if(usuario.getTipoUsuario() == TipoUsuario.PRINCIPAL.getCodigo()) {
-						usuario.setCpf(cpf);
-						usuario.setEmail(email);
-						
-						usuarioDao.alterarUsuario(usuario);
-					}
+		try (UsuarioDao usuarioDao = new UsuarioDao()) {
+			Conta conta = this.buscarConta(idTelegram);
+			
+			List<Usuario> usuarios = conta.getUsuarios();
+			
+			for (Usuario usuario : usuarios) {
+				if(usuario.getTipoUsuario() == TipoUsuario.PRINCIPAL.getCodigo()) {
+					usuario.setCpf(cpf);
+					usuario.setEmail(email);
+					
+					usuarioDao.alterarUsuario(usuario);
 				}
 			}
 		}
@@ -112,25 +113,15 @@ class ContaComando {
 	 * @throws UsuarioDuplicadoExcecao Se o dependente já existir no BD
 	 */
 	public synchronized void incluirDependente(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) throws ContaInexistenteExcecao, UsuarioDuplicadoExcecao {
-		if (this.temConta(idTelegram)) {
-			try (UsuarioDao usuarioDao = new UsuarioDao(); ContaDao contaDao = new ContaDao();) {
-				Conta conta = contaDao.buscarConta(idTelegram);
-				
-				Usuario usuarioBD = usuarioDao.buscarUsuario(cpf);
-				
-				if(usuarioBD == null) {
-					Usuario usuario = this.criarUsuario(nome, sobrenome, telefone, cpf, email);
-					usuario.setTipoUsuario(TipoUsuario.DEPENDENTE.getCodigo());
-					
-					usuario.setConta(conta);
-					
-					usuarioDao.criarUsuario(usuario);
-				} else {
-					throw new UsuarioDuplicadoExcecao();
-				}
+		try (UsuarioDao usuarioDao = new UsuarioDao();) {
+			Conta conta = this.buscarConta(idTelegram);
+			
+			Usuario usuario = this.criarUsuario(nome, sobrenome, telefone, cpf, email, TipoUsuario.DEPENDENTE, conta);
+			
+			if(!usuarioDao.criarUsuario(usuario)) {
+				throw new UsuarioDuplicadoExcecao();
 			}
 		}
-
 	}
 
 	/**
@@ -143,13 +134,121 @@ class ContaComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized List<Usuario> listarUsuarios(long idTelegram) throws ContaInexistenteExcecao {
-		if (this.temConta(idTelegram)) {
-			try (ContaDao contaDao = new ContaDao(); UsuarioDao usuarioDao = new UsuarioDao();) {
-				Conta conta = contaDao.buscarConta(idTelegram);
-				return conta.getUsuarios();
-			}
+		Conta conta = this.buscarConta(idTelegram);
+		
+		return conta.getUsuarios();
+	}
+	
+	/**
+	 * Atualiza o saldo de acordo com o tipo de transação
+	 * 
+	 * @param idTelegram ID do Telegram
+	 * @param valor Valor que será utilizado para somar ou subtrair do saldo
+	 * @param tipoTransacao Tipo de transação que está sendo realizada
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
+	public synchronized void atualizarSaldo(long idTelegram, double valor, TipoTransacao tipoTransacao) throws ContaInexistenteExcecao {
+		Conta conta = this.buscarConta(idTelegram);
+		
+		double saldo = conta.getSaldo();
+		
+		switch (tipoTransacao) {
+			case DEPOSITO:
+			case EMPRESTIMO:
+				saldo += valor;
+				break;
+			case SAQUE:
+			case TARIFA:
+			case JUROS:
+			case PAGAMENTO_EMPRESTIMO:
+				saldo -= valor;
+				break;
 		}
-		return new ArrayList<>();
+		
+		conta.setSaldo(saldo);
+		
+		try (ContaDao contaDao = new ContaDao();) {
+			contaDao.alterarConta(conta);
+		}
+
+		Transacao transacao = new Transacao();
+		
+		transacao.setConta(conta);
+		transacao.setDataHora(LocalDateTime.now());
+		transacao.setTipoTransacao(tipoTransacao.getCodigo());
+		transacao.setValor(valor);
+		
+		try (TransacaoDao transacaoDao = new TransacaoDao();) {
+			transacaoDao.adicionarTransacao(transacao);
+		}
+	}
+	
+	/**
+	 * Busca e devolve o saldo disponível na conta do usuário
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return O saldo disponível
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
+	public synchronized double verificarSaldo(long idTelegram) throws ContaInexistenteExcecao {
+		Conta conta = this.buscarConta(idTelegram);
+		
+		return conta.getSaldo();
+	}
+
+	/**
+	 * Busca e devolve todas as transações realizadas na conta do usuário
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return A lista com todas as transações
+	 * 
+	 * @throws SaldoInsuficienteExcecao Se não houver saldo suficiente para concluir a operação
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
+	public synchronized List<Transacao> verificacaoExtrato(long idTelegram) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
+		if (Tarifas.EXTRATO.getCustoServico() <= this.verificarSaldo(idTelegram)) {
+			this.atualizarSaldo(idTelegram, Tarifas.EXTRATO.getCustoServico(), TipoTransacao.TARIFA);
+
+			Conta conta = this.buscarConta(idTelegram);
+
+			return conta.getTransacoes();
+		} else {
+			throw new SaldoInsuficienteExcecao();
+		}
+	}
+	
+	/**
+	 * Realiza um depósito na conta do usuário
+	 * 
+	 * @param idTelegram ID do Telegram
+	 * @param valor Valor à ser depositado
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
+	public synchronized void realizarDeposito(long idTelegram, double valor) throws ContaInexistenteExcecao {
+		this.atualizarSaldo(idTelegram, valor, TipoTransacao.DEPOSITO);
+	}
+
+	/**
+	 * Realiza um saque na conta do usuário
+	 * 
+	 * @param idTelegram ID do Telegram
+	 * @param valor Valor à ser sacado
+	 * 
+	 * @throws SaldoInsuficienteExcecao Se não houver saldo suficiente para concluir a operação
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
+	public synchronized void realizarSaque(long idTelegram, double valor) throws SaldoInsuficienteExcecao, ContaInexistenteExcecao {
+		if (this.verificarSaldo(idTelegram) > (valor + Tarifas.SAQUE.getCustoServico())) {
+			this.atualizarSaldo(idTelegram, valor, TipoTransacao.SAQUE);
+			this.atualizarSaldo(idTelegram, Tarifas.SAQUE.getCustoServico(), TipoTransacao.TARIFA);
+		} else {
+			throw new SaldoInsuficienteExcecao();
+		}
 	}
 	
 	/**
@@ -160,16 +259,20 @@ class ContaComando {
 	 * @param telefone Número de telefone do usuário
 	 * @param cpf CPF do usuário
 	 * @param email Email do usuário
+	 * @param tipoUsuario Tipo de usuário da conta (principal ou dependente)
+	 * @param conta A conta à qual esse usuário pertence
 	 * 
 	 * @return O usuário que foi criado
 	 */
-	private synchronized Usuario criarUsuario(String nome, String sobrenome, String telefone, String cpf, String email) {
+	private synchronized Usuario criarUsuario(String nome, String sobrenome, String telefone, String cpf, String email, TipoUsuario tipoUsuario, Conta conta) {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome(nome + " " + sobrenome);
 		usuario.setTelefone(telefone);
 		usuario.setCpf(cpf);
 		usuario.setEmail(email);
+		usuario.setTipoUsuario(tipoUsuario.getCodigo());
+		usuario.setConta(conta);
 		
 		return usuario;
 	}

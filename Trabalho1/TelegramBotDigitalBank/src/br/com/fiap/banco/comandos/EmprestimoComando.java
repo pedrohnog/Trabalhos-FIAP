@@ -5,7 +5,6 @@ import java.util.List;
 import br.com.fiap.banco.constantes.Tarifas;
 import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.dados.EmprestimoDetalhe;
-import br.com.fiap.banco.dao.impl.ContaDao;
 import br.com.fiap.banco.dao.impl.EmprestimoDao;
 import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Emprestimo;
@@ -47,40 +46,34 @@ class EmprestimoComando {
 	 */
 	public synchronized void solicitarEmprestimo(long idTelegram, double valor, int prazo) throws ContaInexistenteExcecao, ValorEmprestimoExcedidoExcecao, PrazoEmprestimoExcedidoExcecao, SaldoInsuficienteExcecao, EmprestimoAbertoExcecao {
 		ContaComando contaComando = new ContaComando();
-		OperacoesComando operacoesComando = new OperacoesComando();
-		TransacaoComando transacaoComando = new TransacaoComando();
 		
-		if (contaComando.temConta(idTelegram)) {
-			double saldo = operacoesComando.verificarSaldo(idTelegram);
+		double saldo = contaComando.verificarSaldo(idTelegram);
 
-			if (valor > this.verificarValorMaximoEmprestimo(idTelegram)) {
-				throw new ValorEmprestimoExcedidoExcecao();
-			}
-			if (prazo > PRAZO_MAXIMO) {
-				throw new PrazoEmprestimoExcedidoExcecao();
-			}
-			if (valor + Tarifas.EMPRESTIMO.getCustoServico() > saldo) {
-				throw new SaldoInsuficienteExcecao();
-			}
+		if (valor > this.verificarValorMaximoEmprestimo(idTelegram)) {
+			throw new ValorEmprestimoExcedidoExcecao();
+		}
+		
+		if (prazo > PRAZO_MAXIMO) {
+			throw new PrazoEmprestimoExcedidoExcecao();
+		}
+		
+		if (Tarifas.EMPRESTIMO.getCustoServico() > saldo) {
+			throw new SaldoInsuficienteExcecao();
+		}
 
-			try (ContaDao contaDao = new ContaDao(); EmprestimoDao emprestimoDao = new EmprestimoDao();) {
-				Conta conta = contaDao.buscarConta(idTelegram);
-				
-				if(verificarEmprestimoAberto(idTelegram)) {
-					throw new EmprestimoAbertoExcecao();
-				}
-
-				List<Emprestimo> listaParcelas = CaluladorEmprestimoUtil.calcularEmprestimo(conta, valor, prazo);
-				
-				emprestimoDao.adicionarLista(listaParcelas);
-						
-				conta.setSaldo((conta.getSaldo() - Tarifas.EMPRESTIMO.getCustoServico()) + valor);
-
-				contaDao.alterarConta(conta);
-
-				transacaoComando.gravarTransacao(conta, Tarifas.EMPRESTIMO.getCustoServico(), TipoTransacao.TARIFA.getCodigo());
-				transacaoComando.gravarTransacao(conta, valor, TipoTransacao.EMPRESTIMO.getCodigo());
-			}
+		if(this.verificarEmprestimoAberto(idTelegram)) {
+			throw new EmprestimoAbertoExcecao();
+		}
+		
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			Conta conta = contaComando.buscarConta(idTelegram);
+			
+			List<Emprestimo> listaParcelas = CaluladorEmprestimoUtil.calcularEmprestimo(conta, valor, prazo);
+			
+			emprestimoDao.adicionarLista(listaParcelas);
+					
+			contaComando.atualizarSaldo(idTelegram, Tarifas.EMPRESTIMO.getCustoServico(), TipoTransacao.TARIFA);
+			contaComando.atualizarSaldo(idTelegram, valor, TipoTransacao.EMPRESTIMO);
 		}
 	}
 
@@ -95,12 +88,8 @@ class EmprestimoComando {
 	 */
 	public synchronized double verificarValorMaximoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
 		ContaComando contaComando = new ContaComando();
-		OperacoesComando operacoesComando = new OperacoesComando();
 		
-		if (contaComando.temConta(idTelegram)) {
-			return operacoesComando.verificarSaldo(idTelegram) * MULTIPLICADOR_MAXIMO;
-		}
-		return 0.0d;
+		return contaComando.verificarSaldo(idTelegram) * MULTIPLICADOR_MAXIMO;
 	}
 	
 	
@@ -113,28 +102,23 @@ class EmprestimoComando {
 	 * 
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
-	public synchronized EmprestimoDetalhe buscarSaldoDevedorPrazoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
-		ContaComando contaComando = new ContaComando();
-		
+	public synchronized EmprestimoDetalhe buscarSaldoDevedorPrazoEmprestimo(long idTelegram) {
 		EmprestimoDetalhe emprestimoDetalhe = new EmprestimoDetalhe();
 		
-		if (contaComando.temConta(idTelegram)) {
-			try (ContaDao contaDao = new ContaDao(); EmprestimoDao emprestimoDao = new EmprestimoDao();) {
-				Conta conta = contaDao.buscarConta(idTelegram);
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			
+			List<Emprestimo> emprestimosAberto = emprestimoDao.buscarDadosEmprestimoAberto(idTelegram);
+			
+			double saldoDevedor = 0.0d;
+			
+			if(emprestimosAberto != null && !emprestimosAberto.isEmpty()) {
+				emprestimoDetalhe.setPrazoPagamento(emprestimosAberto.size());
 				
-				List<Emprestimo> emprestimosAberto = emprestimoDao.buscarDadosEmprestimoAberto(conta.getNumero());
-				
-				double saldoDevedor = 0.0d;
-				
-				if(emprestimosAberto != null && !emprestimosAberto.isEmpty()) {
-					emprestimoDetalhe.setPrazoPagamento(emprestimosAberto.size());
-					
-					for (Emprestimo emprestimo : emprestimosAberto) {
-						saldoDevedor += emprestimo.getValorParcela() + emprestimo.getJuros();
-					}
-					
-					emprestimoDetalhe.setSaldoDevedor(saldoDevedor);
+				for (Emprestimo emprestimo : emprestimosAberto) {
+					saldoDevedor += emprestimo.getValorParcela() + emprestimo.getJuros();
 				}
+				
+				emprestimoDetalhe.setSaldoDevedor(saldoDevedor);
 			}
 		}
 		
@@ -162,8 +146,10 @@ class EmprestimoComando {
 	 * Verifica as parcelas do empréstimo que estão vencidas e tenta realizar o pagamento automaticamente
 	 * 
 	 * @param idTelegram Id do Telegram
+	 * 
+	 * @throws ContaInexistenteExcecao  Se não existir a conta informada
 	 */
-	public synchronized void pagarEmprestimosVencidos(long idTelegram) {
+	public synchronized void pagarEmprestimosVencidos(long idTelegram) throws ContaInexistenteExcecao {
 		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
 			List<Emprestimo> emprestimosVencidos = emprestimoDao.buscarEmprestimosVencidos(idTelegram);
 			for (Emprestimo emprestimo : emprestimosVencidos) {
@@ -181,25 +167,19 @@ class EmprestimoComando {
 	 * @param emprestimo Parcela que está vencida
 	 * 
 	 * @return <code>true</code> se conseguir realizar o pagamento, se não <code>false</code>
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
-	private synchronized boolean pagarEmprestimoVencido(long idTelegram, Emprestimo emprestimo) {
-		TransacaoComando transacaoComando = new TransacaoComando();
+	private synchronized boolean pagarEmprestimoVencido(long idTelegram, Emprestimo emprestimo) throws ContaInexistenteExcecao {
+		ContaComando contaComando = new ContaComando();
 		
-		try (ContaDao contaDao = new ContaDao(); EmprestimoDao emprestimoDao = new EmprestimoDao();) {
-			Conta conta = contaDao.buscarConta(idTelegram);
-
-			Double saldo = conta.getSaldo();
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			double saldo = contaComando.verificarSaldo(idTelegram);
 			
 			if(saldo >= (emprestimo.getValorParcela() + emprestimo.getJuros())) {
-				saldo -= (emprestimo.getValorParcela() + emprestimo.getJuros());
+				contaComando.atualizarSaldo(idTelegram, emprestimo.getValorParcela(), TipoTransacao.PAGAMENTO_EMPRESTIMO);
+				contaComando.atualizarSaldo(idTelegram, emprestimo.getJuros(), TipoTransacao.JUROS);
 				
-				conta.setSaldo(saldo);
-
-				transacaoComando.gravarTransacao(conta, emprestimo.getValorParcela(), TipoTransacao.PAGAMENTO_EMPRESTIMO.getCodigo());
-				transacaoComando.gravarTransacao(conta, emprestimo.getJuros(), TipoTransacao.JUROS.getCodigo());
-				
-				//FIXME Por algum motivo que não consegui entender, não está gravando o saldo corretamente
-				contaDao.alterarConta(conta);
 				emprestimoDao.marcarEmprestimoPago(emprestimo);
 			} else {
 				return false;
