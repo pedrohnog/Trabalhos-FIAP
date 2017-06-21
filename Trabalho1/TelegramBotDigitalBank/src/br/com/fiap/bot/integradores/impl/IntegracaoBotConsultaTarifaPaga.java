@@ -20,7 +20,7 @@ public class IntegracaoBotConsultaTarifaPaga extends IntegracaoBotConsulta {
 		
 		try {
 			transacaoDetalhe = botComando.listarTarifas(usuario.id());
-			retorno.append("EXTRATO DE TARIFAS \n");
+			retorno.append("EXTRATO DE TARIFAS \n\n");
 			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
 				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora())
 						+ ": " + MoedaUtil.conveterMoedaBr(transacao.getValor()) + "\n");

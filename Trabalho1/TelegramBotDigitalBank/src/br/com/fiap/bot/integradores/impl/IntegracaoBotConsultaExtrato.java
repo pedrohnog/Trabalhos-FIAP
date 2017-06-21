@@ -22,7 +22,7 @@ public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 		try {
 			List<Transacao> transacoes = botComando.verificarExtrato(usuario.id());
 			retorno.append("EXTRATO DA CONTA")
-			.append("\n");
+			.append("\n\n");
 			for (Transacao transacao : transacoes) {
 				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora()) + " - ")
 				.append(TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + ": ")
