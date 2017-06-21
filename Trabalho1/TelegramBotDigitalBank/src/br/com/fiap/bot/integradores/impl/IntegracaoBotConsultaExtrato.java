@@ -13,6 +13,7 @@ import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
+import br.com.fiap.bot.util.ConverteMoedaUtil;
 
 public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 
@@ -32,7 +33,7 @@ public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 				.append(" | ")
 				.append(TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString())
 				.append(" | ")
-				.append(format.format(transacao.getValor()))
+				.append(ConverteMoedaUtil.conveterMoedaBr(transacao.getValor()))
 				.append("\n");
 			}
 			retorno.append("----------------------");
