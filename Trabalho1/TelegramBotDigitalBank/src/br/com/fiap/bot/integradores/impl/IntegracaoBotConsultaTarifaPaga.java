@@ -7,7 +7,7 @@ import br.com.fiap.banco.dados.TransacaoDetalhe;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
-import br.com.fiap.bot.util.ConverteMoedaUtil;
+import br.com.fiap.bot.util.MoedaUtil;
 import br.com.fiap.bot.util.DataUtil;
 
 public class IntegracaoBotConsultaTarifaPaga extends IntegracaoBotConsulta {
@@ -23,7 +23,7 @@ public class IntegracaoBotConsultaTarifaPaga extends IntegracaoBotConsulta {
 			retorno.append("EXTRATO DE TARIFAS \n");
 			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
 				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora())
-						+ ": " + ConverteMoedaUtil.conveterMoedaBr(transacao.getValor()) + "\n");
+						+ ": " + MoedaUtil.conveterMoedaBr(transacao.getValor()) + "\n");
 			}
 			retorno.append("Total: " + transacaoDetalhe.getSomatorio());
 		} catch (ContaInexistenteExcecao e) {

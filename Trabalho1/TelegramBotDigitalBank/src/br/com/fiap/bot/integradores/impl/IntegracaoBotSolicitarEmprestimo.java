@@ -12,7 +12,7 @@ import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
-import br.com.fiap.bot.util.ConverteMoedaUtil;
+import br.com.fiap.bot.util.MoedaUtil;
 
 public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 
@@ -57,7 +57,7 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 		} catch (ValorEmprestimoExcedidoExcecao e) {
 			try {				
 				retorno = "Empréstimo não confirmado! O valor máximo que você pode solicitar é: "
-						+ ConverteMoedaUtil.conveterMoedaBr(botComando.verificarValorMaximoEmprestimo(usuario.id()));
+						+ MoedaUtil.conveterMoedaBr(botComando.verificarValorMaximoEmprestimo(usuario.id()));
 			} catch (ContaInexistenteExcecao | SaldoInsuficienteExcecao e1) {
 				retorno = "Empréstimo não confirmado! Valor excedido!";
 			}

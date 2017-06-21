@@ -10,7 +10,7 @@ import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
-import br.com.fiap.bot.util.ConverteMoedaUtil;
+import br.com.fiap.bot.util.MoedaUtil;
 import br.com.fiap.bot.util.DataUtil;
 
 public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
@@ -26,7 +26,7 @@ public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 			for (Transacao transacao : transacoes) {
 				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora()) + " ")
 				.append(TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " ")
-				.append(ConverteMoedaUtil.conveterMoedaBr(transacao.getValor()))
+				.append(MoedaUtil.conveterMoedaBr(transacao.getValor()))
 				.append("\n");
 			}
 		} catch (SaldoInsuficienteExcecao e) {
