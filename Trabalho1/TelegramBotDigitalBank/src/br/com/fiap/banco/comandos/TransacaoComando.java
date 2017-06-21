@@ -1,5 +1,8 @@
 package br.com.fiap.banco.comandos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.dados.TransacaoDetalhe;
 import br.com.fiap.banco.dao.impl.TransacaoDao;
@@ -23,8 +26,7 @@ class TransacaoComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized TransacaoDetalhe listarLancamentos(long idTelegram) throws ContaInexistenteExcecao {
-		//TODO Revisar para incluir empréstimo
-		return this.listarTransacao(idTelegram, TipoTransacao.DEPOSITO);
+		return this.listarTransacao(idTelegram, TipoTransacao.DEPOSITO, TipoTransacao.EMPRESTIMO);
 	}
 
 	/**
@@ -37,8 +39,7 @@ class TransacaoComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized TransacaoDetalhe listarRetiradas(long idTelegram) throws ContaInexistenteExcecao {
-		//TODO Revisar para incluir empréstimo
-		return this.listarTransacao(idTelegram, TipoTransacao.SAQUE);
+		return this.listarTransacao(idTelegram, TipoTransacao.SAQUE, TipoTransacao.PAGAMENTO_EMPRESTIMO);
 	}
 
 	/**
@@ -51,8 +52,7 @@ class TransacaoComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized TransacaoDetalhe listarTarifas(long idTelegram) throws ContaInexistenteExcecao {
-		//TODO Revisar para incluir empréstimo
-		return this.listarTransacao(idTelegram, TipoTransacao.TARIFA);
+		return this.listarTransacao(idTelegram, TipoTransacao.TARIFA, TipoTransacao.JUROS);
 	}
 	
 	/**
@@ -65,15 +65,20 @@ class TransacaoComando {
 	 * 
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
-	private synchronized TransacaoDetalhe listarTransacao(long idTelegram, TipoTransacao tipoTransacao) throws ContaInexistenteExcecao {
-		//TODO Revisar para incluir empréstimo
+	private synchronized TransacaoDetalhe listarTransacao(long idTelegram, TipoTransacao... tipoTransacoes) throws ContaInexistenteExcecao {
 		ContaComando contaComando = new ContaComando();
 		TransacaoDetalhe transacaoDetalhe = new TransacaoDetalhe();
 		
 		try (TransacaoDao transacaoDao = new TransacaoDao();) {
 			Conta conta = contaComando.buscarConta(idTelegram);
 			
-			transacaoDetalhe.setTransacoes(transacaoDao.buscarTransacoes(conta.getNumero(), tipoTransacao));
+			List<Transacao> transacoes = new ArrayList<>();
+			
+			for (TipoTransacao tipoTransacao : tipoTransacoes) {
+				transacoes.addAll(transacaoDao.buscarTransacoes(conta.getNumero(), tipoTransacao));
+			}
+			
+			transacaoDetalhe.setTransacoes(transacoes);
 			
 			double somatorio = 0.0d;
 			

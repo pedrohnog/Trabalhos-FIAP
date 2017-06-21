@@ -22,16 +22,21 @@ public class ExibicaoLancamentosTeste {
 		try {
 			TransacaoDetalhe transacaoDetalhe = comando.listarLancamentos(idTelegram);
 			
-			Assert.assertEquals(deposito, transacaoDetalhe.getSomatorio().doubleValue(), 0d);
+			Assert.assertEquals(deposito + valorEmprestimo, transacaoDetalhe.getSomatorio().doubleValue(), 0d);
 			
 			List<Transacao> transacoes = transacaoDetalhe.getTransacoes();
 			
-			Assert.assertEquals(1, transacoes.size());
+			Assert.assertEquals(2, transacoes.size());
 			
-			Transacao transacao = transacoes.get(0);
+			Transacao transacaoDeposito = transacoes.get(0);
 			
-			Assert.assertEquals(TipoTransacao.DEPOSITO.getCodigo(), transacao.getTipoTransacao());
-			Assert.assertEquals(deposito, transacao.getValor(), 0d);
+			Assert.assertEquals(TipoTransacao.DEPOSITO.getCodigo(), transacaoDeposito.getTipoTransacao());
+			Assert.assertEquals(deposito, transacaoDeposito.getValor(), 0d);
+			
+			Transacao transacaoEmprestimo = transacoes.get(1);
+			
+			Assert.assertEquals(TipoTransacao.EMPRESTIMO.getCodigo(), transacaoEmprestimo.getTipoTransacao());
+			Assert.assertEquals(valorEmprestimo, transacaoEmprestimo.getValor(), 0d);
 		} catch (ContaInexistenteExcecao e) {
 			e.printStackTrace();
 		}
