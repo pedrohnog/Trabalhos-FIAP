@@ -21,7 +21,7 @@ public class IntegracaoBotConsultaLancamento extends IntegracaoBotConsulta {
 		
 		try {
 			transacaoDetalhe = botComando.listarLancamentos(usuario.id());
-			retorno.append("EXTRATO DE SAQUES \n\n");
+			retorno.append("EXTRATO DE LANÇAMENTOS \n\n");
 			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
 				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora())
 						+ " - " + TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString()
