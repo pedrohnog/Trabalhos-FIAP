@@ -77,9 +77,9 @@ public class EmprestimoDao extends DaoGenerico<Emprestimo> {
 	 * 
 	 * @return Parcela empréstima e não paga
 	 */
-	public Emprestimo buscarEmprestimoVencido(long conta, int numeroParcela) {
-		TypedQuery<Emprestimo> query = super.em.createQuery("select e from Emprestimo e where parcela_paga = 0 and data_vencimento <= curdate() and conta_numero = " + conta + " and numero_parcela = " + numeroParcela, Emprestimo.class);
+	public Emprestimo buscarEmprestimo(long conta, int numeroParcela) {
+		TypedQuery<Emprestimo> query = super.em.createQuery("select e from Emprestimo e where parcela_paga = 0 and conta_numero = " + conta + " and numero_parcela = " + numeroParcela, Emprestimo.class);
 		return query.getSingleResult();
 	}
-
+	
 }
