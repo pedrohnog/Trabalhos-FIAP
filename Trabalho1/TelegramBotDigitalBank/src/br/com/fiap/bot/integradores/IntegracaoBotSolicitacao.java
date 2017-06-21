@@ -8,9 +8,7 @@ public abstract class IntegracaoBotSolicitacao implements IntegracaoBot{
 	private String dominioResposta;	
 	private String mensagemPrimeiraIntegracao;
 	
-	IntegracaoBotSolicitacao(){
-	}
-	protected IntegracaoBotSolicitacao( String mensagemPrimeiraIntegracao,String dominioResposta){
+	protected IntegracaoBotSolicitacao(String mensagemPrimeiraIntegracao,String dominioResposta){
 		this.mensagemPrimeiraIntegracao = mensagemPrimeiraIntegracao;
 		this.dominioResposta = dominioResposta;
 	}

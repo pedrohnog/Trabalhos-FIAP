@@ -1,4 +1,4 @@
-package br.com.fiap.bot.integradores;
+package br.com.fiap.bot.integradores.impl;
 
 import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +12,7 @@ import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
+import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 
 public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 

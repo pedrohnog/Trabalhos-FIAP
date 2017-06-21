@@ -1,15 +1,15 @@
-package br.com.fiap.bot.integradores;
+package br.com.fiap.bot.integradores.impl;
 
 import com.pengrad.telegrambot.model.Chat;
 
-public class IntegracaoBotAjuda extends IntegracaoBotConsulta {
+import br.com.fiap.bot.integradores.IntegracaoBot;
 
-	@Override
+public class IntegracaoBotAjuda implements IntegracaoBot {
+
 	public String integrarBanco(String resposta, Chat usuario) {
 		return "";
 	}
 
-	@Override
 	public String tratarPrimeiraInteracao(Chat usuario) {
 		return  "Segue a lista de comandos que podem ser efetuados, espero poder ajudar... "
 				+"\n/criar_conta"
