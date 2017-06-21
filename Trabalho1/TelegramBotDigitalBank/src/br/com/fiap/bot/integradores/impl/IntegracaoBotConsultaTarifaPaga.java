@@ -25,7 +25,7 @@ public class IntegracaoBotConsultaTarifaPaga extends IntegracaoBotConsulta {
 				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora())
 						+ ": " + MoedaUtil.conveterMoedaBr(transacao.getValor()) + "\n");
 			}
-			retorno.append("Total: " + transacaoDetalhe.getSomatorio());
+			retorno.append("Total: " + MoedaUtil.conveterMoedaBr(transacaoDetalhe.getSomatorio()));
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta"); 
 		}		

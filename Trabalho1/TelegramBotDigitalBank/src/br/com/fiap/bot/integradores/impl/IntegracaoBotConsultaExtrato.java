@@ -24,8 +24,8 @@ public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 			retorno.append("EXTRATO DA CONTA")
 			.append("\n");
 			for (Transacao transacao : transacoes) {
-				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora()) + " ")
-				.append(TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " ")
+				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora()) + " - ")
+				.append(TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + ": ")
 				.append(MoedaUtil.conveterMoedaBr(transacao.getValor()))
 				.append("\n");
 			}
