@@ -19,7 +19,7 @@ import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaExtrato;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaque;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaTarifaPaga;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotCriarConta;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotExibirDados;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotExibirInformacoesTitularDependentes;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotIncluirDependente;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotModificarConta;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotRealizarDeposito;
@@ -111,8 +111,8 @@ public class BotUtil {
 		case "/incluir_dependente":
 			retorno = new IntegracaoBotIncluirDependente();
 			break;
-		case "/exibir_dados":
-			retorno = new IntegracaoBotExibirDados();
+		case "/exibir_informacoes_titular_e_dependentes":
+			retorno = new IntegracaoBotExibirInformacoesTitularDependentes();
 			break;
 		case "/realizar_deposito":
 			retorno = new IntegracaoBotRealizarDeposito();

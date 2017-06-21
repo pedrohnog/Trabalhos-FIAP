@@ -10,7 +10,7 @@ import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.MoedaUtil;
 
-public class IntegracaoBotExibirDados extends IntegracaoBotConsulta {
+public class IntegracaoBotExibirInformacoesTitularDependentes extends IntegracaoBotConsulta {
 
 	@Override
 	public String integrarBanco(String resposta, Chat usuario) {

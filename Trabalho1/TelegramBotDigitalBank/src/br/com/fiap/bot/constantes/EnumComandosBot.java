@@ -12,7 +12,7 @@ public enum EnumComandosBot {
 	REALIZAR_DEPOSITOS("/realizar_deposito", EnumTipoIntegracaoBot.SOLICITACAO),
 	REALIZAR_SAQUE("/realizar_saque", EnumTipoIntegracaoBot.SOLICITACAO),
 	SOLICITAR_EMPRESTIMO("/solicitar_emprestimo", EnumTipoIntegracaoBot.SOLICITACAO),
-	EXIBIR_DADOS("/exibir_dados", EnumTipoIntegracaoBot.CONSULTA),
+	EXIBIR_DADOS("/exibir_informacoes_titular_e_dependentes", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_EXTRATO("/consultar_extrato", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTA_DEPOSITOS("/consultar_lancamentos", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_SAQUES("/consultar_saques", EnumTipoIntegracaoBot.CONSULTA),
