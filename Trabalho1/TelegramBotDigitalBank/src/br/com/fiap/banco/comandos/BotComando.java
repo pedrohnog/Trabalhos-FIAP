@@ -136,8 +136,9 @@ public class BotComando {
 	 * @return Valor máximo que o usuário pode solicitar de empréstimo
 	 * 
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 * @throws SaldoInsuficienteExcecao  Se não houver saldo suficiente para solicitar o empréstimo
 	 */
-	public synchronized double verificarValorMaximoEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
+	public synchronized double verificarValorMaximoEmprestimo(long idTelegram) throws ContaInexistenteExcecao, SaldoInsuficienteExcecao {
 		return (new EmprestimoComando()).verificarValorMaximoEmprestimo(idTelegram);
 	}
 	
