@@ -168,6 +168,41 @@ class EmprestimoComando {
 	}
 	
 	/**
+	 * Lista todas as parcelas que estão vencidas e não pagas
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return Lista de parcelas vencidas e não pagas
+	 */
+	public synchronized List<Emprestimo> listarEmprestimosVencidos(long idTelegram) {
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			return emprestimoDao.buscarEmprestimosVencidos(idTelegram);
+		}
+	}
+	
+	/**
+	 * Busca a parcela de um empréstimo e só realiza o pagamento se estiver vencido e não tiver sido pago
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * @param numeroParcela Número da parcela
+	 * 
+	 * @return <code>true</code> se conseguir realizar o pagamento, se não <code>false</code>
+	 * 
+	 * @throws ContaInexistenteExcecao ContaInexistenteExcecao Se não existir a conta informada
+	 */
+	public synchronized boolean pagarEmprestimoVencido(long idTelegram, int numeroParcela) throws ContaInexistenteExcecao {
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			Emprestimo emprestimoVencido = emprestimoDao.buscarEmprestimoVencido(idTelegram, numeroParcela);
+			
+			if(emprestimoVencido == null) {
+				return false;
+			}
+			
+			return this.pagarEmprestimoVencido(idTelegram, emprestimoVencido);
+		}
+	}
+	
+	/**
 	 * Realiza o pagamento da parcela de empréstimo que está vencida
 	 * 
 	 * @param idTelegram Id do Telegram
