@@ -14,7 +14,7 @@ public enum EnumComandosBot {
 	SOLICITAR_EMPRESTIMO("/solicitar_emprestimo", EnumTipoIntegracaoBot.SOLICITACAO),
 	EXIBIR_DADOS("/exibir_dados", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_EXTRATO("/consultar_extrato", EnumTipoIntegracaoBot.CONSULTA),
-	CONSULTA_DEPOSITOS("/consultar_depositos", EnumTipoIntegracaoBot.CONSULTA),
+	CONSULTA_DEPOSITOS("/consultar_lancamentos", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_SAQUES("/consultar_saques", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_TARIFAS_PAGAS("/consultar_tarifas_pagas", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_EMPRESTIMO("/consultar_emprestimo", EnumTipoIntegracaoBot.CONSULTA),

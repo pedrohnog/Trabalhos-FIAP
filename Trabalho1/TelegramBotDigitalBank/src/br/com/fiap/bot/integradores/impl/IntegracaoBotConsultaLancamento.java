@@ -11,7 +11,7 @@ import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.DataUtil;
 import br.com.fiap.bot.util.MoedaUtil;
 
-public class IntegracaoBotConsultaDeposito extends IntegracaoBotConsulta {
+public class IntegracaoBotConsultaLancamento extends IntegracaoBotConsulta {
 
 	@Override
 	public String integrarBanco(String resposta, Chat usuario) {

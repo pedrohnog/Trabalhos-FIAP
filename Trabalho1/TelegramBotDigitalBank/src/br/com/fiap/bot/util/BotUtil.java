@@ -13,7 +13,7 @@ import br.com.fiap.bot.dao.impl.MensagemIntegracaoDao;
 import br.com.fiap.bot.entidades.MensagemIntegracao;
 import br.com.fiap.bot.integradores.IntegracaoBot;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotAjuda;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaDeposito;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaLancamento;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaEmprestimo;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaExtrato;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaque;
@@ -123,8 +123,8 @@ public class BotUtil {
 		case "/consultar_extrato":
 			retorno = new IntegracaoBotConsultaExtrato();
 			break;
-		case "/consultar_depositos":
-			retorno = new IntegracaoBotConsultaDeposito();
+		case "/consultar_lancamentos":
+			retorno = new IntegracaoBotConsultaLancamento();
 			break;
 		case "/consultar_saques":
 			retorno = new IntegracaoBotConsultaSaque();
