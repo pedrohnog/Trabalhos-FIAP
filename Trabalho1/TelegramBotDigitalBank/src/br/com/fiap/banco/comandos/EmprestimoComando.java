@@ -10,6 +10,7 @@ import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Emprestimo;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.EmprestimoAbertoExcecao;
+import br.com.fiap.banco.excecao.PagamentoEmprestimoExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
@@ -160,10 +161,59 @@ class EmprestimoComando {
 		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
 			List<Emprestimo> emprestimosVencidos = emprestimoDao.buscarEmprestimosVencidos(idTelegram);
 			for (Emprestimo emprestimo : emprestimosVencidos) {
-				if(!this.pagarEmprestimoVencido(idTelegram, emprestimo)) {
+				if(!this.pagarEmprestimo(idTelegram, emprestimo)) {
 					break;
 				}
 			}
+		}
+	}
+	
+	/**
+	 * Lista todas as parcelas que estão vencidas e não pagas
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return Lista de parcelas vencidas e não pagas
+	 */
+	public synchronized List<Emprestimo> listarEmprestimosVencidos(long idTelegram) {
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			return emprestimoDao.buscarEmprestimosVencidos(idTelegram);
+		}
+	}
+	
+	/**
+	 * Lista todas as parcelas que não estão pagas
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return Lista de parcelas não pagas
+	 */
+	public synchronized List<Emprestimo> listarEmprestimosAbertos(long idTelegram) {
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			return emprestimoDao.buscarDadosEmprestimoAberto(idTelegram);
+		}
+	}
+	
+	/**
+	 * Busca a parcela de um empréstimo e só realiza o pagamento se estiver vencido e não tiver sido pago
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * @param numeroParcela Número da parcela
+	 * 
+	 * @return <code>true</code> se conseguir realizar o pagamento, se não <code>false</code>
+	 * 
+	 * @throws ContaInexistenteExcecao ContaInexistenteExcecao Se não existir a conta informada
+	 * @throws PagamentoEmprestimoExcecao Se a parcela não existir ou já estiver paga
+	 */
+	public synchronized boolean pagarEmprestimo(long idTelegram, int numeroParcela) throws ContaInexistenteExcecao, PagamentoEmprestimoExcecao {
+		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+			Emprestimo emprestimoVencido = emprestimoDao.buscarEmprestimo(idTelegram, numeroParcela);
+			
+			if(emprestimoVencido == null || !this.pagarEmprestimo(idTelegram, emprestimoVencido)) {
+				throw new PagamentoEmprestimoExcecao();
+			}
+			
+			return true;
 		}
 	}
 	
@@ -177,19 +227,21 @@ class EmprestimoComando {
 	 * 
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
-	private synchronized boolean pagarEmprestimoVencido(long idTelegram, Emprestimo emprestimo) throws ContaInexistenteExcecao {
+	private synchronized boolean pagarEmprestimo(long idTelegram, Emprestimo emprestimo) throws ContaInexistenteExcecao {
 		ContaComando contaComando = new ContaComando();
 		
-		try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
-			double saldo = contaComando.verificarSaldo(idTelegram);
-			
-			if(saldo >= (emprestimo.getValorParcela() + emprestimo.getJuros())) {
-				contaComando.atualizarSaldo(idTelegram, emprestimo.getValorParcela(), TipoTransacao.PAGAMENTO_EMPRESTIMO);
-				contaComando.atualizarSaldo(idTelegram, emprestimo.getJuros(), TipoTransacao.JUROS);
+		if (!emprestimo.isParcelaPaga()) {
+			try (EmprestimoDao emprestimoDao = new EmprestimoDao();) {
+				double saldo = contaComando.verificarSaldo(idTelegram);
 				
-				emprestimoDao.marcarEmprestimoPago(emprestimo);
-			} else {
-				return false;
+				if(saldo >= (emprestimo.getValorParcela() + emprestimo.getJuros())) {
+					contaComando.atualizarSaldo(idTelegram, emprestimo.getValorParcela(), TipoTransacao.PAGAMENTO_EMPRESTIMO);
+					contaComando.atualizarSaldo(idTelegram, emprestimo.getJuros(), TipoTransacao.JUROS);
+					
+					emprestimoDao.marcarEmprestimoPago(emprestimo);
+				} else {
+					return false;
+				}
 			}
 		}
 		

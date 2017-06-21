@@ -4,10 +4,12 @@ import java.util.List;
 
 import br.com.fiap.banco.dados.EmprestimoDetalhe;
 import br.com.fiap.banco.dados.TransacaoDetalhe;
+import br.com.fiap.banco.entidades.Emprestimo;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.EmprestimoAbertoExcecao;
+import br.com.fiap.banco.excecao.PagamentoEmprestimoExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
@@ -207,6 +209,54 @@ public class BotComando {
 	 */
 	public synchronized TransacaoDetalhe listarTarifas(long idTelegram) throws ContaInexistenteExcecao {
 		return (new TransacaoComando()).listarTarifas(idTelegram);
+	}
+	
+	/**
+	 * Realiza o pagamento de todas as parcelas vencidas do empréstimo
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 */
+	public synchronized void pagarParcelasVencidasEmprestimo(long idTelegram) throws ContaInexistenteExcecao {
+		(new EmprestimoComando()).pagarEmprestimosVencidos(idTelegram);
+	}
+	
+	/**
+	 * Realiza o pagamento da parcela informada se estiver vencida e não paga
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * @param numeroParcela Número da parcela
+	 * 
+	 * @return <code>true</code> se conseguir realizar o pagamento, se não <code>false</code>
+	 * 
+	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 * @throws PagamentoEmprestimoExcecao Se a parcela não existir ou já estiver paga
+	 */
+	public synchronized boolean pagarParcelaEmprestimo(long idTelegram, int numeroParcela) throws ContaInexistenteExcecao, PagamentoEmprestimoExcecao {
+		return (new EmprestimoComando()).pagarEmprestimo(idTelegram, numeroParcela);
+	}
+	
+	/**
+	 * Lista todas as parcelas que estão vencidas e não pagas
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return Lista de parcelas vencidas e não pagas
+	 */
+	public synchronized List<Emprestimo> listarEmprestimosVencidos(long idTelegram) {
+		return (new EmprestimoComando()).listarEmprestimosVencidos(idTelegram);
+	}
+	
+	/**
+	 * Lista todas as parcelas que não estão pagas
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return Lista de parcelas não pagas
+	 */
+	public synchronized List<Emprestimo> listarEmprestimosNaoPagos(long idTelegram) {
+		return (new EmprestimoComando()).listarEmprestimosAbertos(idTelegram);
 	}
 
 }
