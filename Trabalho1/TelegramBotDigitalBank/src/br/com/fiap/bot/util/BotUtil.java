@@ -14,6 +14,7 @@ import br.com.fiap.bot.entidades.MensagemIntegracao;
 import br.com.fiap.bot.integradores.IntegracaoBot;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotAjuda;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaDeposito;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaEmprestimo;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaExtrato;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaque;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaTarifaPaga;
@@ -133,6 +134,9 @@ public class BotUtil {
 			break;
 		case "/consultar_tarifas_pagas":
 			retorno = new IntegracaoBotConsultaTarifaPaga();
+			break;
+		case "/consultar_emprestimo":
+			retorno = new IntegracaoBotConsultaEmprestimo();
 			break;
 		default:
 			break;
