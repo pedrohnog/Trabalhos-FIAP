@@ -9,6 +9,7 @@ import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.EmprestimoAbertoExcecao;
+import br.com.fiap.banco.excecao.PagamentoEmprestimoExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
@@ -230,9 +231,10 @@ public class BotComando {
 	 * @return <code>true</code> se conseguir realizar o pagamento, se não <code>false</code>
 	 * 
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
+	 * @throws PagamentoEmprestimoExcecao Se a parcela não existir ou já estiver paga
 	 */
-	public synchronized boolean pagarParcelaVencidaEmprestimo(long idTelegram, int numeroParcela) throws ContaInexistenteExcecao {
-		return (new EmprestimoComando()).pagarEmprestimoVencido(idTelegram, numeroParcela);
+	public synchronized boolean pagarParcelaEmprestimo(long idTelegram, int numeroParcela) throws ContaInexistenteExcecao, PagamentoEmprestimoExcecao {
+		return (new EmprestimoComando()).pagarEmprestimo(idTelegram, numeroParcela);
 	}
 	
 	/**
@@ -244,6 +246,17 @@ public class BotComando {
 	 */
 	public synchronized List<Emprestimo> listarEmprestimosVencidos(long idTelegram) {
 		return (new EmprestimoComando()).listarEmprestimosVencidos(idTelegram);
+	}
+	
+	/**
+	 * Lista todas as parcelas que não estão pagas
+	 * 
+	 * @param idTelegram Id do Telegram
+	 * 
+	 * @return Lista de parcelas não pagas
+	 */
+	public synchronized List<Emprestimo> listarEmprestimosNaoPagos(long idTelegram) {
+		return (new EmprestimoComando()).listarEmprestimosAbertos(idTelegram);
 	}
 
 }

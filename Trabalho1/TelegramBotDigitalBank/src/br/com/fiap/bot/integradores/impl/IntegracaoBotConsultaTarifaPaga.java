@@ -34,7 +34,7 @@ public class IntegracaoBotConsultaTarifaPaga extends IntegracaoBotConsulta {
 
 	@Override
 	public String tratarPrimeiraInteracao(Chat usuario) {
-		return "TARIFA";
+		return this.integrarBanco("", usuario);
 	}
 
 }

@@ -16,8 +16,8 @@ import br.com.fiap.bot.util.MoedaUtil;
 
 public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 
-	IntegracaoBotSolicitarEmprestimo() {
-		super("Para efetivar seu empréstimo, informe o valor que você precisa e a quantidade de parcelas.", "valor - quantidade parcelas (Ex: 500,00 - 36)");
+	public IntegracaoBotSolicitarEmprestimo() {
+		super("Para efetivar seu empréstimo, informe o valor que você precisa e a quantidade de parcelas. \nInforme no seguinte padrão: valor - quantidade parcelas (Ex: 500,00 - 36)", "valor - quantidade parcelas (Ex: 500,00 - 36)");
 	}
 
 	@Override
@@ -26,13 +26,17 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 		if(resposta != null){
 			String [] respostas = resposta.split("-");
 			try{
-				if(!(Double.valueOf(respostas[0].trim()) > 0D)){
-					respostaOk = false;
-				}	
-				if(!(Integer.valueOf(respostas[1].trim()) > 0D)){
-					respostaOk = false;
-				}	
-			}catch(NumberFormatException e){
+				if(respostas.length == 2){
+					if (!(Double.valueOf(respostas[0].trim()) > 0D)) {
+						respostaOk = false;
+					}
+					if (!(Integer.valueOf(respostas[1].trim()) > 0D)) {
+						respostaOk = false;
+					}
+				}else{
+					respostaOk = false;					
+				}
+			}catch(Exception e){
 				respostaOk = false;
 			}
 		}else{
@@ -83,7 +87,7 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 		try {
 			valorMaximoEmprestimo = botComando.verificarValorMaximoEmprestimo(usuario.id());
 			retorno.append(super.tratarPrimeiraInteracao(usuario))
-			.append("\nO limite máximo que você pode pedir empresta é: ")
+			.append("\nO limite máximo que você pode pedir emprestado é: ")
 			.append(format.format(valorMaximoEmprestimo));
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
