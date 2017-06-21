@@ -16,12 +16,14 @@ import br.com.fiap.bot.integradores.impl.IntegracaoBotAjuda;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaDeposito;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaExtrato;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaque;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaTarifaPaga;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotCriarConta;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotExibirDados;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotIncluirDependente;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotModificarConta;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotRealizarDeposito;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotRealizarSaque;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotSolicitarEmprestimo;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotStart;
 
 public class BotUtil {
@@ -125,6 +127,12 @@ public class BotUtil {
 			break;
 		case "/consultar_saques":
 			retorno = new IntegracaoBotConsultaSaque();
+			break;
+		case "/solicitar_emprestimo":
+			retorno = new IntegracaoBotSolicitarEmprestimo();
+			break;
+		case "/consultar_tarifas_pagas":
+			retorno = new IntegracaoBotConsultaTarifaPaga();
 			break;
 		default:
 			break;
