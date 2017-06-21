@@ -25,18 +25,13 @@ public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 		try {
 			List<Transacao> transacoes = botComando.verificarExtrato(usuario.id());
 			retorno.append("EXTRATO DA CONTA")
-			.append("\n")
-			.append("----------------------")
 			.append("\n");
 			for (Transacao transacao : transacoes) {
-				retorno.append(transacao.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-				.append(" | ")
-				.append(TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString())
-				.append(" | ")
+				retorno.append(transacao.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " ")
+				.append(TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString() + " ")
 				.append(ConverteMoedaUtil.conveterMoedaBr(transacao.getValor()))
 				.append("\n");
 			}
-			retorno.append("----------------------");
 		} catch (SaldoInsuficienteExcecao e) {
 			retorno.append("Saldo insuficiente para consultar o extrato!");
 		} catch (ContaInexistenteExcecao e) {
