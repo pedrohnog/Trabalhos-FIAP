@@ -39,7 +39,7 @@ class TransacaoComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized TransacaoDetalhe listarRetiradas(long idTelegram) throws ContaInexistenteExcecao {
-		return this.listarTransacao(idTelegram, TipoTransacao.SAQUE, TipoTransacao.PAGAMENTO_EMPRESTIMO);
+		return this.listarTransacao(idTelegram, TipoTransacao.SAQUE, TipoTransacao.PAGAMENTO_EMPRESTIMO, TipoTransacao.JUROS);
 	}
 
 	/**
@@ -52,7 +52,7 @@ class TransacaoComando {
 	 * @throws ContaInexistenteExcecao Se não existir a conta informada
 	 */
 	public synchronized TransacaoDetalhe listarTarifas(long idTelegram) throws ContaInexistenteExcecao {
-		return this.listarTransacao(idTelegram, TipoTransacao.TARIFA, TipoTransacao.JUROS);
+		return this.listarTransacao(idTelegram, TipoTransacao.TARIFA);
 	}
 	
 	/**
