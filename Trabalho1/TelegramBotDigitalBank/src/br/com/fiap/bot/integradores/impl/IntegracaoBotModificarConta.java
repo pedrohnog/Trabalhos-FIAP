@@ -35,9 +35,13 @@ public class IntegracaoBotModificarConta extends IntegracaoBotSolicitacao {
 	@Override
 	public String integrarBanco(String resposta, Chat usuario) {
 		String retorno = "";
+		String[] respostas;
 		BotComando botComando = new BotComando();
+		
+		respostas = resposta.split("-");
+		
 		try {
-			botComando.modificarConta(1234, "98765432100", "novoteste@teste.com.br");
+			botComando.modificarConta(usuario.id(), respostas[0].trim(), respostas[1].trim());
 			retorno = "Parabéns! Conta modificada com sucesso!";
 		} catch (ContaInexistenteExcecao e) {
 			retorno = "Você ainda não tem uma conta, para criar sua conta digite /criar_conta";

@@ -16,10 +16,7 @@ public class IntegracaoBotRealizarDeposito extends IntegracaoBotSolicitacao {
 	public Boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
 		if(resposta != null){
-			resposta = resposta.trim();
-			if (resposta.contains(",")){
-				resposta.replace(",", ".");
-			}			
+			resposta = resposta.trim();						
 			try{
 				if(!(Double.valueOf(resposta) > 0D)){
 					respostaOk = false;
@@ -35,6 +32,9 @@ public class IntegracaoBotRealizarDeposito extends IntegracaoBotSolicitacao {
 	public String integrarBanco(String resposta, Chat usuario) {
 		String retorno = "";
 		BotComando botComando = new BotComando();
+		if (resposta.contains(",")){
+			resposta = resposta.replace(",", ".");
+		}
 		try {
 			botComando.realizarDeposito(usuario.id(), Double.valueOf(resposta));
 			retorno = "Deposito realizado com sucesso!";

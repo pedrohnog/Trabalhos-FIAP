@@ -10,7 +10,7 @@ import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotIncluirDependente() {
-		super("Me fale os dados do novo dependente. Por favor, informe nesta padrão: cpf - nome - email (Ex: 36521563511 - Joao - joao@email.com)", "cpf - nome - email (Ex: 36521563511 - Joao - joao@email.com)");
+		super("Me fale os dados do novo dependente. Por favor, informe nesta padrão: cpf - nome - email - telefone (Ex: 36521563511 - Joao - joao@email.com - 11223344)", "cpf - nome - email - telefone (Ex: 36521563511 - Joao - joao@email.com - 11223344)");
 	}
 
 	@Override
@@ -34,11 +34,22 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 
 	@Override
 	public String integrarBanco(String resposta, Chat usuario) {
+		String[] respostas;
+		String telefone;
+		String cpf;
+		String email;
 		BotComando botComando = new BotComando();
 		String retorno = "";
+		
+		respostas = resposta.split("-");
+		
+		cpf = respostas[0];
+		email = respostas[2];
+		telefone = respostas[3];
+		
 		try {
-			//TODO aguardar ajuste no banco
-			botComando.incluirDependente(usuario.id(), "Teste 2", "Teste", "1187654321", "01010101099", "teste2@teste.com.br");
+			botComando.incluirDependente(usuario.id(), usuario.firstName(), usuario.lastName(),
+					telefone.trim(), cpf.trim(), email.trim());
 			retorno = "Parabéns! Dependente incluido com sucesso!";
 		} catch (ContaInexistenteExcecao e) {
 			retorno = "Você ainda não tem uma conta, para criar sua conta digite /criar_conta";

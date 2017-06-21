@@ -10,14 +10,14 @@ import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 public class IntegracaoBotRealizarSaque extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotRealizarSaque() {
-		super("Quanto você gostaria de sacar? Informe apenas o valor", "Valor para sacar (Ex: 120.00)");
+		super("Quanto você gostaria de sacar? Informe apenas o valor", "Valor para sacar (Ex: 120,00)");
 	}
 
 	@Override
 	public Boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
 		if(resposta != null){
-			resposta = resposta.trim();
+			resposta = resposta.trim();			
 			try{
 				if(!(Double.valueOf(resposta) > 0D)){
 					respostaOk = false;
@@ -33,7 +33,10 @@ public class IntegracaoBotRealizarSaque extends IntegracaoBotSolicitacao {
 	public String integrarBanco(String resposta, Chat usuario) {
 		String retorno = "";
 		Double saldoAnterior = 0D;
-		BotComando botComando = new BotComando();
+		BotComando botComando = new BotComando();		
+		if (resposta.contains(",")){
+			resposta = resposta.replace(",", ".");
+		}
 		try {			
 			saldoAnterior = botComando.verificarSaldo(usuario.id());
 			botComando.realizarSaque(usuario.id(), Double.valueOf(resposta));			
