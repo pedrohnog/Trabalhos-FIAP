@@ -19,21 +19,23 @@ public class IntegracaoBotExibirInformacoesTitularDependentes extends Integracao
 		BotComando botComando = new BotComando();
 		try {
 			usuarios = botComando.listarUsuariosEDependentes(usuario.id());
-			for (Usuario usuario2 : usuarios) {
-				retorno.append(usuario2.getConta().getNumero() + " - " + usuario2.getCpf() + " - " +
-						usuario2.getNome() + " - " + MoedaUtil.conveterMoedaBr(usuario2.getConta().getSaldo()) + "\n");
-			}
+			
+			usuarios.forEach(u -> retorno
+					.append(u.getConta().getNumero()).append(" - ")
+					.append(u.getCpf()).append(" - ")
+					.append(u.getNome()).append(" - ")
+					.append(MoedaUtil.conveterMoedaBr(u.getConta().getSaldo()))
+					.append("\n"));
+			
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
 		}
 		return retorno.toString();
-		//TODO verificar com o rafa
-		//return "CONTA - CPF - NOME - SALDO!";
 	}
 
 	@Override
 	public String tratarPrimeiraInteracao(Chat usuario) {
-		return "CONTA - CPF - NOME - SALDO!";
+		return this.integrarBanco("", usuario);
 	}
 
 }

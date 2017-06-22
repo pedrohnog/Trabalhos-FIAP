@@ -22,7 +22,7 @@ public enum EnumComandosBot {
 	CONSULTAR_EMPRESTIMO("/consultar_emprestimo", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_SALDO_DEVEDOR_EMPRESTIMO("/consultar_saldo_devedor_emprestimo", EnumTipoIntegracaoBot.CONSULTA),
 	AJUDA("/ajuda", EnumTipoIntegracaoBot.CONSULTA );
-	//TODO implementar CONSULTAR_SALDO_DEVEDOR_EMPRESTIMO PAGAR_PARCELAS_VENCIDAS_EMPRESTIMO PAGAR_PARCELA_EMPRESTIMO
+	//TODO implementar PAGAR_PARCELAS_VENCIDAS_EMPRESTIMO PAGAR_PARCELA_EMPRESTIMO
 	public static final Map<String, EnumComandosBot> LISTA_COMANDO_INTERACOES = new HashMap<String, EnumComandosBot>();
 	
 	private String comando;

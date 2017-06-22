@@ -22,12 +22,15 @@ public class IntegracaoBotConsultaSaque extends IntegracaoBotConsulta {
 		try {
 			transacaoDetalhe = botComando.listarRetiradas(usuario.id());
 			retorno.append("EXTRATO DE SAQUES \n\n");
-			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
-				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora())
-						+ " - " + TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString()
-						+ ": " + MoedaUtil.conveterMoedaBr(transacao.getValor()) + "\n");
-			}
-			retorno.append("Total: " + MoedaUtil.conveterMoedaBr(transacaoDetalhe.getSomatorio()));
+			
+			transacaoDetalhe.getTransacoes().forEach(t -> retorno
+					.append(DataUtil.conveterDataPadraoBr(t.getDataHora())).append(" - ")
+					.append(TipoTransacao.getTipoTransacao(t.getTipoTransacao()).toString()).append(": ")
+					.append(MoedaUtil.conveterMoedaBr(t.getValor()))
+					.append("\n\n"));
+			
+			retorno.append("TOTAL: " + MoedaUtil.conveterMoedaBr(transacaoDetalhe.getSomatorio())); 
+			
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta"); 
 		}		

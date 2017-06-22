@@ -21,11 +21,13 @@ public class IntegracaoBotConsultaTarifaPaga extends IntegracaoBotConsulta {
 		try {
 			transacaoDetalhe = botComando.listarTarifas(usuario.id());
 			retorno.append("EXTRATO DE TARIFAS \n\n");
-			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
-				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora())
-						+ ": " + MoedaUtil.conveterMoedaBr(transacao.getValor()) + "\n");
-			}
-			retorno.append("Total: " + MoedaUtil.conveterMoedaBr(transacaoDetalhe.getSomatorio()));
+			
+			transacaoDetalhe.getTransacoes().forEach(t -> retorno
+					.append(DataUtil.conveterDataPadraoBr(t.getDataHora())).append(": ")
+					.append(MoedaUtil.conveterMoedaBr(t.getValor()))
+					.append("\n\n"));
+			
+			retorno.append("TOTAL: " + MoedaUtil.conveterMoedaBr(transacaoDetalhe.getSomatorio()));
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta"); 
 		}		

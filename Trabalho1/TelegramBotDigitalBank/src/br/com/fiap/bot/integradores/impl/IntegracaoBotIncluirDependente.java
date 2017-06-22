@@ -54,7 +54,6 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 		} catch (ContaInexistenteExcecao e) {
 			retorno = "Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
 		} catch (UsuarioDuplicadoExcecao e) {
-			//TODO Tratar o retorno. Só coloquei a frase pra não ficar vazio.
 			retorno = "O dependente que você está tentando incluir já tem conta cadastrada no banco";
 		}
 		return retorno;

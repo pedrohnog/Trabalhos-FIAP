@@ -5,7 +5,6 @@ import com.pengrad.telegrambot.model.Chat;
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.dados.TransacaoDetalhe;
-import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.DataUtil;
@@ -22,16 +21,17 @@ public class IntegracaoBotConsultaLancamento extends IntegracaoBotConsulta {
 		try {
 			transacaoDetalhe = botComando.listarLancamentos(usuario.id());
 			retorno.append("EXTRATO DE LANÇAMENTOS \n\n");
-			for (Transacao transacao : transacaoDetalhe.getTransacoes()) {
-				retorno.append(DataUtil.conveterDataPadraoBr(transacao.getDataHora())
-						+ " - " + TipoTransacao.getTipoTransacao(transacao.getTipoTransacao()).toString()
-						+ ": " + MoedaUtil.conveterMoedaBr(transacao.getValor()) + "\n");
-			}
-			retorno.append("Total: " + MoedaUtil.conveterMoedaBr(transacaoDetalhe.getSomatorio()));
-			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta"); 
+			
+			transacaoDetalhe.getTransacoes().forEach(t -> retorno
+					.append(DataUtil.conveterDataPadraoBr(t.getDataHora())).append(" - ")
+					.append(TipoTransacao.getTipoTransacao(t.getTipoTransacao()).toString()).append(": ")
+					.append(MoedaUtil.conveterMoedaBr(t.getValor()))
+					.append("\n\n"));
+			
+			retorno.append("TOTAL: " + MoedaUtil.conveterMoedaBr(transacaoDetalhe.getSomatorio())); 
 			
 		} catch (ContaInexistenteExcecao e) {
-			
+			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");			
 		}
 			
 		
