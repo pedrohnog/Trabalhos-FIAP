@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.dados.EmprestimoDetalhe;
+import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 
 public class IntegracaoBotConsultaSaldoDevedorEmprestimo extends IntegracaoBotConsulta {
@@ -16,7 +17,7 @@ public class IntegracaoBotConsultaSaldoDevedorEmprestimo extends IntegracaoBotCo
 
 		retorno.append("O saldo devedor do seu empréstimo é: ")
 		.append(emprestimoDetalhe.getSaldoDevedor())
-		.append("\n")
+		.append(ConstantesBot.PULAR_UMA_LINHA)
 		.append("A quantidade de parelas em aberto é: ")
 		.append(emprestimoDetalhe.getPrazoPagamento());
 		

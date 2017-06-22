@@ -8,6 +8,7 @@ import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.entidades.Emprestimo;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.PagamentoEmprestimoExcecao;
+import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 import br.com.fiap.bot.util.DataUtil;
 import br.com.fiap.bot.util.MoedaUtil;
@@ -63,12 +64,12 @@ public class IntegracaoBotPagarParcelaEmprestimo extends IntegracaoBotSolicitaca
 			.append("Caso tenha certeza que tem uma parcela pendente, informe o número dela para tentarmos realizar o pagamento");
 		}else{
 			retorno.append("Informe o numero da parcela que gostaria de pagar de acordo com o retorno abaixo")
-			.append("\n\n")
-			.append("PARCELAS NAO PAGAS")
-			.append("\n\n");
+			.append(ConstantesBot.PULAR_DUAS_LINHA)
+			.append("Segue as parcelas que poderão ser pagas:")
+			.append(ConstantesBot.PULAR_DUAS_LINHA);
 			parcelas.forEach(p -> retorno.append(p.getNumeroParcela()).append(" - ")
 					.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" - ")
-					.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append("\n"));
+					.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append(ConstantesBot.PULAR_UMA_LINHA));
 		}
 		
 		return retorno.toString();

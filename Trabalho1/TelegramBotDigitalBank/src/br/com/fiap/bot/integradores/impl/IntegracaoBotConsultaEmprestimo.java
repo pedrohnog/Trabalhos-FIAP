@@ -6,6 +6,7 @@ import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.entidades.Emprestimo;
+import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.DataUtil;
 import br.com.fiap.bot.util.MoedaUtil;
@@ -23,26 +24,26 @@ public class IntegracaoBotConsultaEmprestimo extends IntegracaoBotConsulta {
 			
 			if(!emprestimosVencidos.isEmpty()){
 				retorno.append("PARCELAS VENCIDAS");
-				retorno.append("\n\n");
+				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
 				
 				emprestimosVencidos.forEach(p -> retorno
 						.append(p.getNumeroParcela()).append(" - ")
 						.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" - ")
-						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append("\n"));
+						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append(ConstantesBot.PULAR_UMA_LINHA));
 				
-				retorno.append("\n\n");
+				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
 			}
 		
 			if(!emprestimosNaoPagos.isEmpty()){
 				retorno.append("PARCELAS NAO PAGAS");
-				retorno.append("\n\n");
+				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
 
 				emprestimosNaoPagos.forEach(p -> retorno
 						.append(p.getNumeroParcela()).append(" - ")
 						.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" - ")
-						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append("\n"));
+						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append(ConstantesBot.PULAR_UMA_LINHA));
 
-				retorno.append("\n\n");
+				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
 			}
 			
 		}else{

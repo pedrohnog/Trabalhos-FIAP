@@ -3,12 +3,13 @@ package br.com.fiap.bot.integradores.impl;
 import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
+import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 
 public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao{
 	
 	public IntegracaoBotCriarConta() {
-		super("Legal, agora informe seu cpf, telefone e email no seguinte formato para que possamos criar sua conta!\n cpf - telefone - email (Ex: 35263585652 - 25547685 - jose@email.com",
+		super("Legal, agora informe seu cpf, telefone e email no seguinte formato para que possamos criar sua conta!" + ConstantesBot.PULAR_UMA_LINHA+ " cpf - telefone - email (Ex: 35263585652 - 25547685 - jose@email.com",
 				"cpf - telefone - email (Ex: 35263585652 - 25547685 - jose@email.com");
 	}
 	

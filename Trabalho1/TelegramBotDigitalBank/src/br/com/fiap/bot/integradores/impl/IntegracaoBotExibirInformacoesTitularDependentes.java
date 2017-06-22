@@ -7,6 +7,7 @@ import com.pengrad.telegrambot.model.Chat;
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
+import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.MoedaUtil;
 
@@ -25,7 +26,7 @@ public class IntegracaoBotExibirInformacoesTitularDependentes extends Integracao
 					.append(u.getCpf()).append(" - ")
 					.append(u.getNome()).append(" - ")
 					.append(MoedaUtil.conveterMoedaBr(u.getConta().getSaldo()))
-					.append("\n"));
+					.append(ConstantesBot.PULAR_UMA_LINHA));
 			
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");

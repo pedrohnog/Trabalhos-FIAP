@@ -2,9 +2,11 @@ package br.com.fiap.bot.integradores;
 
 import com.pengrad.telegrambot.model.Chat;
 
+import br.com.fiap.bot.constantes.ConstantesBot;
+
 public abstract class IntegracaoBotSolicitacao implements IntegracaoBot{
 	
-	public static String ERRO_RESPOSTA = "Ops, alguma problema com a sua resposta, responda novamente seguindo o formato a seguir: \n";
+	public static String ERRO_RESPOSTA = "Ops, alguma problema com a sua resposta, responda novamente seguindo o formato a seguir: " + ConstantesBot.PULAR_UMA_LINHA;
 	private String dominioResposta;	
 	private String mensagemPrimeiraIntegracao;
 	

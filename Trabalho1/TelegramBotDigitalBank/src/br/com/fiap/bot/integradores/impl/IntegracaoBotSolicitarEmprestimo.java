@@ -11,13 +11,14 @@ import br.com.fiap.banco.excecao.EmprestimoAbertoExcecao;
 import br.com.fiap.banco.excecao.PrazoEmprestimoExcedidoExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
+import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 import br.com.fiap.bot.util.MoedaUtil;
 
 public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotSolicitarEmprestimo() {
-		super("Para efetivar seu empréstimo, informe o valor que você precisa e a quantidade de parcelas. \nInforme no seguinte padrão: valor - quantidade parcelas (Ex: 500,00 - 36)", "valor - quantidade parcelas (Ex: 500,00 - 36)");
+		super("Para efetivar seu empréstimo, informe o valor que você precisa e a quantidade de parcelas. " + ConstantesBot.PULAR_UMA_LINHA + "Informe no seguinte padrão: valor - quantidade parcelas (Ex: 500,00 - 36)", "valor - quantidade parcelas (Ex: 500,00 - 36)");
 	}
 
 	@Override
@@ -87,7 +88,8 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 		try {
 			valorMaximoEmprestimo = botComando.verificarValorMaximoEmprestimo(usuario.id());
 			retorno.append(super.tratarPrimeiraInteracao(usuario))
-			.append("\nO limite máximo que você pode pedir emprestado é: ")
+			.append(ConstantesBot.PULAR_UMA_LINHA)
+			.append("O limite máximo que você pode pedir emprestado é: ")
 			.append(format.format(valorMaximoEmprestimo));
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");

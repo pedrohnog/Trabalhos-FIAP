@@ -13,6 +13,7 @@ import com.pengrad.telegrambot.request.GetUpdates;
 import com.pengrad.telegrambot.request.SendChatAction;
 import com.pengrad.telegrambot.request.SendMessage;
 
+import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.constantes.EnumComandosBot;
 import br.com.fiap.bot.constantes.EnumTipoIntegracaoBot;
 import br.com.fiap.bot.integradores.IntegracaoBot;
@@ -117,9 +118,9 @@ public class Bot {
 			List<String> comandosEnviados = BotUtil.encontrarComandosNaMensagem(mensagemRecebida);
 			
 			if(comandosEnviados.isEmpty()){
-				mensagemRetorno = "Comando desconhecido!\n Para saber a lista completa de comandos, digite /ajuda";
+				mensagemRetorno = "Comando desconhecido!" + ConstantesBot.PULAR_UMA_LINHA + " Para saber a lista completa de comandos, digite /ajuda";
 			}else if(comandosEnviados.size() > 1){
-				mensagemRetorno = "Você enviou mais de um comando, por favor digite apenas um comando!\n Para saber a lista completa de comandos, digite /ajuda";
+				mensagemRetorno = "Você enviou mais de um comando, por favor digite apenas um comando!" + ConstantesBot.PULAR_UMA_LINHA + " Para saber a lista completa de comandos, digite /ajuda";
 			}else{
 				String comando = comandosEnviados.get(0);
 				String mensagemSemComando = BotUtil.retirarComandoDaMensagem(mensagemRecebida, comando);
