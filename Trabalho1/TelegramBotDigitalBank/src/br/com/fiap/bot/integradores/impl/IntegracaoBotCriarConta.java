@@ -42,11 +42,15 @@ public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao{
 	@Override
 	public String integrarBanco(String resposta, Chat usuario) {
 		BotComando botComando = new BotComando();
+		
 		String [] respostas = resposta.split("-");
+		
 		String cpf = respostas[0].trim();
 		String telefone = respostas[1].trim();
 		String email = respostas[2].trim();
+		
 		botComando.criarConta(usuario.id(), usuario.firstName(), usuario.lastName(), telefone, cpf, email);
+		
 		return "Parabéns! Conta criada com sucesso!";
 	}
 }
