@@ -16,11 +16,15 @@ public class IntegracaoBotConsultaSaldoDevedorEmprestimo extends IntegracaoBotCo
 		BotComando botComando = new BotComando();
 		EmprestimoDetalhe emprestimoDetalhe = botComando.verificarSaldoDevedorPrazoEmprestimo(usuario.id());
 
-		retorno.append("O saldo devedor do seu empréstimo é: ")
-		.append(MoedaUtil.conveterMoedaBr(emprestimoDetalhe.getSaldoDevedor()))
-		.append(ConstantesBot.PULAR_UMA_LINHA)
-		.append("A quantidade de parelas em aberto é: ")
-		.append(emprestimoDetalhe.getPrazoPagamento());
+		if (emprestimoDetalhe.getSaldoDevedor() != ConstantesBot.VALOR_ZERO_DOUBLE){
+			retorno.append("O saldo devedor do seu empréstimo é: ")
+			.append(MoedaUtil.conveterMoedaBr(emprestimoDetalhe.getSaldoDevedor()))
+			.append(ConstantesBot.PULAR_UMA_LINHA)
+			.append("A quantidade de parelas em aberto é: ")
+			.append(emprestimoDetalhe.getPrazoPagamento());
+		}else{
+			retorno.append("Você não tem emprestimo para ser pago!");
+		}
 		
 		return retorno.toString();
 	}
