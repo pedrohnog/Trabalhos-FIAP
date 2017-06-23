@@ -16,7 +16,10 @@ public class IntegracaoBotRealizarDeposito extends IntegracaoBotSolicitacao {
 	public Boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
 		if(resposta != null){
-			resposta = resposta.trim();						
+			resposta = resposta.trim();
+			if (resposta.contains(",")){
+				resposta = resposta.replace(",", ".");
+			}
 			try{
 				if(!(Double.valueOf(resposta) > 0D)){
 					respostaOk = false;
