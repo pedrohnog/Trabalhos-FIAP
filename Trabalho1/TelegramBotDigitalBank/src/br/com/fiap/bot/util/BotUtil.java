@@ -13,15 +13,18 @@ import br.com.fiap.bot.dao.impl.MensagemIntegracaoDao;
 import br.com.fiap.bot.entidades.MensagemIntegracao;
 import br.com.fiap.bot.integradores.IntegracaoBot;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotAjuda;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaLancamento;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaEmprestimo;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaExtrato;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaLancamento;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaldoDevedorEmprestimo;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaque;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaTarifaPaga;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotCriarConta;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotExibirInformacoesTitularDependentes;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotIncluirDependente;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotModificarConta;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotPagarParcelaEmprestimo;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotPagarTodasParcelasEmprestimo;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotRealizarDeposito;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotRealizarSaque;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotSolicitarEmprestimo;
@@ -111,7 +114,7 @@ public class BotUtil {
 		case "/incluir_dependente":
 			retorno = new IntegracaoBotIncluirDependente();
 			break;
-		case "/exibir_informacoes_titular_e_dependentes":
+		case "/exibir_info_titular_dependentes":
 			retorno = new IntegracaoBotExibirInformacoesTitularDependentes();
 			break;
 		case "/realizar_deposito":
@@ -138,6 +141,16 @@ public class BotUtil {
 		case "/consultar_emprestimo":
 			retorno = new IntegracaoBotConsultaEmprestimo();
 			break;
+		case "/pagar_parcelas_vencidas_emprest":
+			retorno = new IntegracaoBotPagarTodasParcelasEmprestimo();
+			break;
+		case "/pagar_parcela_emprestimo":
+			retorno = new IntegracaoBotPagarParcelaEmprestimo();
+			break;
+		case "/consultar_saldo_devedor_emprest":
+			retorno = new IntegracaoBotConsultaSaldoDevedorEmprestimo();
+			break;
+			 
 		default:
 			break;
 		}
