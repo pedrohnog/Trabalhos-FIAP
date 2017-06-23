@@ -37,10 +37,14 @@ public class Bot {
 			
 			for (Update update : updates) {
 				m = update.updateId() + 1;
-				
+				String mensagemRetorno = "";
 				if(update.message() != null){
 					bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));					
-					String mensagemRetorno = tratarMensagemBot(update);					
+					try{
+						mensagemRetorno = tratarMensagemBot(update);
+					}catch(Exception e){
+						mensagemRetorno = "Desculpe, não entendi... digite /ajuda para obter a lista de comandos conhecidos.";
+					}
 					bot.execute(new SendMessage(update.message().chat().id(), mensagemRetorno.toString()));
 				}
 				
