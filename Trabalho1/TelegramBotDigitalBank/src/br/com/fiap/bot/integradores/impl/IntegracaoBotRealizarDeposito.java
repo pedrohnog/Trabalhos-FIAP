@@ -5,6 +5,8 @@ import com.pengrad.telegrambot.model.Chat;
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
+import br.com.fiap.bot.util.MoedaUtil;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de depósito do Bot
@@ -13,7 +15,7 @@ import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 public class IntegracaoBotRealizarDeposito extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotRealizarDeposito() {
-		super("Quanto você gostaria de depositar? Digite apenas o valor.", "Valor para depositar (Ex: 500,00)");
+		super(PropriedadesUtil.carregarMensagensIntegracao().getProperty("REALIZAR_DEPOSITO"), PropriedadesUtil.carregarMensagensIntegracao().getProperty("REALIZAR_DEPOSITO_FORMATO"));
 	}
 
 	@Override
@@ -44,9 +46,9 @@ public class IntegracaoBotRealizarDeposito extends IntegracaoBotSolicitacao {
 		}
 		try {
 			botComando.realizarDeposito(usuario.id(), Double.valueOf(resposta));
-			retorno = "Deposito realizado com sucesso!";
+			retorno = String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_DEPOSITO_REALIZADO"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id())));
 		} catch (ContaInexistenteExcecao e) {
-			retorno = "Deposito não realizado! Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
+			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");
 		}
 
 		return retorno;

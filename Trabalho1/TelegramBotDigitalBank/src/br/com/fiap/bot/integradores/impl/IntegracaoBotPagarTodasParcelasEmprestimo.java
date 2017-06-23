@@ -8,6 +8,8 @@ import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.entidades.Emprestimo;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
+import br.com.fiap.bot.util.MoedaUtil;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de pagamento de todas as parcelas do empréstimo do Bot
@@ -16,7 +18,7 @@ import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotPagarTodasParcelasEmprestimo() {
-		super("Você gostaria de pagar todas as parcelas possíveis com o saldo da sua conta? Sim ou Não", "Sim ou Não");
+		super(PropriedadesUtil.carregarMensagensIntegracao().getProperty("PAGAR_PARCELAS_VENCIDAS"), PropriedadesUtil.carregarMensagensIntegracao().getProperty("PAGAR_PARCELAS_VENCIDAS_FORMATO"));
 	}
 
 	@Override
@@ -44,18 +46,26 @@ public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSoli
 		if (!emprestimosNaoPagos.isEmpty() || !emprestimosVencidos.isEmpty()) {
 
 			if (resposta.trim().toUpperCase().equals("NAO") || resposta.trim().toUpperCase().equals("NÃO")) {
-				retorno.append("Ok! Não vamos realizar os pagamentos!");
+				try {
+					retorno.append(String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_PAGAR_PARCELAS_NAO"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id()))));
+				} catch (ContaInexistenteExcecao e) {
+					retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
+				}
 			} else {
 				try {
 					botComando.pagarParcelasVencidasEmprestimo(usuario.id());
 				} catch (ContaInexistenteExcecao e) {
-					retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
+					retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
 				}
 
-				retorno.append("Parcelas pagas com sucesso!");
+				try {
+					retorno.append(String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_PAGAR_PARCELAS_SIM"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id()))));
+				} catch (ContaInexistenteExcecao e) {
+					retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
+				}
 			}
 		} else {
-			retorno.append("Você não tem emprestimo para ser pago!");
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_SEM_PARCELAS"));
 		}
 		return retorno.toString();
 	}

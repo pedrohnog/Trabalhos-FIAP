@@ -14,6 +14,7 @@ import br.com.fiap.banco.excecao.ValorEmprestimoExcedidoExcecao;
 import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 import br.com.fiap.bot.util.MoedaUtil;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de solicitação de empréstimo do Bot
@@ -22,10 +23,7 @@ import br.com.fiap.bot.util.MoedaUtil;
 public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotSolicitarEmprestimo() {
-		super("Para efetivar seu empréstimo, informe o valor que você precisa e a quantidade de parcelas. "
-				+ ConstantesBot.PULAR_UMA_LINHA
-				+ "Informe no seguinte padrão: valor - quantidade parcelas (Ex: 500,00 - 36)",
-				"valor - quantidade parcelas (Ex: 500,00 - 36)");
+		super(PropriedadesUtil.carregarMensagensIntegracao().getProperty("SOLICITAR_EMPRESTIMO"), PropriedadesUtil.carregarMensagensIntegracao().getProperty("SOLICITAR_EMPRESTIMO_FORMATO"));
 	}
 
 	@Override
@@ -63,23 +61,31 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 
 		try {
 			botComando.solicitarEmprestimo(usuario.id(), valorEmprestimo, quantidadeParcelas);
-			retorno = "Emprestimo solicitado com sucesso! O dinheiro está na sua conta!";
+			retorno = String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_EMPRESTIMO_SOLICITADO"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id())));
 		} catch (ContaInexistenteExcecao e) {
-			retorno = "Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
+			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");
 		} catch (ValorEmprestimoExcedidoExcecao e) {
 			try {
-				retorno = "Empréstimo não confirmado! O valor máximo que você pode solicitar é: "
-						+ MoedaUtil.conveterMoedaBr(botComando.verificarValorMaximoEmprestimo(usuario.id()));
-			} catch (ContaInexistenteExcecao | SaldoInsuficienteExcecao e1) {
-				retorno = "Empréstimo não confirmado! Valor excedido!";
+				retorno = String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_EXCEDIDO_VALOR_EMPRESTIMO"), MoedaUtil.conveterMoedaBr(botComando.verificarValorMaximoEmprestimo(usuario.id())));
+			} catch (ContaInexistenteExcecao e1) {
+				retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");
+			} catch (SaldoInsuficienteExcecao e1) {
+				try {
+					retorno = String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_SALDO_INSUFICIENTE"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id())));
+				} catch (ContaInexistenteExcecao e2) {
+					retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");
+				}
 			}
-
 		} catch (PrazoEmprestimoExcedidoExcecao e) {
-			retorno = "Empréstimo não confirmado! O valor máximo de parcela que você pode solicitar é 36";
+			retorno = String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_EXCEDIDO_PRAZO_EMPRESTIMO"), "36");
 		} catch (SaldoInsuficienteExcecao e) {
-			retorno = "Empréstimo não confirmado! Saldo na conta insuficiente!";
+			try {
+				retorno = String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_SALDO_INSUFICIENTE"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id())));
+			} catch (ContaInexistenteExcecao e2) {
+				retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");
+			}
 		} catch (EmprestimoAbertoExcecao e) {
-			retorno = "Empréstimo não confirmado! Você já tem um empréstimo aberto.";
+			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_EMPRESTIMO_ABERTO");
 		}
 		return retorno;
 	}
@@ -98,9 +104,13 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 					.append("O limite máximo que você pode pedir emprestado é: ")
 					.append(format.format(valorMaximoEmprestimo));
 		} catch (ContaInexistenteExcecao e) {
-			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
 		} catch (SaldoInsuficienteExcecao e) {
-			retorno.append("Desculpe, mas você não tem saldo para solicitar empréstimo.");
+			try {
+				retorno.append(String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_SALDO_INSUFICIENTE"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id()))));
+			} catch (ContaInexistenteExcecao e1) {
+				retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
+			}
 		}
 		return retorno.toString();
 	}

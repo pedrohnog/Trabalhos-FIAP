@@ -4,8 +4,8 @@ import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaExistenteExcecao;
-import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de criação de conta do Bot
@@ -14,10 +14,7 @@ import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotCriarConta() {
-		super("Legal, agora informe seu cpf, telefone e email no seguinte formato para que possamos criar sua conta!"
-				+ ConstantesBot.PULAR_UMA_LINHA
-				+ " cpf - telefone - email (Ex: 35263585652 - 25547685 - jose@email.com",
-				"cpf - telefone - email (Ex: 35263585652 - 25547685 - jose@email.com");
+		super(PropriedadesUtil.carregarMensagensIntegracao().getProperty("COMANDO_CRIAR_CONTA"), PropriedadesUtil.carregarMensagensIntegracao().getProperty("COMANDO_CRIAR_CONTA_FORMATO"));
 	}
 
 	@Override
@@ -58,9 +55,9 @@ public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao {
 
 		try {
 			botComando.criarConta(usuario.id(), usuario.firstName(), usuario.lastName(), telefone, cpf, email);
-			return "Parabéns! Conta criada com sucesso!";
+			return PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_CRIADA");
 		} catch (ContaExistenteExcecao e) {
-			return "Você já possui uma conta. Não será possível criar uma nova!";
+			return PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_EXISTENTE");
 		}
 
 	}

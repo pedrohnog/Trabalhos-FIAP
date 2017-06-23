@@ -6,6 +6,7 @@ import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.MoedaUtil;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de consulta do saldo da conta do Bot
@@ -20,9 +21,9 @@ public class IntegracaoBotConsultarSaldoConta extends IntegracaoBotConsulta {
 		Double saldoConta;
 		try {
 			saldoConta = botComando.verificarSaldo(usuario.id());
-			retorno.append("SALDO NA CONTA:").append(MoedaUtil.conveterMoedaBr(saldoConta));
+			retorno.append(String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("CONSULTAR_SALDO"), MoedaUtil.conveterMoedaBr(saldoConta)));
 		} catch (ContaInexistenteExcecao e) {
-			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
 		}
 
 		return retorno.toString();

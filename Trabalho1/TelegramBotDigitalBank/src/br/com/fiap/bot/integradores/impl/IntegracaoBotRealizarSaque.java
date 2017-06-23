@@ -6,6 +6,8 @@ import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
+import br.com.fiap.bot.util.MoedaUtil;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de saque do Bot
@@ -14,7 +16,7 @@ import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 public class IntegracaoBotRealizarSaque extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotRealizarSaque() {
-		super("Quanto você gostaria de sacar? Informe apenas o valor", "Valor para sacar (Ex: 120,00)");
+		super(PropriedadesUtil.carregarMensagensIntegracao().getProperty("REALIZAR_SAQUE"), PropriedadesUtil.carregarMensagensIntegracao().getProperty("REALIZAR_SAQUE_FORMATO"));
 	}
 
 	@Override
@@ -47,11 +49,11 @@ public class IntegracaoBotRealizarSaque extends IntegracaoBotSolicitacao {
 		try {
 			saldoAnterior = botComando.verificarSaldo(usuario.id());
 			botComando.realizarSaque(usuario.id(), Double.valueOf(resposta));
-			retorno = "Saque realizado com sucesso! Seu novo saldo é " + botComando.verificarSaldo(usuario.id());
+			retorno = String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_SAQUE_REALIZADO"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id())));
 		} catch (SaldoInsuficienteExcecao e) {
-			retorno = "Saque não realizado! Seu saldo é insuficiente! Saldo na conta: " + saldoAnterior;
+			retorno = String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_SALDO_INSUFICIENTE"), saldoAnterior);
 		} catch (ContaInexistenteExcecao e) {
-			retorno = "Saque não realizado! Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
+			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");
 		}
 		return retorno;
 	}

@@ -7,6 +7,7 @@ import br.com.fiap.banco.dados.EmprestimoDetalhe;
 import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.MoedaUtil;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de consulta do saldo devedor do empréstimo do Bot
@@ -26,7 +27,7 @@ public class IntegracaoBotConsultaSaldoDevedorEmprestimo extends IntegracaoBotCo
 					.append(ConstantesBot.PULAR_UMA_LINHA).append("A quantidade de parelas em aberto é: ")
 					.append(emprestimoDetalhe.getPrazoPagamento());
 		} else {
-			retorno.append("Você não tem emprestimo para ser pago!");
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_SEM_PARCELAS"));
 		}
 
 		return retorno.toString();

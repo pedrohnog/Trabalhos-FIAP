@@ -6,6 +6,7 @@ import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de inclusão de dependentes do Bot
@@ -14,8 +15,7 @@ import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotIncluirDependente() {
-		super("Me fale os dados do novo dependente. Por favor, informe nesta padrão: cpf - nome - email - telefone (Ex: 36521563511 - Joao - joao@email.com - 11223344)",
-				"cpf - nome - email - telefone (Ex: 36521563511 - Joao - joao@email.com - 11223344)");
+		super(PropriedadesUtil.carregarMensagensIntegracao().getProperty("INCLUIR_DEPENDENTE"), PropriedadesUtil.carregarMensagensIntegracao().getProperty("INCLUIR_DEPENDENTE_FORMATO"));
 	}
 
 	@Override
@@ -55,11 +55,11 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 		try {
 			botComando.incluirDependente(usuario.id(), usuario.firstName(), usuario.lastName(), telefone.trim(),
 					cpf.trim(), email.trim());
-			retorno = "Parabéns! Dependente incluido com sucesso!";
+			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_DEPENDENTE_INCLUIDO");
 		} catch (ContaInexistenteExcecao e) {
-			retorno = "Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
+			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");
 		} catch (UsuarioDuplicadoExcecao e) {
-			retorno = "O dependente que você está tentando incluir já tem conta cadastrada no banco";
+			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_DEPENDENTE_DUPLICADO");
 		}
 		return retorno;
 	}

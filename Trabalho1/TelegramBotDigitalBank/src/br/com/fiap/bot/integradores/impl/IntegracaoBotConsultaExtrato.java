@@ -11,8 +11,9 @@ import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
-import br.com.fiap.bot.util.MoedaUtil;
 import br.com.fiap.bot.util.DataUtil;
+import br.com.fiap.bot.util.MoedaUtil;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de consulta de extrato do Bot
@@ -26,18 +27,21 @@ public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 		BotComando botComando = new BotComando();
 		try {
 			List<Transacao> transacoes = botComando.verificarExtrato(usuario.id());
-			retorno.append("EXTRATO DA CONTA").append(ConstantesBot.PULAR_DUAS_LINHA);
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("EXTRATO"));
 
 			transacoes.forEach(t -> retorno.append(DataUtil.conveterDataPadraoBr(t.getDataHora()) + " - ")
 					.append(TipoTransacao.getTipoTransacao(t.getTipoTransacao()).toString() + ": ")
 					.append(MoedaUtil.conveterMoedaBr(t.getValor())).append(ConstantesBot.PULAR_UMA_LINHA));
 
-			retorno.append("SALDO NA CONTA: ")
-					.append(MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id())));
+			retorno.append(String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("CONSULTAR_SALDO"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id()))));
 		} catch (SaldoInsuficienteExcecao e) {
-			retorno.append("Saldo insuficiente para consultar o extrato!");
+			try {
+				retorno.append(String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("CONSULTAR_SALDO"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id()))));
+			} catch (ContaInexistenteExcecao e1) {
+				retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
+			}
 		} catch (ContaInexistenteExcecao e) {
-			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
 		}
 
 		return retorno.toString();

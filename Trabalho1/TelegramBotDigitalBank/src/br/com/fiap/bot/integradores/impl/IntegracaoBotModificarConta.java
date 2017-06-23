@@ -5,6 +5,7 @@ import com.pengrad.telegrambot.model.Chat;
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de modificação de conta do Bot
@@ -13,8 +14,7 @@ import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 public class IntegracaoBotModificarConta extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotModificarConta() {
-		super("Me fale os seus novos dados para que possamos atualizar. Por favor, informe nesta padrão: cpf - email (Ex: 36521563511 - joao@email.com)",
-				"cpf - email (Ex: 36521563511 - joao@email.com)");
+		super(PropriedadesUtil.carregarMensagensIntegracao().getProperty("MODIFICAR_CONTA"), PropriedadesUtil.carregarMensagensIntegracao().getProperty("MODIFICAR_CONTA_FORMATO"));
 	}
 
 	@Override
@@ -47,9 +47,9 @@ public class IntegracaoBotModificarConta extends IntegracaoBotSolicitacao {
 
 		try {
 			botComando.modificarConta(usuario.id(), respostas[0].trim(), respostas[1].trim());
-			retorno = "Parabéns! Conta modificada com sucesso!";
+			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_MODIFICADA");
 		} catch (ContaInexistenteExcecao e) {
-			retorno = "Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
+			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");
 		}
 		return retorno;
 	}

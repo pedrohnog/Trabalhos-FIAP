@@ -12,6 +12,7 @@ import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 import br.com.fiap.bot.util.DataUtil;
 import br.com.fiap.bot.util.MoedaUtil;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo comando de pagamento de uma parcela do empréstimo do Bot
@@ -46,11 +47,11 @@ public class IntegracaoBotPagarParcelaEmprestimo extends IntegracaoBotSolicitaca
 
 		try {
 			botComando.pagarParcelaEmprestimo(usuario.id(), Integer.valueOf(resposta));
-			retorno.append("Parcela paga com sucesso!");
+			retorno.append(String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_PARCELA_PAGA"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id()))));
 		} catch (ContaInexistenteExcecao e) {
-			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
 		} catch (PagamentoEmprestimoExcecao e) {
-			retorno.append("Não é possível realizar o pagamento da parcela selecionada. A parcela não existe ou já está paga.");
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_PARCELA_INEXISTENTE_PAGA"));
 		}
 
 		return retorno.toString();
@@ -64,12 +65,9 @@ public class IntegracaoBotPagarParcelaEmprestimo extends IntegracaoBotSolicitaca
 		List<Emprestimo> parcelas = botComando.listarEmprestimosNaoPagos(usuario.id());
 
 		if (parcelas.isEmpty()) {
-			retorno.append("Nesta consulta prévia, não encontramos parcelas pendentes para pagamento.")
-					.append("Caso tenha certeza que tem uma parcela pendente, informe o número dela para tentarmos realizar o pagamento");
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("PAGAR_PARCELA_NAO_ENCONTRADA"));
 		} else {
-			retorno.append("Informe o numero da parcela que gostaria de pagar de acordo com o retorno abaixo")
-					.append(ConstantesBot.PULAR_DUAS_LINHA).append("Segue as parcelas que poderão ser pagas:")
-					.append(ConstantesBot.PULAR_DUAS_LINHA);
+			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("PAGAR_PARCELA"));
 			parcelas.forEach(p -> retorno.append(p.getNumeroParcela()).append(" - ")
 					.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" - ")
 					.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append(ConstantesBot.PULAR_UMA_LINHA));
