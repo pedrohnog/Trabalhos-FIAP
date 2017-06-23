@@ -12,24 +12,6 @@ import br.com.fiap.bot.constantes.EnumComandosBot;
 import br.com.fiap.bot.dao.impl.MensagemIntegracaoDao;
 import br.com.fiap.bot.entidades.MensagemIntegracao;
 import br.com.fiap.bot.integradores.IntegracaoBot;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotAjuda;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaEmprestimo;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaExtrato;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaLancamento;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaldoDevedorEmprestimo;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaRetiradas;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaTarifaPaga;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultarSaldoConta;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotCriarConta;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotExibirInformacoesTitularDependentes;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotIncluirDependente;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotModificarConta;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotPagarParcelaEmprestimo;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotPagarTodasParcelasEmprestimo;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotRealizarDeposito;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotRealizarSaque;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotSolicitarEmprestimo;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotStart;
 
 /**
  * Classe utilitária para auxiliar nos tratamentos realizados pelo Bot
@@ -120,65 +102,13 @@ public class BotUtil {
 	 */
 	public static IntegracaoBot definirClasseIntegracao(EnumComandosBot ultimoComandoExecutado) {
 		IntegracaoBot retorno = null;
-
-		switch (ultimoComandoExecutado.getComando()) {
-			case "/start":
-				retorno = new IntegracaoBotStart();
-				break;
-			case "/ajuda":
-				retorno = new IntegracaoBotAjuda();
-				break;
-			case "/criar_conta":
-				retorno = new IntegracaoBotCriarConta();
-				break;
-			case "/modificar_conta":
-				retorno = new IntegracaoBotModificarConta();
-				break;
-			case "/incluir_dependente":
-				retorno = new IntegracaoBotIncluirDependente();
-				break;
-			case "/exibir_info_titular_dependentes":
-				retorno = new IntegracaoBotExibirInformacoesTitularDependentes();
-				break;
-			case "/realizar_deposito":
-				retorno = new IntegracaoBotRealizarDeposito();
-				break;
-			case "/realizar_saque":
-				retorno = new IntegracaoBotRealizarSaque();
-				break;
-			case "/consultar_extrato":
-				retorno = new IntegracaoBotConsultaExtrato();
-				break;
-			case "/consultar_lancamentos":
-				retorno = new IntegracaoBotConsultaLancamento();
-				break;
-			case "/consultar_retiradas":
-				retorno = new IntegracaoBotConsultaRetiradas();
-				break;
-			case "/solicitar_emprestimo":
-				retorno = new IntegracaoBotSolicitarEmprestimo();
-				break;
-			case "/consultar_tarifas_pagas":
-				retorno = new IntegracaoBotConsultaTarifaPaga();
-				break;
-			case "/consultar_emprestimo":
-				retorno = new IntegracaoBotConsultaEmprestimo();
-				break;
-			case "/pagar_parcelas_vencidas_emprest":
-				retorno = new IntegracaoBotPagarTodasParcelasEmprestimo();
-				break;
-			case "/pagar_parcela_emprestimo":
-				retorno = new IntegracaoBotPagarParcelaEmprestimo();
-				break;
-			case "/consultar_saldo_devedor_emprest":
-				retorno = new IntegracaoBotConsultaSaldoDevedorEmprestimo();
-				break;
-			case "/consultar_saldo_conta":
-				retorno = new IntegracaoBotConsultarSaldoConta();
-				break;
-			default:
-				break;
+		
+		try {
+			return (IntegracaoBot) ultimoComandoExecutado.getClasseComando().newInstance();
+		} catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException e) {
+			e.printStackTrace();
 		}
+		
 		return retorno;
 	}
 
