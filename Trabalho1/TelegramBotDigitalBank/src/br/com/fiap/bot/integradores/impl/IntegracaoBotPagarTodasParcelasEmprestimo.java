@@ -26,8 +26,11 @@ public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSoli
 		boolean respostaOk = true;
 
 		try {
-			if (resposta == null || resposta.trim().length() != 3 || !(resposta.trim().toUpperCase().equals("SIM")
-					|| resposta.trim().toUpperCase().equals("NAO") || resposta.trim().toUpperCase().equals("NÃO"))) {
+			if (resposta == null ||
+					!(
+							resposta.trim().toUpperCase().equals("SIM") || !resposta.trim().toUpperCase().equals("S") || 
+							resposta.trim().toUpperCase().equals("NAO") || resposta.trim().toUpperCase().equals("NÃO") || resposta.trim().toUpperCase().equals("N"))
+					) {
 				respostaOk = false;
 			}
 		} catch (Exception e) {
@@ -44,8 +47,7 @@ public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSoli
 		List<Emprestimo> emprestimosVencidos = botComando.listarEmprestimosVencidos(usuario.id());
 
 		if (!emprestimosNaoPagos.isEmpty() || !emprestimosVencidos.isEmpty()) {
-
-			if (resposta.trim().toUpperCase().equals("NAO") || resposta.trim().toUpperCase().equals("NÃO")) {
+			if (resposta.trim().toUpperCase().equals("NAO") || resposta.trim().toUpperCase().equals("NÃO") || resposta.trim().toUpperCase().equals("N")) {
 				try {
 					retorno.append(String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_PAGAR_PARCELAS_NAO"), MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id()))));
 				} catch (ContaInexistenteExcecao e) {
