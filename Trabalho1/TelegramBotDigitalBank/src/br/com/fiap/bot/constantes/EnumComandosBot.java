@@ -12,15 +12,15 @@ public enum EnumComandosBot {
 	REALIZAR_DEPOSITOS("/realizar_deposito", EnumTipoIntegracaoBot.SOLICITACAO),
 	REALIZAR_SAQUE("/realizar_saque", EnumTipoIntegracaoBot.SOLICITACAO),
 	SOLICITAR_EMPRESTIMO("/solicitar_emprestimo", EnumTipoIntegracaoBot.SOLICITACAO),
-	PAGAR_PARCELAS_VENCIDAS_EMPRESTIMO("/pagar_parcelas_vencidas_emprestimo", EnumTipoIntegracaoBot.SOLICITACAO),
+	PAGAR_PARCELAS_VENCIDAS_EMPRESTIMO("/pagar_parcelas_vencidas_emprest", EnumTipoIntegracaoBot.SOLICITACAO),
 	PAGAR_PARCELA_EMPRESTIMO("/pagar_parcela_emprestimo", EnumTipoIntegracaoBot.SOLICITACAO),
-	EXIBIR_DADOS("/exibir_informacoes_titular_e_dependentes", EnumTipoIntegracaoBot.CONSULTA),
+	EXIBIR_DADOS("/exibir_info_titular_dependentes", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_EXTRATO("/consultar_extrato", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTA_DEPOSITOS("/consultar_lancamentos", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_SAQUES("/consultar_saques", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_TARIFAS_PAGAS("/consultar_tarifas_pagas", EnumTipoIntegracaoBot.CONSULTA),
 	CONSULTAR_EMPRESTIMO("/consultar_emprestimo", EnumTipoIntegracaoBot.CONSULTA),
-	CONSULTAR_SALDO_DEVEDOR_EMPRESTIMO("/consultar_saldo_devedor_emprestimo", EnumTipoIntegracaoBot.CONSULTA),
+	CONSULTAR_SALDO_DEVEDOR_EMPRESTIMO("/consultar_saldo_devedor_emprest", EnumTipoIntegracaoBot.CONSULTA),
 	AJUDA("/ajuda", EnumTipoIntegracaoBot.CONSULTA );
 
 	public static final Map<String, EnumComandosBot> LISTA_COMANDO_INTERACOES = new HashMap<String, EnumComandosBot>();
