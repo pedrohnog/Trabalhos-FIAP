@@ -9,6 +9,10 @@ import br.com.fiap.banco.entidades.Emprestimo;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 
+/**
+ * Classe responsável pelo comando de pagamento de todas as parcelas do empréstimo do Bot
+ *
+ */
 public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotPagarTodasParcelasEmprestimo() {
@@ -18,12 +22,10 @@ public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSoli
 	@Override
 	public Boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
-		
+
 		try {
-			if (resposta == null || resposta.trim().length() != 3 || 
-					!(resposta.trim().toUpperCase().equals("SIM")
-							|| resposta.trim().toUpperCase().equals("NAO") 
-							|| resposta.trim().toUpperCase().equals("NÃO"))) {
+			if (resposta == null || resposta.trim().length() != 3 || !(resposta.trim().toUpperCase().equals("SIM")
+					|| resposta.trim().toUpperCase().equals("NAO") || resposta.trim().toUpperCase().equals("NÃO"))) {
 				respostaOk = false;
 			}
 		} catch (Exception e) {
@@ -33,27 +35,26 @@ public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSoli
 	}
 
 	@Override
-	public String integrarBanco(String resposta, Chat usuario) {	
+	public String integrarBanco(String resposta, Chat usuario) {
 		BotComando botComando = new BotComando();
 		StringBuffer retorno = new StringBuffer();
 		List<Emprestimo> emprestimosNaoPagos = botComando.listarEmprestimosNaoPagos(usuario.id());
 		List<Emprestimo> emprestimosVencidos = botComando.listarEmprestimosVencidos(usuario.id());
-		
-		if(!emprestimosNaoPagos.isEmpty() || !emprestimosVencidos.isEmpty()){
-		
-			if( resposta.trim().toUpperCase().equals("NAO") 
-						|| resposta.trim().toUpperCase().equals("NÃO")){
+
+		if (!emprestimosNaoPagos.isEmpty() || !emprestimosVencidos.isEmpty()) {
+
+			if (resposta.trim().toUpperCase().equals("NAO") || resposta.trim().toUpperCase().equals("NÃO")) {
 				retorno.append("Ok! Não vamos realizar os pagamentos!");
-			}else{
+			} else {
 				try {
 					botComando.pagarParcelasVencidasEmprestimo(usuario.id());
 				} catch (ContaInexistenteExcecao e) {
 					retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
 				}
-			
+
 				retorno.append("Parcelas pagas com sucesso!");
 			}
-		}else{
+		} else {
 			retorno.append("Você não tem emprestimo para ser pago!");
 		}
 		return retorno.toString();

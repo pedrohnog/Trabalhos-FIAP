@@ -15,33 +15,40 @@ import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 import br.com.fiap.bot.util.MoedaUtil;
 
+/**
+ * Classe responsável pelo comando de solicitação de empréstimo do Bot
+ *
+ */
 public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotSolicitarEmprestimo() {
-		super("Para efetivar seu empréstimo, informe o valor que você precisa e a quantidade de parcelas. " + ConstantesBot.PULAR_UMA_LINHA + "Informe no seguinte padrão: valor - quantidade parcelas (Ex: 500,00 - 36)", "valor - quantidade parcelas (Ex: 500,00 - 36)");
+		super("Para efetivar seu empréstimo, informe o valor que você precisa e a quantidade de parcelas. "
+				+ ConstantesBot.PULAR_UMA_LINHA
+				+ "Informe no seguinte padrão: valor - quantidade parcelas (Ex: 500,00 - 36)",
+				"valor - quantidade parcelas (Ex: 500,00 - 36)");
 	}
 
 	@Override
 	public Boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
-		if(resposta != null){
-			String [] respostas = resposta.split("-");
-			try{
-				if(respostas.length == 2){
+		if (resposta != null) {
+			String[] respostas = resposta.split("-");
+			try {
+				if (respostas.length == 2) {
 					if (!(Double.valueOf(respostas[0].trim()) > 0D)) {
 						respostaOk = false;
 					}
 					if (!(Integer.valueOf(respostas[1].trim()) > 0D)) {
 						respostaOk = false;
 					}
-				}else{
-					respostaOk = false;					
+				} else {
+					respostaOk = false;
 				}
-			}catch(Exception e){
+			} catch (Exception e) {
 				respostaOk = false;
 			}
-		}else{
-			respostaOk = false;			
+		} else {
+			respostaOk = false;
 		}
 		return respostaOk;
 	}
@@ -49,24 +56,24 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 	@Override
 	public String integrarBanco(String resposta, Chat usuario) {
 		BotComando botComando = new BotComando();
-		String [] respostas = resposta.split("-");
+		String[] respostas = resposta.split("-");
 		String retorno = "";
 		Double valorEmprestimo = Double.valueOf(respostas[0].trim());
 		Integer quantidadeParcelas = Integer.valueOf(respostas[1].trim());
-		
+
 		try {
 			botComando.solicitarEmprestimo(usuario.id(), valorEmprestimo, quantidadeParcelas);
 			retorno = "Emprestimo solicitado com sucesso! O dinheiro está na sua conta!";
 		} catch (ContaInexistenteExcecao e) {
 			retorno = "Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
 		} catch (ValorEmprestimoExcedidoExcecao e) {
-			try {				
+			try {
 				retorno = "Empréstimo não confirmado! O valor máximo que você pode solicitar é: "
 						+ MoedaUtil.conveterMoedaBr(botComando.verificarValorMaximoEmprestimo(usuario.id()));
 			} catch (ContaInexistenteExcecao | SaldoInsuficienteExcecao e1) {
 				retorno = "Empréstimo não confirmado! Valor excedido!";
 			}
-			
+
 		} catch (PrazoEmprestimoExcedidoExcecao e) {
 			retorno = "Empréstimo não confirmado! O valor máximo de parcela que você pode solicitar é 36";
 		} catch (SaldoInsuficienteExcecao e) {
@@ -76,21 +83,20 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 		}
 		return retorno;
 	}
-	
+
 	@Override
 	public String tratarPrimeiraInteracao(Chat usuario) {
-		
+
 		BotComando botComando = new BotComando();
 		Double valorMaximoEmprestimo = null;
 		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		StringBuffer retorno = new StringBuffer();
-		
+
 		try {
 			valorMaximoEmprestimo = botComando.verificarValorMaximoEmprestimo(usuario.id());
-			retorno.append(super.tratarPrimeiraInteracao(usuario))
-			.append(ConstantesBot.PULAR_UMA_LINHA)
-			.append("O limite máximo que você pode pedir emprestado é: ")
-			.append(format.format(valorMaximoEmprestimo));
+			retorno.append(super.tratarPrimeiraInteracao(usuario)).append(ConstantesBot.PULAR_UMA_LINHA)
+					.append("O limite máximo que você pode pedir emprestado é: ")
+					.append(format.format(valorMaximoEmprestimo));
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
 		} catch (SaldoInsuficienteExcecao e) {

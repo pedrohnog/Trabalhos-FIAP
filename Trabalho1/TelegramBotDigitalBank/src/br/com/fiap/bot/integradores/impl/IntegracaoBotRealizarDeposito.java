@@ -6,6 +6,10 @@ import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 
+/**
+ * Classe responsável pelo comando de depósito do Bot
+ *
+ */
 public class IntegracaoBotRealizarDeposito extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotRealizarDeposito() {
@@ -15,19 +19,19 @@ public class IntegracaoBotRealizarDeposito extends IntegracaoBotSolicitacao {
 	@Override
 	public Boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
-		if(resposta != null){
+		if (resposta != null) {
 			resposta = resposta.trim();
-			if (resposta.contains(",")){
+			if (resposta.contains(",")) {
 				resposta = resposta.replace(",", ".");
 			}
-			try{
-				if(!(Double.valueOf(resposta) > 0D)){
+			try {
+				if (!(Double.valueOf(resposta) > 0D)) {
 					respostaOk = false;
-				}				
-			}catch(NumberFormatException e){
+				}
+			} catch (NumberFormatException e) {
 				respostaOk = false;
 			}
-		}		
+		}
 		return respostaOk;
 	}
 
@@ -35,7 +39,7 @@ public class IntegracaoBotRealizarDeposito extends IntegracaoBotSolicitacao {
 	public String integrarBanco(String resposta, Chat usuario) {
 		String retorno = "";
 		BotComando botComando = new BotComando();
-		if (resposta.contains(",")){
+		if (resposta.contains(",")) {
 			resposta = resposta.replace(",", ".");
 		}
 		try {
@@ -44,7 +48,7 @@ public class IntegracaoBotRealizarDeposito extends IntegracaoBotSolicitacao {
 		} catch (ContaInexistenteExcecao e) {
 			retorno = "Deposito não realizado! Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
 		}
-		
+
 		return retorno;
 	}
 

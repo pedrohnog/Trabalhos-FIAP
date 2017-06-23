@@ -14,6 +14,10 @@ import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.MoedaUtil;
 import br.com.fiap.bot.util.DataUtil;
 
+/**
+ * Classe responsável pelo comando de consulta de extrato do Bot
+ *
+ */
 public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 
 	@Override
@@ -22,28 +26,26 @@ public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 		BotComando botComando = new BotComando();
 		try {
 			List<Transacao> transacoes = botComando.verificarExtrato(usuario.id());
-			retorno.append("EXTRATO DA CONTA")
-			.append(ConstantesBot.PULAR_DUAS_LINHA);
-			
-			transacoes.forEach(t -> retorno
-				.append(DataUtil.conveterDataPadraoBr(t.getDataHora()) + " - ")
-				.append(TipoTransacao.getTipoTransacao(t.getTipoTransacao()).toString() + ": ")
-				.append(MoedaUtil.conveterMoedaBr(t.getValor()))
-				.append(ConstantesBot.PULAR_UMA_LINHA));
-			
-			retorno.append("SALDO NA CONTA: ").append(MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id())));
+			retorno.append("EXTRATO DA CONTA").append(ConstantesBot.PULAR_DUAS_LINHA);
+
+			transacoes.forEach(t -> retorno.append(DataUtil.conveterDataPadraoBr(t.getDataHora()) + " - ")
+					.append(TipoTransacao.getTipoTransacao(t.getTipoTransacao()).toString() + ": ")
+					.append(MoedaUtil.conveterMoedaBr(t.getValor())).append(ConstantesBot.PULAR_UMA_LINHA));
+
+			retorno.append("SALDO NA CONTA: ")
+					.append(MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id())));
 		} catch (SaldoInsuficienteExcecao e) {
 			retorno.append("Saldo insuficiente para consultar o extrato!");
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
 		}
-		
+
 		return retorno.toString();
 	}
 
 	@Override
 	public String tratarPrimeiraInteracao(Chat usuario) {
-		return this.integrarBanco("",usuario);
+		return this.integrarBanco("", usuario);
 	}
 
 }

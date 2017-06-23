@@ -7,6 +7,10 @@ import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 
+/**
+ * Classe responsável pelo comando de saque do Bot
+ *
+ */
 public class IntegracaoBotRealizarSaque extends IntegracaoBotSolicitacao {
 
 	public IntegracaoBotRealizarSaque() {
@@ -16,19 +20,19 @@ public class IntegracaoBotRealizarSaque extends IntegracaoBotSolicitacao {
 	@Override
 	public Boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
-		if(resposta != null){
-			resposta = resposta.trim();		
-			if (resposta.contains(",")){
+		if (resposta != null) {
+			resposta = resposta.trim();
+			if (resposta.contains(",")) {
 				resposta = resposta.replace(",", ".");
 			}
-			try{
-				if(!(Double.valueOf(resposta) > 0D)){
+			try {
+				if (!(Double.valueOf(resposta) > 0D)) {
 					respostaOk = false;
-				}				
-			}catch(NumberFormatException e){
+				}
+			} catch (NumberFormatException e) {
 				respostaOk = false;
 			}
-		}	
+		}
 		return respostaOk;
 	}
 
@@ -36,16 +40,16 @@ public class IntegracaoBotRealizarSaque extends IntegracaoBotSolicitacao {
 	public String integrarBanco(String resposta, Chat usuario) {
 		String retorno = "";
 		Double saldoAnterior = 0D;
-		BotComando botComando = new BotComando();		
-		if (resposta.contains(",")){
+		BotComando botComando = new BotComando();
+		if (resposta.contains(",")) {
 			resposta = resposta.replace(",", ".");
 		}
-		try {			
+		try {
 			saldoAnterior = botComando.verificarSaldo(usuario.id());
-			botComando.realizarSaque(usuario.id(), Double.valueOf(resposta));			
+			botComando.realizarSaque(usuario.id(), Double.valueOf(resposta));
 			retorno = "Saque realizado com sucesso! Seu novo saldo é " + botComando.verificarSaldo(usuario.id());
 		} catch (SaldoInsuficienteExcecao e) {
-			retorno = "Saque não realizado! Seu saldo é insuficiente! Saldo na conta: " + saldoAnterior;			
+			retorno = "Saque não realizado! Seu saldo é insuficiente! Saldo na conta: " + saldoAnterior;
 		} catch (ContaInexistenteExcecao e) {
 			retorno = "Saque não realizado! Você ainda não tem uma conta, para criar sua conta digite /criar_conta";
 		}

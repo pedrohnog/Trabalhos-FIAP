@@ -11,6 +11,10 @@ import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.DataUtil;
 import br.com.fiap.bot.util.MoedaUtil;
 
+/**
+ * Classe responsável pelo comando de consulta de lançamentos do Bot
+ *
+ */
 public class IntegracaoBotConsultaLancamento extends IntegracaoBotConsulta {
 
 	@Override
@@ -18,25 +22,22 @@ public class IntegracaoBotConsultaLancamento extends IntegracaoBotConsulta {
 		BotComando botComando = new BotComando();
 		TransacaoDetalhe transacaoDetalhe;
 		StringBuilder retorno = new StringBuilder();
-		
+
 		try {
 			transacaoDetalhe = botComando.listarLancamentos(usuario.id());
-			retorno.append("EXTRATO DE LANÇAMENTOS")
-			.append(ConstantesBot.PULAR_DUAS_LINHA);
-			
-			transacaoDetalhe.getTransacoes().forEach(t -> retorno
-					.append(DataUtil.conveterDataPadraoBr(t.getDataHora())).append(" - ")
-					.append(TipoTransacao.getTipoTransacao(t.getTipoTransacao()).toString()).append(": ")
-					.append(MoedaUtil.conveterMoedaBr(t.getValor()))
-					.append(ConstantesBot.PULAR_DUAS_LINHA));
-			
-			retorno.append("TOTAL: " + MoedaUtil.conveterMoedaBr(transacaoDetalhe.getSomatorio())); 
-			
+			retorno.append("EXTRATO DE LANÇAMENTOS").append(ConstantesBot.PULAR_DUAS_LINHA);
+
+			transacaoDetalhe.getTransacoes()
+					.forEach(t -> retorno.append(DataUtil.conveterDataPadraoBr(t.getDataHora())).append(" - ")
+							.append(TipoTransacao.getTipoTransacao(t.getTipoTransacao()).toString()).append(": ")
+							.append(MoedaUtil.conveterMoedaBr(t.getValor())).append(ConstantesBot.PULAR_DUAS_LINHA));
+
+			retorno.append("TOTAL: " + MoedaUtil.conveterMoedaBr(transacaoDetalhe.getSomatorio()));
+
 		} catch (ContaInexistenteExcecao e) {
-			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");			
+			retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
 		}
-			
-		
+
 		return retorno.toString();
 	}
 

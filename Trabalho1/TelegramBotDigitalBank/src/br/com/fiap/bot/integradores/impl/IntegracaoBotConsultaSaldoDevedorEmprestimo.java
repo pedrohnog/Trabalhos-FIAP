@@ -8,6 +8,10 @@ import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 import br.com.fiap.bot.util.MoedaUtil;
 
+/**
+ * Classe responsável pelo comando de consulta do saldo devedor do empréstimo do Bot
+ *
+ */
 public class IntegracaoBotConsultaSaldoDevedorEmprestimo extends IntegracaoBotConsulta {
 
 	@Override
@@ -16,22 +20,21 @@ public class IntegracaoBotConsultaSaldoDevedorEmprestimo extends IntegracaoBotCo
 		BotComando botComando = new BotComando();
 		EmprestimoDetalhe emprestimoDetalhe = botComando.verificarSaldoDevedorPrazoEmprestimo(usuario.id());
 
-		if (emprestimoDetalhe.getSaldoDevedor() != ConstantesBot.VALOR_ZERO_DOUBLE){
+		if (emprestimoDetalhe.getSaldoDevedor() != ConstantesBot.VALOR_ZERO_DOUBLE) {
 			retorno.append("O saldo devedor do seu empréstimo é: ")
-			.append(MoedaUtil.conveterMoedaBr(emprestimoDetalhe.getSaldoDevedor()))
-			.append(ConstantesBot.PULAR_UMA_LINHA)
-			.append("A quantidade de parelas em aberto é: ")
-			.append(emprestimoDetalhe.getPrazoPagamento());
-		}else{
+					.append(MoedaUtil.conveterMoedaBr(emprestimoDetalhe.getSaldoDevedor()))
+					.append(ConstantesBot.PULAR_UMA_LINHA).append("A quantidade de parelas em aberto é: ")
+					.append(emprestimoDetalhe.getPrazoPagamento());
+		} else {
 			retorno.append("Você não tem emprestimo para ser pago!");
 		}
-		
+
 		return retorno.toString();
 	}
 
 	@Override
 	public String tratarPrimeiraInteracao(Chat usuario) {
-		return this.integrarBanco("",usuario);
+		return this.integrarBanco("", usuario);
 	}
 
 }

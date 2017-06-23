@@ -5,6 +5,10 @@ import com.pengrad.telegrambot.model.Chat;
 import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
 
+/**
+ * Classe responsável pelo comando de start do Bot
+ *
+ */
 public class IntegracaoBotStart extends IntegracaoBotConsulta {
 
 	@Override
@@ -14,8 +18,8 @@ public class IntegracaoBotStart extends IntegracaoBotConsulta {
 
 	@Override
 	public String tratarPrimeiraInteracao(Chat usuario) {
-		return "Olá "+usuario.firstName()+"!" + ConstantesBot.PULAR_UMA_LINHA
-				+"Meu nome é Fiap Bank, sou um atendente virtual e irei ajudar você." + ConstantesBot.PULAR_UMA_LINHA
+		return "Olá " + usuario.firstName() + "!" + ConstantesBot.PULAR_UMA_LINHA
+				+ "Meu nome é Fiap Bank, sou um atendente virtual e irei ajudar você." + ConstantesBot.PULAR_UMA_LINHA
 				+ "Para saber o que você pode fazer por aqui, digite /ajuda";
 	}
 
