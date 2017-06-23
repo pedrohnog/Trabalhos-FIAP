@@ -247,6 +247,8 @@ class EmprestimoComando {
 					contaComando.atualizarSaldo(idTelegram, emprestimo.getValorParcela(), TipoTransacao.PAGAMENTO_EMPRESTIMO);
 					contaComando.atualizarSaldo(idTelegram, emprestimo.getJuros(), TipoTransacao.JUROS);
 					
+					emprestimo.setConta(contaComando.buscarConta(idTelegram));
+					
 					emprestimoDao.marcarEmprestimoPago(emprestimo);
 				} else {
 					return false;
