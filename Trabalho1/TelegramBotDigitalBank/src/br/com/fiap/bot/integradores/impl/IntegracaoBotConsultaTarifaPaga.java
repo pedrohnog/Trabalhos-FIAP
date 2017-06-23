@@ -4,12 +4,11 @@ import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.dados.TransacaoDetalhe;
-import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
-import br.com.fiap.bot.util.MoedaUtil;
 import br.com.fiap.bot.util.DataUtil;
+import br.com.fiap.bot.util.MoedaUtil;
 
 public class IntegracaoBotConsultaTarifaPaga extends IntegracaoBotConsulta {
 

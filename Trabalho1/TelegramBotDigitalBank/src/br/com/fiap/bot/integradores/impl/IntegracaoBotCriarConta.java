@@ -3,6 +3,7 @@ package br.com.fiap.bot.integradores.impl;
 import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
+import br.com.fiap.banco.excecao.ContaExistenteExcecao;
 import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 
@@ -49,8 +50,12 @@ public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao{
 		String telefone = respostas[1].trim();
 		String email = respostas[2].trim();
 		
-		botComando.criarConta(usuario.id(), usuario.firstName(), usuario.lastName(), telefone, cpf, email);
+		try {
+			botComando.criarConta(usuario.id(), usuario.firstName(), usuario.lastName(), telefone, cpf, email);
+			return "Parabéns! Conta criada com sucesso!";
+		} catch (ContaExistenteExcecao e) {
+			return "Você já possui uma conta. Não será possível criar uma nova!";
+		}
 		
-		return "Parabéns! Conta criada com sucesso!";
 	}
 }
