@@ -1,6 +1,9 @@
 package br.com.fiap.banco.comandos;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.NoResultException;
 
@@ -23,6 +26,8 @@ import br.com.fiap.banco.util.CaluladorEmprestimoUtil;
  *
  */
 class EmprestimoComando {
+	
+	private static DecimalFormat df2 = new DecimalFormat(".##", DecimalFormatSymbols.getInstance(new Locale("en", "US")));
 	
 	/**
 	 * Constante que define o prazo máximo (em meses) que o usuário pode pagar o empréstimo
@@ -128,7 +133,7 @@ class EmprestimoComando {
 					saldoDevedor += emprestimo.getValorParcela() + emprestimo.getJuros();
 				}
 				
-				emprestimoDetalhe.setSaldoDevedor(saldoDevedor);
+				emprestimoDetalhe.setSaldoDevedor(Double.valueOf(df2.format(saldoDevedor)));
 			}
 		}
 		
