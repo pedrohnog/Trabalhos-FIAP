@@ -2,6 +2,8 @@ package br.com.fiap.banco.comandos;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import br.com.fiap.banco.constantes.Tarifas;
 import br.com.fiap.banco.constantes.TipoTransacao;
 import br.com.fiap.banco.dados.EmprestimoDetalhe;
@@ -214,6 +216,8 @@ class EmprestimoComando {
 			}
 			
 			return true;
+		} catch(NoResultException e) {
+			throw new PagamentoEmprestimoExcecao();
 		}
 	}
 	

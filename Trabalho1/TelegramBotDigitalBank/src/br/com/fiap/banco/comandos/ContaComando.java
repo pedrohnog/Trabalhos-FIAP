@@ -13,6 +13,7 @@ import br.com.fiap.banco.dao.impl.UsuarioDao;
 import br.com.fiap.banco.entidades.Conta;
 import br.com.fiap.banco.entidades.Transacao;
 import br.com.fiap.banco.entidades.Usuario;
+import br.com.fiap.banco.excecao.ContaExistenteExcecao;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.banco.excecao.SaldoInsuficienteExcecao;
 import br.com.fiap.banco.excecao.UsuarioDuplicadoExcecao;
@@ -55,8 +56,10 @@ class ContaComando {
 	 * @param telefone Número de telefone do usuário
 	 * @param cpf CPF do usuário
 	 * @param email Email do usuário
+	 * 
+	 * @throws ContaExistenteExcecao Se o usuário já tiver uma conta
 	 */
-	public synchronized void criarConta(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) {
+	public synchronized void criarConta(long idTelegram, String nome, String sobrenome, String telefone, String cpf, String email) throws ContaExistenteExcecao {
 		Conta conta = new Conta();
 		conta.setNumero(idTelegram);
 		conta.setDataAbertura(LocalDate.now());
@@ -69,6 +72,8 @@ class ContaComando {
 					
 					usuarioDao.criarUsuario(usuario);
 				}
+			} else {
+				throw new ContaExistenteExcecao();
 			}
 		}
 	}
