@@ -1,8 +1,11 @@
 package br.com.fiap.bot.integradores.impl;
 
+import java.util.List;
+
 import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
+import br.com.fiap.banco.entidades.Emprestimo;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 
@@ -33,17 +36,25 @@ public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSoli
 	public String integrarBanco(String resposta, Chat usuario) {	
 		BotComando botComando = new BotComando();
 		StringBuffer retorno = new StringBuffer();
-		if( resposta.trim().toUpperCase().equals("NAO") 
-							|| resposta.trim().toUpperCase().equals("NÃO")){
-			retorno.append("Ok! Não vamos realizar os pagamentos!");
-		}else{
-			try {
-				botComando.pagarParcelasVencidasEmprestimo(usuario.id());
-			} catch (ContaInexistenteExcecao e) {
-				retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
-			}
+		List<Emprestimo> emprestimosNaoPagos = botComando.listarEmprestimosNaoPagos(usuario.id());
+		List<Emprestimo> emprestimosVencidos = botComando.listarEmprestimosVencidos(usuario.id());
+		
+		if(!emprestimosNaoPagos.isEmpty() || !emprestimosVencidos.isEmpty()){
+		
+			if( resposta.trim().toUpperCase().equals("NAO") 
+						|| resposta.trim().toUpperCase().equals("NÃO")){
+				retorno.append("Ok! Não vamos realizar os pagamentos!");
+			}else{
+				try {
+					botComando.pagarParcelasVencidasEmprestimo(usuario.id());
+				} catch (ContaInexistenteExcecao e) {
+					retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
+				}
 			
-			retorno.append("Parcelas pagas com sucesso!");
+				retorno.append("Parcelas pagas com sucesso!");
+			}
+		}else{
+			retorno.append("Você não tem emprestimo para ser pago!");
 		}
 		return retorno.toString();
 	}
