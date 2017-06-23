@@ -39,7 +39,7 @@ public class IntegracaoBotConsultaEmprestimo extends IntegracaoBotConsulta {
 			}
 
 			if (!emprestimosNaoPagos.isEmpty()) {
-				retorno.append("PARCELAS NAO PAGAS");
+				retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("CONSULTAR_EMPRESTIMOS_NAO_PAGOS"));
 				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
 
 				emprestimosNaoPagos.forEach(p -> retorno.append(p.getNumeroParcela()).append(" - ")
