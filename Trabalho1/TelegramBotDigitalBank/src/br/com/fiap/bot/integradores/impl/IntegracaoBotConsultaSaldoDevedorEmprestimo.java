@@ -6,6 +6,7 @@ import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.dados.EmprestimoDetalhe;
 import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
+import br.com.fiap.bot.util.MoedaUtil;
 
 public class IntegracaoBotConsultaSaldoDevedorEmprestimo extends IntegracaoBotConsulta {
 
@@ -16,7 +17,7 @@ public class IntegracaoBotConsultaSaldoDevedorEmprestimo extends IntegracaoBotCo
 		EmprestimoDetalhe emprestimoDetalhe = botComando.verificarSaldoDevedorPrazoEmprestimo(usuario.id());
 
 		retorno.append("O saldo devedor do seu empréstimo é: ")
-		.append(emprestimoDetalhe.getSaldoDevedor())
+		.append(MoedaUtil.conveterMoedaBr(emprestimoDetalhe.getSaldoDevedor()))
 		.append(ConstantesBot.PULAR_UMA_LINHA)
 		.append("A quantidade de parelas em aberto é: ")
 		.append(emprestimoDetalhe.getPrazoPagamento());

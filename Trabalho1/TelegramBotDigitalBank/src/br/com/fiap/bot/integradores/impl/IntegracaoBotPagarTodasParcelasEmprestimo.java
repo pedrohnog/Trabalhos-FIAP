@@ -4,7 +4,6 @@ import com.pengrad.telegrambot.model.Chat;
 
 import br.com.fiap.banco.comandos.BotComando;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
-import br.com.fiap.banco.excecao.PagamentoEmprestimoExcecao;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 
 public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSolicitacao {
