@@ -37,7 +37,7 @@ public class IntegracaoBotConsultaLancamento extends IntegracaoBotConsulta {
 		}
 			
 		
-		return "DEPOSITO";
+		return retorno.toString();
 	}
 
 	@Override

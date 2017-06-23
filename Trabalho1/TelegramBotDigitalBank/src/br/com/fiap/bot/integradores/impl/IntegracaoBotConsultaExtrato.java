@@ -31,6 +31,7 @@ public class IntegracaoBotConsultaExtrato extends IntegracaoBotConsulta {
 				.append(MoedaUtil.conveterMoedaBr(t.getValor()))
 				.append(ConstantesBot.PULAR_UMA_LINHA));
 			
+			retorno.append("SALDO NA CONTA: ").append(MoedaUtil.conveterMoedaBr(botComando.verificarSaldo(usuario.id())));
 		} catch (SaldoInsuficienteExcecao e) {
 			retorno.append("Saldo insuficiente para consultar o extrato!");
 		} catch (ContaInexistenteExcecao e) {

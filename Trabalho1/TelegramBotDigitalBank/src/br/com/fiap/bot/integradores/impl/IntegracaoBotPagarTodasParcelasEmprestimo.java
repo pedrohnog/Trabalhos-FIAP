@@ -34,15 +34,18 @@ public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSoli
 	public String integrarBanco(String resposta, Chat usuario) {	
 		BotComando botComando = new BotComando();
 		StringBuffer retorno = new StringBuffer();
-		
+		if( resposta.trim().toUpperCase().equals("NAO") 
+							|| resposta.trim().toUpperCase().equals("NÃO")){
+			retorno.append("Ok! Não vamos realizar os pagamentos!");
+		}else{
 			try {
 				botComando.pagarParcelasVencidasEmprestimo(usuario.id());
 			} catch (ContaInexistenteExcecao e) {
 				retorno.append("Você ainda não tem uma conta, para criar sua conta digite /criar_conta");
 			}
 			
-			retorno.append("Parcela paga com sucesso!");
-			
+			retorno.append("Parcelas pagas com sucesso!");
+		}
 		return retorno.toString();
 	}
 

@@ -17,8 +17,9 @@ import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaEmprestimo;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaExtrato;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaLancamento;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaldoDevedorEmprestimo;
-import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaSaque;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaRetiradas;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultaTarifaPaga;
+import br.com.fiap.bot.integradores.impl.IntegracaoBotConsultarSaldoConta;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotCriarConta;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotExibirInformacoesTitularDependentes;
 import br.com.fiap.bot.integradores.impl.IntegracaoBotIncluirDependente;
@@ -129,8 +130,8 @@ public class BotUtil {
 		case "/consultar_lancamentos":
 			retorno = new IntegracaoBotConsultaLancamento();
 			break;
-		case "/consultar_saques":
-			retorno = new IntegracaoBotConsultaSaque();
+		case "/consultar_retiradas":
+			retorno = new IntegracaoBotConsultaRetiradas();
 			break;
 		case "/solicitar_emprestimo":
 			retorno = new IntegracaoBotSolicitarEmprestimo();
@@ -150,7 +151,11 @@ public class BotUtil {
 		case "/consultar_saldo_devedor_emprest":
 			retorno = new IntegracaoBotConsultaSaldoDevedorEmprestimo();
 			break;
-			 
+		case "/consultar_saldo_conta":
+			retorno = new IntegracaoBotConsultarSaldoConta();
+			break;
+				 
+			
 		default:
 			break;
 		}
