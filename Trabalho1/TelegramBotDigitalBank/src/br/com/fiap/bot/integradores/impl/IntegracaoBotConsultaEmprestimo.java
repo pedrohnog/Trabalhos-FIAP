@@ -31,8 +31,8 @@ public class IntegracaoBotConsultaEmprestimo extends IntegracaoBotConsulta {
 			if (!emprestimosVencidos.isEmpty()) {
 				retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("CONSULTAR_EMPRESTIMOS_VENCIDOS"));
 
-				emprestimosVencidos.forEach(p -> retorno.append(p.getNumeroParcela()).append(" - ")
-						.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" - ")
+				emprestimosVencidos.forEach(p -> retorno.append(p.getNumeroParcela()).append(" | ")
+						.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" | ")
 						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela() + p.getJuros())).append(ConstantesBot.PULAR_UMA_LINHA));
 
 				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
@@ -42,8 +42,8 @@ public class IntegracaoBotConsultaEmprestimo extends IntegracaoBotConsulta {
 				retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("CONSULTAR_EMPRESTIMOS_NAO_PAGOS"));
 				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
 
-				emprestimosNaoPagos.forEach(p -> retorno.append(p.getNumeroParcela()).append(" - ")
-						.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" - ")
+				emprestimosNaoPagos.forEach(p -> retorno.append(p.getNumeroParcela()).append(" | ")
+						.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" | ")
 						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela() + p.getJuros())).append(ConstantesBot.PULAR_UMA_LINHA));
 
 				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
