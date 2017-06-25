@@ -33,7 +33,7 @@ public class IntegracaoBotConsultaEmprestimo extends IntegracaoBotConsulta {
 
 				emprestimosVencidos.forEach(p -> retorno.append(p.getNumeroParcela()).append(" - ")
 						.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" - ")
-						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append(ConstantesBot.PULAR_UMA_LINHA));
+						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela() + p.getJuros())).append(ConstantesBot.PULAR_UMA_LINHA));
 
 				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
 			}
@@ -44,7 +44,7 @@ public class IntegracaoBotConsultaEmprestimo extends IntegracaoBotConsulta {
 
 				emprestimosNaoPagos.forEach(p -> retorno.append(p.getNumeroParcela()).append(" - ")
 						.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" - ")
-						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append(ConstantesBot.PULAR_UMA_LINHA));
+						.append(MoedaUtil.conveterMoedaBr(p.getValorParcela() + p.getJuros())).append(ConstantesBot.PULAR_UMA_LINHA));
 
 				retorno.append(ConstantesBot.PULAR_DUAS_LINHA);
 			}
