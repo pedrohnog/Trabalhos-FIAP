@@ -9,7 +9,6 @@ import br.com.fiap.banco.entidades.Usuario;
 import br.com.fiap.banco.excecao.ContaInexistenteExcecao;
 import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.integradores.IntegracaoBotConsulta;
-import br.com.fiap.bot.util.MoedaUtil;
 import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
@@ -26,9 +25,7 @@ public class IntegracaoBotExibirInformacoesTitularDependentes extends Integracao
 		try {
 			usuarios = botComando.listarUsuariosEDependentes(usuario.id());
 
-			usuarios.forEach(u -> retorno.append(u.getConta().getNumero()).append(" - ").append(u.getCpf())
-					.append(" - ").append(u.getNome()).append(" - ")
-					.append(MoedaUtil.conveterMoedaBr(u.getConta().getSaldo())).append(ConstantesBot.PULAR_UMA_LINHA));
+			usuarios.forEach(u -> retorno.append(u.getNome()).append(" - ").append(u.getEmail()).append(" - ").append(u.getCpf()).append(" - ").append(u.getTelefone()).append(ConstantesBot.PULAR_UMA_LINHA));
 
 		} catch (ContaInexistenteExcecao e) {
 			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE"));
