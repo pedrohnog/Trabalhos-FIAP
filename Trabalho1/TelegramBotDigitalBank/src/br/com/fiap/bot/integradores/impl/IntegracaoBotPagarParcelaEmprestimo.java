@@ -68,9 +68,9 @@ public class IntegracaoBotPagarParcelaEmprestimo extends IntegracaoBotSolicitaca
 			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("PAGAR_PARCELA_NAO_ENCONTRADA"));
 		} else {
 			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("PAGAR_PARCELA"));
-			parcelas.forEach(p -> retorno.append(p.getNumeroParcela()).append(" - ")
-					.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" - ")
-					.append(MoedaUtil.conveterMoedaBr(p.getValorParcela())).append(ConstantesBot.PULAR_UMA_LINHA));
+			parcelas.forEach(p -> retorno.append(p.getNumeroParcela()).append(" | ")
+					.append(DataUtil.conveterDataPadraoBr(p.getDataVencimento())).append(" | ")
+					.append(MoedaUtil.conveterMoedaBr(p.getValorParcela() + p.getJuros())).append(ConstantesBot.PULAR_UMA_LINHA));
 		}
 
 		return retorno.toString();
