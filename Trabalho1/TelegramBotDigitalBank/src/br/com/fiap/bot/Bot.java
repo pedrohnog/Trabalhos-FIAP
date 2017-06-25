@@ -13,12 +13,12 @@ import com.pengrad.telegrambot.request.GetUpdates;
 import com.pengrad.telegrambot.request.SendChatAction;
 import com.pengrad.telegrambot.request.SendMessage;
 
-import br.com.fiap.bot.constantes.ConstantesBot;
 import br.com.fiap.bot.constantes.EnumComandosBot;
 import br.com.fiap.bot.constantes.EnumTipoIntegracaoBot;
 import br.com.fiap.bot.integradores.IntegracaoBot;
 import br.com.fiap.bot.integradores.IntegracaoBotSolicitacao;
 import br.com.fiap.bot.util.BotUtil;
+import br.com.fiap.bot.util.PropriedadesUtil;
 
 /**
  * Classe responsável pelo tratamento de integração entre usuário, bot e banco
@@ -135,9 +135,9 @@ public class Bot {
 			List<String> comandosEnviados = BotUtil.encontrarComandosNaMensagem(mensagemRecebida);
 
 			if (comandosEnviados.isEmpty()) {
-				mensagemRetorno = "Comando desconhecido!" + ConstantesBot.PULAR_UMA_LINHA + " Para saber a lista completa de comandos, digite /ajuda";
+				mensagemRetorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("COMANDO_DESCONHECIDO");
 			} else if (comandosEnviados.size() > 1) {
-				mensagemRetorno = "Você enviou mais de um comando, por favor digite apenas um comando!" + ConstantesBot.PULAR_UMA_LINHA + " Para saber a lista completa de comandos, digite /ajuda";
+				mensagemRetorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("COMANDO_DUPLICADO");
 			} else {
 				String comando = comandosEnviados.get(0);
 				String mensagemSemComando = BotUtil.retirarComandoDaMensagem(mensagemRecebida, comando);
