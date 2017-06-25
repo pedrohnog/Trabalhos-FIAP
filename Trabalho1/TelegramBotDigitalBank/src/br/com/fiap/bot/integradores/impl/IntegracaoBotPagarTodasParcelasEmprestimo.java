@@ -28,7 +28,7 @@ public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSoli
 		try {
 			if (resposta == null ||
 					!(
-							resposta.trim().toUpperCase().equals("SIM") || !resposta.trim().toUpperCase().equals("S") || 
+							resposta.trim().toUpperCase().equals("SIM") || resposta.trim().toUpperCase().equals("S") || 
 							resposta.trim().toUpperCase().equals("NAO") || resposta.trim().toUpperCase().equals("NÃO") || resposta.trim().toUpperCase().equals("N"))
 					) {
 				respostaOk = false;
