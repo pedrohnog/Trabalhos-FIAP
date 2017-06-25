@@ -24,7 +24,7 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 		resposta = resposta.trim();
 		String[] respostas = resposta.split("-");
 
-		if (respostas.length != 3) {
+		if (respostas.length != 4) {
 			respostaOk = false;
 		} else {
 			for (int i = 0; i < respostas.length; i++) {
@@ -42,6 +42,7 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 		String[] respostas;
 		String telefone;
 		String cpf;
+		String nome;
 		String email;
 		BotComando botComando = new BotComando();
 		String retorno = "";
@@ -49,14 +50,14 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 		respostas = resposta.split("-");
 
 		cpf = respostas[0];
+		nome = respostas[1];
 		email = respostas[2];
 		telefone = respostas[3];
 
 		try {
-			String nomeUsuario = usuario.firstName().replaceAll("[^A-Za-z0-9]", "");
-			String sobrenomeUsuario = usuario.lastName().replaceAll("[^A-Za-z0-9]", "");
+			String nomeUsuario = nome.replaceAll("[^A-Za-z0-9]", "");
 			
-			botComando.incluirDependente(usuario.id(), nomeUsuario, sobrenomeUsuario, telefone.trim(), cpf.trim(), email.trim());
+			botComando.incluirDependente(usuario.id(), nomeUsuario, "", telefone.trim(), cpf.trim(), email.trim());
 			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_DEPENDENTE_INCLUIDO");
 		} catch (ContaInexistenteExcecao e) {
 			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");
