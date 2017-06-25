@@ -57,7 +57,7 @@ class EmprestimoComando {
 		
 		double saldo = contaComando.verificarSaldo(idTelegram);
 
-		if (valor > this.verificarValorMaximoEmprestimo(idTelegram)) {
+		if (valor >= (this.verificarValorMaximoEmprestimo(idTelegram) + .01d)) {
 			throw new ValorEmprestimoExcedidoExcecao();
 		}
 		

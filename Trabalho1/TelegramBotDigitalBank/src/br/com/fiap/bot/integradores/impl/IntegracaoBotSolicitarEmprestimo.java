@@ -33,7 +33,8 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 			String[] respostas = resposta.split("-");
 			try {
 				if (respostas.length == 2) {
-					if (!(Double.valueOf(respostas[0].trim()) > 0D)) {
+					String respostaValor = respostas[0].trim().replace(",", ".");
+					if (!(Double.valueOf(respostaValor) > 0D)) {
 						respostaOk = false;
 					}
 					if (!(Integer.valueOf(respostas[1].trim()) > 0D)) {
@@ -56,7 +57,7 @@ public class IntegracaoBotSolicitarEmprestimo extends IntegracaoBotSolicitacao {
 		BotComando botComando = new BotComando();
 		String[] respostas = resposta.split("-");
 		String retorno = "";
-		Double valorEmprestimo = Double.valueOf(respostas[0].trim());
+		Double valorEmprestimo = Double.valueOf(respostas[0].trim().replace(",", "."));
 		Integer quantidadeParcelas = Integer.valueOf(respostas[1].trim());
 
 		try {
