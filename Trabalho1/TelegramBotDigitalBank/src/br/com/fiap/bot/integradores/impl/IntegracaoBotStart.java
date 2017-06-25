@@ -18,7 +18,9 @@ public class IntegracaoBotStart extends IntegracaoBotConsulta {
 
 	@Override
 	public String tratarPrimeiraInteracao(Chat usuario) {
-		return String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("COMANDO_START"), usuario.firstName());
+		String nomeUsuario = usuario.firstName().replaceAll("[^A-Za-z0-9]", "");
+		
+		return String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("COMANDO_START"), nomeUsuario);
 	}
 
 }

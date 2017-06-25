@@ -53,8 +53,10 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 		telefone = respostas[3];
 
 		try {
-			botComando.incluirDependente(usuario.id(), usuario.firstName(), usuario.lastName(), telefone.trim(),
-					cpf.trim(), email.trim());
+			String nomeUsuario = usuario.firstName().replaceAll("[^A-Za-z0-9]", "");
+			String sobrenomeUsuario = usuario.lastName().replaceAll("[^A-Za-z0-9]", "");
+			
+			botComando.incluirDependente(usuario.id(), nomeUsuario, sobrenomeUsuario, telefone.trim(), cpf.trim(), email.trim());
 			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_DEPENDENTE_INCLUIDO");
 		} catch (ContaInexistenteExcecao e) {
 			retorno = PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_INEXISTENTE");

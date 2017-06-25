@@ -54,7 +54,10 @@ public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao {
 		String email = respostas[2].trim();
 
 		try {
-			botComando.criarConta(usuario.id(), usuario.firstName(), usuario.lastName(), telefone, cpf, email);
+			String nomeUsuario = usuario.firstName().replaceAll("[^A-Za-z0-9]", "");
+			String sobrenomeUsuario = usuario.lastName().replaceAll("[^A-Za-z0-9]", "");
+			
+			botComando.criarConta(usuario.id(), nomeUsuario, sobrenomeUsuario, telefone, cpf, email);
 			return PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_CRIADA");
 		} catch (ContaExistenteExcecao e) {
 			return PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_CONTA_EXISTENTE");

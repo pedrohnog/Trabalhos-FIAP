@@ -142,8 +142,10 @@ public class BotUtil {
 		MensagemIntegracao mensagemIntegracao = new MensagemIntegracao();
 		MensagemIntegracaoDao mensagemIntegracaoDao = new MensagemIntegracaoDao();
 
+		String nomeUsuario = usuario.firstName().replaceAll("[^A-Za-z0-9]", "");
+		
 		mensagemIntegracao.setIdTelegram(usuario.id());
-		mensagemIntegracao.setNomeTelegram(usuario.firstName());
+		mensagemIntegracao.setNomeTelegram(nomeUsuario);
 		mensagemIntegracao.setMensagemRecebida(mensagemRecebida);
 		mensagemIntegracao.setMensagemEnviada(mensagemEnviada);
 
