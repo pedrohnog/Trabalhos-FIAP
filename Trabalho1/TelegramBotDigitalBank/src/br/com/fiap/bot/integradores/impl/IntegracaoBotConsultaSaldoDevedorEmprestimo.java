@@ -21,7 +21,7 @@ public class IntegracaoBotConsultaSaldoDevedorEmprestimo extends IntegracaoBotCo
 		BotComando botComando = new BotComando();
 		EmprestimoDetalhe emprestimoDetalhe = botComando.verificarSaldoDevedorPrazoEmprestimo(usuario.id());
 
-		if (emprestimoDetalhe.getSaldoDevedor() != ConstantesBot.VALOR_ZERO_DOUBLE) {
+		if (emprestimoDetalhe.getSaldoDevedor() != 0.0d) {
 			retorno.append(String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("CONSULTAR_SALDO_DEVEDOR_EMPRESTIMO"), MoedaUtil.conveterMoedaBr(emprestimoDetalhe.getSaldoDevedor()), emprestimoDetalhe.getPrazoPagamento()));
 		} else {
 			retorno.append(PropriedadesUtil.carregarMensagensIntegracao().getProperty("RETORNO_SEM_PARCELAS"));
