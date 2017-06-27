@@ -18,7 +18,7 @@ public abstract class IntegracaoBotSolicitacao implements IntegracaoBot {
 		this.dominioResposta = dominioResposta;
 	}
 
-	public abstract Boolean validarResposta(String resposta);
+	public abstract boolean validarResposta(String resposta);
 
 	public abstract String integrarBanco(String resposta, Chat usuario);
 
