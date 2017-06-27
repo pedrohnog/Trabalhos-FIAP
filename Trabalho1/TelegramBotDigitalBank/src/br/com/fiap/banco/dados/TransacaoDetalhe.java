@@ -11,10 +11,10 @@ import br.com.fiap.banco.entidades.Transacao;
  */
 public class TransacaoDetalhe implements Serializable {
 
-	private static final long serialVersionUID = -3191534842798150141L;
+	private static final long serialVersionUID = -8946530411695752192L;
 	
 	private List<Transacao> transacoes;
-	private Double somatorio;
+	private double somatorio;
 
 	public List<Transacao> getTransacoes() {
 		return transacoes;
@@ -24,11 +24,11 @@ public class TransacaoDetalhe implements Serializable {
 		this.transacoes = transacoes;
 	}
 
-	public Double getSomatorio() {
+	public double getSomatorio() {
 		return somatorio;
 	}
 
-	public void setSomatorio(Double somatorio) {
+	public void setSomatorio(double somatorio) {
 		this.somatorio = somatorio;
 	}
 
@@ -36,7 +36,9 @@ public class TransacaoDetalhe implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((somatorio == null) ? 0 : somatorio.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(somatorio);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((transacoes == null) ? 0 : transacoes.hashCode());
 		return result;
 	}
@@ -53,11 +55,7 @@ public class TransacaoDetalhe implements Serializable {
 			return false;
 		}
 		TransacaoDetalhe other = (TransacaoDetalhe) obj;
-		if (somatorio == null) {
-			if (other.somatorio != null) {
-				return false;
-			}
-		} else if (!somatorio.equals(other.somatorio)) {
+		if (Double.doubleToLongBits(somatorio) != Double.doubleToLongBits(other.somatorio)) {
 			return false;
 		}
 		if (transacoes == null) {
