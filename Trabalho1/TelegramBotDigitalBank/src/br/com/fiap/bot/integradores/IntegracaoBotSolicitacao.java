@@ -10,8 +10,6 @@ import br.com.fiap.bot.util.PropriedadesUtil;
  */
 public abstract class IntegracaoBotSolicitacao implements IntegracaoBot {
 
-	public static String ERRO_RESPOSTA = PropriedadesUtil.carregarMensagensIntegracao().getProperty("ERRO_RESPOSTA");
-
 	private String dominioResposta;
 	private String mensagemPrimeiraIntegracao;
 
@@ -25,7 +23,8 @@ public abstract class IntegracaoBotSolicitacao implements IntegracaoBot {
 	public abstract String integrarBanco(String resposta, Chat usuario);
 
 	public String informarErroNaResposta() {
-		return String.format(ERRO_RESPOSTA, this.dominioResposta);
+		return String.format(PropriedadesUtil.carregarMensagensIntegracao().getProperty("ERRO_RESPOSTA"),
+				this.dominioResposta);
 	}
 
 	public String tratarPrimeiraInteracao(Chat usuario) {
