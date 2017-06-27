@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "MENSAGEM_INTEGRACAO", catalog = "DBBotBank")
 public class MensagemIntegracao implements Serializable {
 
-	private static final long serialVersionUID = 1685332432291411751L;
+	private static final long serialVersionUID = -5910870714954873091L;
 
 	/**
 	 * Id auto-gerado
@@ -25,13 +25,13 @@ public class MensagemIntegracao implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private Long id;
+	private long id;
 
 	/**
 	 * Número do Telegram do cliente
 	 */
 	@Column(name = "id_telegram", unique = false, nullable = false)
-	private Long idTelegram;
+	private long idTelegram;
 
 	/**
 	 * Nome do cliente
@@ -51,19 +51,19 @@ public class MensagemIntegracao implements Serializable {
 	@Column(name = "mensagem_env", unique = false, nullable = false, length = 5000)
 	private String mensagemEnviada;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Long getIdTelegram() {
+	public long getIdTelegram() {
 		return idTelegram;
 	}
 
-	public void setIdTelegram(Long idTelegram) {
+	public void setIdTelegram(long idTelegram) {
 		this.idTelegram = idTelegram;
 	}
 
@@ -95,7 +95,7 @@ public class MensagemIntegracao implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -111,11 +111,7 @@ public class MensagemIntegracao implements Serializable {
 			return false;
 		}
 		MensagemIntegracao other = (MensagemIntegracao) obj;
-		if (id == null) {
-			if (other.id != null) {
-				return false;
-			}
-		} else if (!id.equals(other.id)) {
+		if (id != other.id) {
 			return false;
 		}
 		return true;
