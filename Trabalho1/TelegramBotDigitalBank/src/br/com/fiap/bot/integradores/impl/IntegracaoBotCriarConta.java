@@ -18,7 +18,7 @@ public class IntegracaoBotCriarConta extends IntegracaoBotSolicitacao {
 	}
 
 	@Override
-	public Boolean validarResposta(String resposta) {
+	public boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
 		if (resposta != null) {
 			resposta = resposta.trim();

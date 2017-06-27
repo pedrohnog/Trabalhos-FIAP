@@ -19,7 +19,7 @@ public class IntegracaoBotIncluirDependente extends IntegracaoBotSolicitacao {
 	}
 
 	@Override
-	public Boolean validarResposta(String resposta) {
+	public boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
 		resposta = resposta.trim();
 		String[] respostas = resposta.split("-");

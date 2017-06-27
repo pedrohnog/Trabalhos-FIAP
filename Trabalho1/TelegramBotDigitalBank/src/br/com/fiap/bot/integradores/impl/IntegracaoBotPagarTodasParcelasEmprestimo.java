@@ -22,7 +22,7 @@ public class IntegracaoBotPagarTodasParcelasEmprestimo extends IntegracaoBotSoli
 	}
 
 	@Override
-	public Boolean validarResposta(String resposta) {
+	public boolean validarResposta(String resposta) {
 		boolean respostaOk = true;
 
 		try {
