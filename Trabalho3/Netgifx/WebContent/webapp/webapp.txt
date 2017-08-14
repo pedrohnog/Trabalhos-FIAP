@@ -1,0 +1,3 @@
+Pasta onde serão criados os webapps
+
+Todas as telas "abertas" ficarão nessa pasta
