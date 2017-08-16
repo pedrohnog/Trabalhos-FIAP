@@ -1,0 +1,13 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:p="http://primefaces.org/ui">
+	<h:form id="categoria">
+		<p:carousel value="#{categoriasBean.lista}" var="dadosCategoria" headerText="Nome da categoria" responsive="true" circular="true" numVisible="6">
+			<p:panelGrid>
+				<p:graphicImage name="static/gif/#{dadosCategoria.teste}.gif" height="200" width="200" /> 
+			</p:panelGrid>
+		</p:carousel>
+	</h:form>
+</ui:composition>
