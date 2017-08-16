@@ -6,7 +6,8 @@
 	<h:form id="categoria">
 		<p:carousel value="#{categoriasBean.lista}" var="dadosCategoria" headerText="Nome da categoria" responsive="true" circular="true" numVisible="6">
 			<p:panelGrid>
-				<p:graphicImage name="static/gif/#{dadosCategoria.teste}.gif" height="200" width="200" /> 
+				<p:graphicImage name="static/gif/#{dadosCategoria.teste}.gif" height="200" width="200" />
+				<h:outputText value="#{contagem}"/>
 			</p:panelGrid>
 		</p:carousel>
 	</h:form>
