@@ -39,10 +39,10 @@ public class Gif {
 	@Column(name = "Caminho", length = 45)
 	private String caminho;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "gifs")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "gifs")
 	private Set<Usuario> usuarios;
 	
-	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)
 	@JoinTable(name="GIF_CATEGORIA", 
 			joinColumns=@JoinColumn(name="idGif"),
 			inverseJoinColumns=@JoinColumn(name="idCategoria"))

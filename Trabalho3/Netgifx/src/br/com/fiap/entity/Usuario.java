@@ -45,7 +45,7 @@ public class Usuario {
 	@Column(name = "Email", length = 20)
 	private String email;
 
-	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)
 	@JoinTable(name="FAVORITOS", 
 			joinColumns=@JoinColumn(name="idUsuario"),
 			inverseJoinColumns=@JoinColumn(name="idGif"))

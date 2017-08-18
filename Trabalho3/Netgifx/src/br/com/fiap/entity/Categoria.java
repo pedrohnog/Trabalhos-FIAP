@@ -23,7 +23,7 @@ public class Categoria {
 	@Column(name = "Nome", length = 45)
 	private String nome;
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categorias")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categorias")
 	private Set<Gif> gifs;
 
 	public int getIdCategoria() {
