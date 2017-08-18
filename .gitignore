@@ -31,3 +31,6 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 RemoteSystemsTempFiles/.project
+
+Trabalho3/Netgifx/.classpath
+Trabalho3/Netgifx/.project
