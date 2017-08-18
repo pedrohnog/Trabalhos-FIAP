@@ -26,6 +26,9 @@ public class NetgifxCommand {
 		/* FIXME esta apagando o favorito ao rodar 2x */
 		
 		usuario.getGifs().clear();
+		if (gifs.isEmpty()) {
+			new UsuarioCommand().atualizarUsuario(usuario);
+		}
 		for (Gif gif : gifs) {
 			usuario.getGifs().add(gif);
 			for (Usuario usuarioGif : gif.getUsuarios()) {
