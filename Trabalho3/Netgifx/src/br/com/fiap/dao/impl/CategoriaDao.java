@@ -1,5 +1,7 @@
 package br.com.fiap.dao.impl;
 
+import java.util.List;
+
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
@@ -24,6 +26,15 @@ public class CategoriaDao extends  DaoGenerico<Categoria>{
 		TypedQuery<Categoria> query = super.em.createQuery("select c from Categoria c where nome = '" + nome + "'", Categoria.class);
 		try {
 			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	public List<Categoria> listarCategorias(){
+		TypedQuery<Categoria> query = super.em.createQuery("select c from Categoria c ", Categoria.class);
+		try {
+			return query.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}

@@ -23,7 +23,7 @@ public class UsuarioDao extends DaoGenerico<Usuario>{
 	 * 
 	 * @return <code>true</code> se o usuário não existir e conseguir criar um novo, se não <code>false</code>
 	 */
-	public boolean criarUsuario(Usuario usuario) {
+	public boolean cadastrarUsuario(Usuario usuario) {
 		if (this.buscarUsuario(usuario.getCpf()) == null) {
 			super.adicionar(usuario);
 			return true;
