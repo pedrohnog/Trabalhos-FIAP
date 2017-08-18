@@ -17,7 +17,7 @@ public class UsuarioCommand {
 		return usuario;
 	}
 	
-	public synchronized void criarUsuario(String nome,String apelido, String senha, String cpf, LocalDate dataNasc, String telefone, String email ) {
+	public synchronized void cadastrarUsuario(String nome,String apelido, String senha, String cpf, LocalDate dataNasc, String telefone, String email ) {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome(nome);
@@ -28,12 +28,16 @@ public class UsuarioCommand {
 		usuario.setApelido(apelido);
 		usuario.setDataNasc(dataNasc);
 
+		cadastrarUsuario(usuario);
+	}
+	
+	public synchronized void cadastrarUsuario(Usuario usuario) {
 		try (UsuarioDao usuarioDao = new UsuarioDao();) {
-			usuarioDao.criarUsuario(usuario);
+			usuarioDao.cadastrarUsuario(usuario);
 		}
 	}
 	
-	public synchronized void atualizarFavoritos(Usuario usuario) {
+	public synchronized void atualizarUsuario(Usuario usuario) {
 		
 		try (UsuarioDao usuarioDao = new UsuarioDao();) {
 			usuarioDao.atualizar(usuario);

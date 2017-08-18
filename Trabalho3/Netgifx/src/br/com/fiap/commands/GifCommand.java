@@ -14,4 +14,17 @@ public class GifCommand {
 		
 		return gif;
 	}
+	
+	public synchronized void atualizarGif(Gif gif) {
+		
+		try (GifDao gifDao = new GifDao();) {
+			gifDao.atualizar(gif);
+		}
+	}
+	
+	public synchronized void cadastrarGif(Gif gif) {
+		try (GifDao gifDao = new GifDao();) {
+			gifDao.cadastrarGif(gif);
+		}
+	}
 }
