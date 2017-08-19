@@ -1,14 +1,32 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-				xmlns:ui="http://java.sun.com/jsf/facelets"
-				xmlns:f="http://java.sun.com/jsf/core"
-				xmlns:h="http://java.sun.com/jsf/html"
-				xmlns:p="http://primefaces.org/ui">
-	<h:form id="categoria">
-		<p:carousel value="#{categoriasBean.lista}" var="dadosCategoria" headerText="Nome da categoria" responsive="true" circular="true" numVisible="6">
-			<p:panelGrid>
-				<p:graphicImage name="static/gif/#{dadosCategoria.teste}.gif" height="200" width="200" />
-				<h:outputText value="#{contagem}"/>
-			</p:panelGrid>
-		</p:carousel>
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+					
+	<h:form id="form">
+		<c:forEach var="categoria" items="#{categoriaMB.categorias}">		
+		    <p:carousel value="#{categoria.gifs}" headerText="#{categoria.nome}" var="gif" itemStyle="text-align:center" numVisible="5" easing="easeOutBounce" cricular="true">
+		        <h:panelGrid columns="2"  columnClasses="label,value">	        
+	                <p:commandLink update=":form:gifDetalhes" oncomplete="PF('gifDialog').show()" >
+	                	<p:graphicImage name="#{gif.caminho}" height="200" width="200"/>	 
+	                    <f:setPropertyActionListener value="#{gif}" target="#{categoriaMB.gifSelecionado}" />
+	                </p:commandLink>
+		        </h:panelGrid>
+		    </p:carousel> 	    
+		</c:forEach>
+		
+	    <p:dialog header="NetGifx" widgetVar="gifDialog" modal="true"  maximizable="false" minimizable="false" width="100%" height="100%" 
+	    	 appendToBody="true" resizable="false" draggable="false" showEffect="side" hideEffect="explode" >
+	        <p:outputPanel id="gifDetalhes" style="text-align:center;">
+	            <p:panelGrid  columns="2" rendered="#{not empty categoriaMB.gifSelecionado}" columnClasses="label,value">
+	                <f:facet name="header">
+	                    <p:graphicImage name="#{categoriaMB.gifSelecionado.caminho}" width="600px" height="600px"/> 
+	                </f:facet>	 
+	            </p:panelGrid>
+	        </p:outputPanel>
+	    </p:dialog>
 	</h:form>
 </ui:composition>
