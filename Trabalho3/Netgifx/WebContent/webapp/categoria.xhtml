@@ -8,8 +8,8 @@
 					
 	<h:form id="form">
 		<c:forEach var="categoria" items="#{categoriaMB.categorias}">		
-		    <p:carousel value="#{categoria.gifs}" headerText="#{categoria.nome}" var="gif" itemStyle="text-align:center" numVisible="5" easing="easeOutBounce" cricular="true">
-		        <h:panelGrid columns="2"  columnClasses="label,value">	        
+		    <p:carousel value="#{categoria.gifs}" headerText="#{categoria.nome}" var="gif" itemStyle="text-align:center;background-color:black;" numVisible="6" easing="easeOutBounce" cricular="true" >
+		        <h:panelGrid columns="2"  columnClasses="label,value" title="#{gif.nome}">	        
 	                <p:commandLink update=":form:gifDetalhes" oncomplete="PF('gifDialog').show()" >
 	                	<p:graphicImage name="#{gif.caminho}" height="200" width="200"/>	 
 	                    <f:setPropertyActionListener value="#{gif}" target="#{categoriaMB.gifSelecionado}" />
