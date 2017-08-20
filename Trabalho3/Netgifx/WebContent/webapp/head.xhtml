@@ -23,11 +23,37 @@
 		    direction: ltr;
 		    -webkit-font-smoothing: antialiased;
 		}
+		.logo{
+			border:3px;
+			color:red; 
+			float:left;
+			width:60%;
+		}
+		.labelLogin{
+			border:3px;
+			color:red; 
+			width:40%;
+			float: right;
+			margin-right: 20px;
+		}
+		.btnLogin{
+			background: red;
+			border: 0px;
+			color: white;
+			font-weight: 100;
+		}
+		
 	</style>
-	<div>
-	  <p:graphicImage name="static/logo/netgifx-transparente.png" width="120px"/>
-	  <h1 class="cta-pitch">Sua próxima risada, agora.</h1>
-	  <br/>
-	  
-	  </div>
+
+	 <h:panelGrid columns="2"  columnClasses="label,value" style="width:100%;">
+		<p:outputLabel class="logo">
+			<p:graphicImage name="static/logo/netgifx-transparente.png"
+				width="120px" />
+			<h1 class="cta-pitch">Sua próxima risada, agora.</h1>
+		</p:outputLabel>
+		<p:outputLabel class="labelLogin">
+			<p:commandButton  class = "btnLogin" value="Entrar" icon="ui-icon-star" />
+		</p:outputLabel>
+	</h:panelGrid>	
+	<br />
 </ui:composition>
