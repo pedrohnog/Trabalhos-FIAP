@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<style>
+		h3{
+			margin-top: -20px;
+		}
+		.formLogin{
+		text-align: center;
+		}
+	</style>
+	<div class="formLogin">
+	<h3>Faça login e tenha acesso para ver todos os gif's</h3>
+		
+	<h:panelGrid columns="2" cellpadding="5">
+        <p:outputLabel value="Login:" for="Login" />
+        <p:inputText id="Login" value="" />       
+        
+        <p:outputLabel value="Senha:" for="Senha" />
+        <p:inputText id="Senha" value="" type="password" />
+        
+        <p:commandButton value="Entrar" icon="ui-icon-check" class="btn"/>        
+    </h:panelGrid>
+    </div> 
+</ui:composition>
