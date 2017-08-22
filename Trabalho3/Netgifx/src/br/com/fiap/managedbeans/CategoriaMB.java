@@ -27,7 +27,6 @@ public class CategoriaMB implements Serializable {
     	if(categorias == null){
     		categorias = new ArrayList<>();
     	}
-    	System.out.println("Criando categorias!");
     	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Lancamentos"));
     	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Infantil"));
     	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Familia"));
@@ -46,12 +45,10 @@ public class CategoriaMB implements Serializable {
 	}
 
 	public GifVO getGifSelecionado() {
-		System.out.println("Retornando GIF selecionado");
 		return gifSelecionado;
 	}
 
 	public void setGifSelecionado(GifVO gifSelecionado) {
-		System.out.println("Atualizando GIF selecionado");
 		this.gifSelecionado = gifSelecionado;
 	}
 
