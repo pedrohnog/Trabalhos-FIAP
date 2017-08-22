@@ -1,63 +1,119 @@
 package br.com.fiap.commons;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class GifVO {
+public class GifVO implements Serializable {
 
-	private Integer idGif;	
+	private static final long serialVersionUID = -1551243874329101537L;
+	
+	private Integer idGif;
 	private String nome;
 	private String descricao;
 	private LocalDate dataPublicacao;
 	private Double classificacao;
-	private String caminho;
-	
-	
+	private String caminhoAnimado;
+	private String caminhoEstatico;
 
-	public GifVO(Integer idGif, String nome, String descricao, LocalDate dataPublicacao, Double classificacao,
-			String caminho) {
-		super();
+	public GifVO(Integer idGif, String nome, String descricao, LocalDate dataPublicacao, Double classificacao, String caminhoAnimado, String caminhoEstatico) {
 		this.idGif = idGif;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.dataPublicacao = dataPublicacao;
 		this.classificacao = classificacao;
-		this.caminho = caminho;
+		this.caminhoAnimado = caminhoAnimado;
+		this.caminhoEstatico = caminhoEstatico;
 	}
+
 	public Integer getIdGif() {
 		return idGif;
 	}
+
 	public void setIdGif(Integer idGif) {
 		this.idGif = idGif;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getDescricao() {
 		return descricao;
 	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 	public LocalDate getDataPublicacao() {
 		return dataPublicacao;
 	}
+
 	public void setDataPublicacao(LocalDate dataPublicacao) {
 		this.dataPublicacao = dataPublicacao;
 	}
+
 	public Double getClassificacao() {
 		return classificacao;
 	}
+
 	public void setClassificacao(Double classificacao) {
 		this.classificacao = classificacao;
 	}
-	public String getCaminho() {
-		return caminho;
+
+	public String getCaminhoAnimado() {
+		return caminhoAnimado;
 	}
-	public void setCaminho(String caminho) {
-		this.caminho = caminho;
+
+	public void setCaminhoAnimado(String caminhoAnimado) {
+		this.caminhoAnimado = caminhoAnimado;
 	}
-	
+
+	public String getCaminhoEstatico() {
+		return caminhoEstatico;
+	}
+
+	public void setCaminhoEstatico(String caminhoEstatico) {
+		this.caminhoEstatico = caminhoEstatico;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idGif == null) ? 0 : idGif.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof GifVO)) {
+			return false;
+		}
+		GifVO other = (GifVO) obj;
+		if (idGif == null) {
+			if (other.idGif != null) {
+				return false;
+			}
+		} else if (!idGif.equals(other.idGif)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
+
 }
