@@ -19,6 +19,8 @@ public class CategoriaMB implements Serializable {
 
 	private List<CategoriaVO> categorias;
 	private GifVO gifSelecionado;
+	
+	private boolean usuarioLogado = false;
          
     @PostConstruct
     public void init() {
@@ -51,6 +53,14 @@ public class CategoriaMB implements Serializable {
 	public void setGifSelecionado(GifVO gifSelecionado) {
 		System.out.println("Atualizando GIF selecionado");
 		this.gifSelecionado = gifSelecionado;
+	}
+
+	public boolean isUsuarioLogado() {
+		return usuarioLogado;
+	}
+
+	public void setUsuarioLogado(boolean usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
 	}
     
 }
