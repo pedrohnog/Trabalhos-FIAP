@@ -1,5 +1,6 @@
 package br.com.fiap.teste;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,7 @@ public class Main {
 
 		System.out.println("teste");
 
-//		cargaInicial();
+		cargaInicial();
 //		listarCategorias();
 //		buscarUsuario();
 //		buscarGif();
@@ -108,6 +109,11 @@ public class Main {
 		gif1.setClassificacao(Double.valueOf("3"));
 		gif1.setCaminho("01");
 		gif1.setDescricao("primeiro");
+		gif1.setClassificacaoEtaria("Jovens");
+		gif1.setDataPublicacao(LocalDate.now());
+		gif1.setGenero("Nao sei");
+		gif1.setIdioma("Portugues");
+		
 	
 		Gif gif2 = new Gif();
 		gif2.setNome("Segundo");
@@ -136,8 +142,8 @@ public class Main {
 //		return gifs;
 		
 		netgifxCommand.cadastrarGif(gif1);
-		netgifxCommand.cadastrarGif(gif2);
-		netgifxCommand.cadastrarGif(gif3);
+//		netgifxCommand.cadastrarGif(gif2);
+//		netgifxCommand.cadastrarGif(gif3);
 	}
 	
 	private static void criarCategorias() {
