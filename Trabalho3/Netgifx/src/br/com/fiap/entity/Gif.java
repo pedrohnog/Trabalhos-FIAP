@@ -30,6 +30,15 @@ public class Gif {
 	@Column(name = "Descricao", length = 45)
 	private String descricao;
 	
+	@Column(name = "Genero", length = 45)
+	private String genero;
+	
+	@Column(name = "ClassificacaoEtaria", length = 45)
+	private String classificacaoEtaria;
+	
+	@Column(name = "Idioma", length = 45)
+	private String idioma;
+	
 	@Column(name = "DataPublicacao")
 	private LocalDate dataPublicacao;
 	
@@ -110,6 +119,30 @@ public class Gif {
 
 	public void setCategorias(Set<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getClassificacaoEtaria() {
+		return classificacaoEtaria;
+	}
+
+	public void setClassificacaoEtaria(String classificacaoEtaria) {
+		this.classificacaoEtaria = classificacaoEtaria;
+	}
+
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
 	}
 	
 }
