@@ -1,6 +1,5 @@
 package br.com.fiap.teste;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +21,8 @@ public class Main {
 //		listarCategorias();
 //		buscarUsuario();
 //		buscarGif();
-		atualizarFavoritos();
+//		atualizarFavoritos();
+//		atualizarGifCategoria();
 		
 
 				
@@ -31,11 +31,11 @@ public class Main {
 	private static void atualizarFavoritos() {
 	
 		Set<Gif> gifs = new HashSet<Gif>();
-//		Gif gif1 = netgifxCommand.buscarGif(1);
-//		Gif gif2 = netgifxCommand.buscarGif(2);
+		Gif gif1 = netgifxCommand.buscarGif(3);
+		Gif gif2 = netgifxCommand.buscarGif(2);
 		
-//		gifs.add(gif1);
-//		gifs.add(gif2);
+		gifs.add(gif1);
+		gifs.add(gif2);
 		
 		Usuario usuario = netgifxCommand.buscarUsuario("everton");
 		
@@ -44,16 +44,11 @@ public class Main {
 	
 	private static void atualizarGifCategoria() {
 		
-		List<Gif> gifs = new ArrayList<Gif>();
-		Gif gif1 = netgifxCommand.buscarGif(1);
-//		Gif gif2 = netgifxCommand.buscarGif(3);
-		
-		gifs.add(gif1);
-//		gifs.add(gif2);
+		Gif gif = netgifxCommand.buscarGif(2);
 		
 		List<Categoria> categorias = netgifxCommand.listarCategorias();
-		Categoria categoria = categorias.get(0);
-		netgifxCommand.atualizarGifCategoria(gifs, categorias);
+
+		netgifxCommand.atualizarGifCategoria(gif, categorias);
 	}
 	
 	private static void buscarGif() {
