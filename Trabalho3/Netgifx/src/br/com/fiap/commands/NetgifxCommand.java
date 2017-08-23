@@ -22,27 +22,6 @@ public class NetgifxCommand {
 		return new UsuarioCommand().buscarUsuario(apelido);
 	}
 	
-	public void atualizarFavoritos(Usuario usuario, Set<Gif> gifs) {
-		/* FIXME esta apagando o favorito ao rodar 2x */
-		
-		usuario.getGifs().clear();
-		if (gifs.isEmpty()) {
-			new UsuarioCommand().atualizarUsuario(usuario);
-		}
-		for (Gif gif : gifs) {
-			usuario.getGifs().add(gif);
-			for (Usuario usuarioGif : gif.getUsuarios()) {
-				if (usuarioGif.equals(usuario)) {
-					gif.getUsuarios().remove(usuario);
-				}
-				
-			}
-			new UsuarioCommand().atualizarUsuario(usuario);
-			new GifCommand().atualizarGif(gif);
-		}
-
-	}
-	
 	public Gif buscarGif(Integer id) {
 		return new GifCommand().buscarGif(id);
 	}
@@ -59,7 +38,48 @@ public class NetgifxCommand {
 		(new CategoriaCommand()).cadastrarCategoria(categoria);
 	}
 	
-	public void atualizarGifCategoria(List<Gif> gifs,List<Categoria> categorias) {
-		/*TODO Fazer o cadstro de gifXCategoria */
+	public void atualizarGifCategoria(Gif gif,List<Categoria> categoriasNovas) {
+
+		Set<Categoria> categoriasAntigas = gif.getCategorias();
+		//apagar das categoriasAntigas o gif
+		for (Categoria categoriaAntiga : categoriasAntigas) {
+			categoriaAntiga.getGifs().remove(gif);
+			new CategoriaCommand().atualizarCategoria(categoriaAntiga);
+		}
+		//Inserir nas novasCategorias o gif
+		for (Categoria categoriaNova : categoriasNovas) {
+			categoriaNova.getGifs().add(gif);
+			new CategoriaCommand().atualizarCategoria(categoriaNova);
+		}
+		
+		//apagar do gif todas as categorias
+		gif.getCategorias().clear();
+		//add ao gif a nova lista de categorias
+
+		gif.getCategorias().addAll(categoriasNovas);
+		new GifCommand().atualizarGif(gif);
+		
+	}
+	
+	public void atualizarFavoritos(Usuario usuario, Set<Gif> gifsNovos) {
+		
+		Set<Gif> gifsAntigos =usuario.getGifs();
+		//apagar dos gifsAntigo o usuario
+		for (Gif gifAntigo : gifsAntigos) {
+			gifAntigo.getUsuarios().remove(usuario);
+			new GifCommand().atualizarGif(gifAntigo);
+		}
+		//Inserir nos novosGifs o usuario
+		for (Gif gifNovo : gifsNovos) {
+			gifNovo.getUsuarios().add(usuario);
+			new GifCommand().atualizarGif(gifNovo);
+		}
+		
+		//apagar do usuario todos os gif's
+		usuario.getGifs().clear();
+		//add ao usuario a nova lista de gif
+		usuario.getGifs().addAll(gifsNovos);
+		new UsuarioCommand().atualizarUsuario(usuario);
+
 	}
 }
