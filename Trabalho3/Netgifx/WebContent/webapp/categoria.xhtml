@@ -92,8 +92,8 @@
 	
 	
 	</style>
-
-	<h:form id="form">
+    
+	<h:form id="form">	    
 		<c:forEach var="categoria" items="#{categoriaMB.categorias}">		
 		    <p:carousel value="#{categoria.gifs}" headerText="#{categoria.nome}" var="gif" itemStyle="text-align:center;background-color:#141414;border=0px;width:100px;" numVisible="6" easing="easeOutBounce" cricular="true" >
 		        <h:panelGrid columns="2"  columnClasses="label,value" title="#{gif.nome}" style="border=0px;">	        

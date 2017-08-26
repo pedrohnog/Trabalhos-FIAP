@@ -51,9 +51,17 @@
 				width="120px" />
 			<h1 class="cta-pitch">Sua próxima risada, agora.</h1>
 		</p:outputLabel>
-        <p:commandLink class="labelLogin" update=":form:gifDetalhes" oncomplete="PF('gifDialog').show()" >
-         	<p:commandButton  class = "btnLogin" value="Entrar" icon="ui-icon-star" />	 
+		
+        <p:commandLink rendered="#{usuarioMB.usuarioLogado == false}" class="labelLogin" update=":form:gifDetalhes" oncomplete="PF('gifDialog').show()" >
+         	<p:commandButton  class = "btnLogin" value="Entrar" icon="ui-icon-star" />
+         	<f:setPropertyActionListener value="false" target="#{usuarioMB.acaoLoggout}" />	 
          </p:commandLink>
+         
+         <p:commandLink rendered="#{usuarioMB.usuarioLogado == true}" class="labelLogin" update=":form:gifDetalhes" oncomplete="PF('gifDialog').show()" >
+         	<p:commandButton  class = "btnLogin" value="Sair" icon="ui-icon-star" />	 
+         	<f:setPropertyActionListener value="true" target="#{usuarioMB.acaoLoggout}" />
+         </p:commandLink>
+	        
 	</h:panelGrid>	
 	<br />
 </ui:composition>

@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<style>
+		h3{
+			margin-top: -20px;
+		}
+		.formLogin{
+		text-align: center;
+		}
+	</style>
+	<div class="formLogin">
+	<h3>Deseja realmente sair?</h3>
+	 <p:commandButton value="Sim" process="@form"  ajax="false" icon="ui-icon-check" class="btn" actionListener="#{usuarioMB.realizarLoggout}">
+	 	<f:setPropertyActionListener value="false" target="#{usuarioMB.acaoLoggout}" />
+	 </p:commandButton> 
+	 	 <p:commandButton value="Não" process="@form"  ajax="false" icon="ui-icon-check" class="btn">
+	 	<f:setPropertyActionListener value="false" target="#{usuarioMB.acaoLoggout}" />
+	 </p:commandButton>        
+	        
+    </div> 
+</ui:composition>
