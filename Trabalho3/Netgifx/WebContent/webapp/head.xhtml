@@ -51,9 +51,9 @@
 				width="120px" />
 			<h1 class="cta-pitch">Sua próxima risada, agora.</h1>
 		</p:outputLabel>
-		<p:outputLabel class="labelLogin">
-			<p:commandButton  class = "btnLogin" value="Entrar" icon="ui-icon-star" />
-		</p:outputLabel>
+        <p:commandLink class="labelLogin" update=":form:gifDetalhes" oncomplete="PF('gifDialog').show()" >
+         	<p:commandButton  class = "btnLogin" value="Entrar" icon="ui-icon-star" />	 
+         </p:commandLink>
 	</h:panelGrid>	
 	<br />
 </ui:composition>
