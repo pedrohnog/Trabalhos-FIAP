@@ -39,8 +39,6 @@ public class CategoriaService {
 		gifs.add(new GifVO(6, "06", "gif 06", LocalDate.now(), 5D, "static/img/gif/06.gif", "static/img/png/06.png"));
 		gifs.add(new GifVO(7, "07", "gif 07", LocalDate.now(), 5D, "static/img/gif/07.gif", "static/img/png/07.png"));
 		gifs.add(new GifVO(8, "08", "gif 08", LocalDate.now(), 5D, "static/img/gif/08.gif", "static/img/png/08.png"));
-		gifs.add(new GifVO(9, "09", "gif 09", LocalDate.now(), 5D, "static/img/gif/09.gif", "static/img/png/09.png"));
-		gifs.add(new GifVO(10, "10", "gif 10", LocalDate.now(), 5D, "static/img/gif/10.gif", "static/img/png/10.png"));
 
 		return gifs;
 	}
