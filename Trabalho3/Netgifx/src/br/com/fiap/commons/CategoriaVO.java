@@ -28,9 +28,6 @@ public class CategoriaVO {
 		this.nome = nome;
 	}
 	public List<GifVO> getGifs() {
-		for(GifVO gif : this.gifs){
-			System.out.println("GIF - " + gif.getNome());
-		}
 		return gifs;
 	}
 	public void setGifs(List<GifVO> gifs) {
