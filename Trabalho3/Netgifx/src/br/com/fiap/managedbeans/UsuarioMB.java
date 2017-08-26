@@ -26,11 +26,6 @@ public class UsuarioMB implements Serializable {
 	}
 
 	public boolean isAcaoLoggout() {
-		if(acaoLoggout){
-			System.out.println("acaoLoggout = true");
-		}else{
-			System.out.println("acaoLoggout = false");
-		}
 		return acaoLoggout;
 	}
 
@@ -44,12 +39,10 @@ public class UsuarioMB implements Serializable {
 
 	public void realizarLoggout() {
 		this.usuarioLogado = false;
-		System.out.println("usuarioLogado = false");
 	}
 
 	public void realizarLogin(ActionEvent actionEvent) {
 		this.usuarioLogado = true;
-		System.out.println("usuarioLogado = TRUE");
 		addMessage("Login realizado!!");
 	}
 

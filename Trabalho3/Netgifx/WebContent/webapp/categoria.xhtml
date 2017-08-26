@@ -98,7 +98,10 @@
 		    <p:carousel value="#{categoria.gifs}" headerText="#{categoria.nome}" var="gif" itemStyle="text-align:center;background-color:#141414;border=0px;width:100px;" numVisible="6" easing="easeOutBounce" cricular="true" >
 		        <h:panelGrid columns="2"  columnClasses="label,value" title="#{gif.nome}" style="border=0px;">	        
 	                <p:commandLink update=":form:gifDetalhes" oncomplete="PF('gifDialog').show()" >
-	                	<p:graphicImage name="#{gif.caminhoEstatico}" height="140" width="220" style="margin-left:-10px"/>	 
+	                     
+	                	<p:graphicImage rendered="#{usuarioMB.usuarioLogado == false}" name="#{gif.caminhoEstatico}" height="140" width="220" style="margin-left:-10px"/>
+	                	<p:graphicImage rendered="#{usuarioMB.usuarioLogado == true}" name="#{gif.caminhoAnimado}" height="140" width="220" style="margin-left:-10px"/>
+	                		 
 	                    <f:setPropertyActionListener value="#{gif}" target="#{categoriaMB.gifSelecionado}" />
 	                </p:commandLink>
 		        </h:panelGrid>

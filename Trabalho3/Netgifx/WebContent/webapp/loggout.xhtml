@@ -10,18 +10,20 @@
 		h3{
 			margin-top: -20px;
 		}
-		.formLogin{
-		text-align: center;
+		.formLoginLoggout{
+			text-align: center;
+			width: 100%;
 		}
+		
+		
 	</style>
-	<div class="formLogin">
-	<h3>Deseja realmente sair?</h3>
-	 <p:commandButton value="Sim" process="@form"  ajax="false" icon="ui-icon-check" class="btn" actionListener="#{usuarioMB.realizarLoggout}">
-	 	<f:setPropertyActionListener value="false" target="#{usuarioMB.acaoLoggout}" />
-	 </p:commandButton> 
-	 	 <p:commandButton value="Não" process="@form"  ajax="false" icon="ui-icon-check" class="btn">
-	 	<f:setPropertyActionListener value="false" target="#{usuarioMB.acaoLoggout}" />
-	 </p:commandButton>        
-	        
+	<div class="formLoginLoggout">
+		<h3>Deseja realmente sair?</h3>
+		 <p:commandButton value="Sim" process="@form"  ajax="false" icon="ui-icon-check" class="btn" actionListener="#{usuarioMB.realizarLoggout}">
+		 	<f:setPropertyActionListener value="false" target="#{usuarioMB.acaoLoggout}" />
+		 </p:commandButton> 
+		 	 <p:commandButton value="Não" process="@form"  ajax="false" icon="ui-icon-check" class="btn">
+		 	<f:setPropertyActionListener value="false" target="#{usuarioMB.acaoLoggout}" />
+		 </p:commandButton>   
     </div> 
 </ui:composition>
