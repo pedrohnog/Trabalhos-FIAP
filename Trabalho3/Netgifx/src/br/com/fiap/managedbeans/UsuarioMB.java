@@ -1,12 +1,17 @@
 package br.com.fiap.managedbeans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+
+import br.com.fiap.commons.GifVO;
 
 @ManagedBean
 @SessionScoped
@@ -18,6 +23,8 @@ public class UsuarioMB implements Serializable {
 	private boolean acaoLoggout = false;
 	private String usuario = "";
 	private String senha = "";
+	
+	private List<GifVO> gifsFavoritos = null;
 
 	public boolean isUsuarioLogado() {
 		return usuarioLogado;
@@ -58,6 +65,25 @@ public class UsuarioMB implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public List<GifVO> getGifsFavoritos() {
+		gifsFavoritos =  new ArrayList<>();
+		gifsFavoritos.add(new GifVO(1, "01", "gif 01", LocalDate.now(), 5D, "static/img/gif/01.gif", "static/img/png/01.png"));
+		gifsFavoritos.add(new GifVO(2, "02", "gif 02", LocalDate.now(), 5D, "static/img/gif/02.gif", "static/img/png/02.png"));
+		
+		return gifsFavoritos;
+	}
+
+	public void setGifsFavoritos(List<GifVO> gifsFavoritos) {
+		this.gifsFavoritos = gifsFavoritos;
+	}
+	
+	public void adicionarGifFavorito(GifVO gif) {
+		//TODO Implementar lógica para adicionar gif, obs, validar se já nao eh favorito
+		System.out.println("Adicionar");
+		System.out.println(gif.getNome());
+		System.out.println(gif.getCaminhoAnimado());
 	}
 
 	public void realizarLogin(ActionEvent actionEvent) {
