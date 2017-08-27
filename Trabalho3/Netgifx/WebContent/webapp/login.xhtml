@@ -21,13 +21,15 @@
 		<h:panelGrid columns="2" cellpadding="5">
 	
 	        <p:outputLabel value="Login:" for="Login" />
-	        <p:inputText id="Login" />       
+	        <p:inputText id="Login" value="#{usuarioMB.usuario}"/>       
 	        
 	        <p:outputLabel value="Senha:" for="Senha" />
-	        <p:inputText id="Senha" type="password" />
+	        <p:inputText id="Senha" type="password" value="#{usuarioMB.senha}"/>
 	    </h:panelGrid>
-	</h:form>  
-	 <p:commandButton value="Entrar" process="@form"  ajax="false" icon="ui-icon-check" class="btn" actionListener="#{usuarioMB.realizarLogin}" /> 
+	</h:form>
+	<br/>
+	<p:commandButton value="Entrar" ajax="false" icon="ui-icon-check" class="btn" actionListener="#{usuarioMB.realizarLogin}" />  
+	  
 	        
     </div> 
 </ui:composition>
