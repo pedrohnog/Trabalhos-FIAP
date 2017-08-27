@@ -17,16 +17,14 @@
 	<div class="formLogin">
 	<h3>Faça login e tenha acesso para ver todos os gif's</h3>
 		
-	<h:form id="login">
-		<h:panelGrid columns="2" cellpadding="5">
-	
-	        <p:outputLabel value="Login:" for="Login" />
-	        <p:inputText id="Login" value="#{usuarioMB.usuario}"/>       
-	        
-	        <p:outputLabel value="Senha:" for="Senha" />
-	        <p:inputText id="Senha" type="password" value="#{usuarioMB.senha}"/>
-	    </h:panelGrid>
-	</h:form>
+	<h:panelGrid columns="2" cellpadding="5">
+
+        <p:outputLabel value="Login:" for="Login"/>
+        <h:inputText id="Login" value="#{usuarioMB.usuario}"/>       
+        
+        <p:outputLabel value="Senha:" for="Senha" />
+        <h:inputText id="Senha" type="password" value="#{usuarioMB.senha}"/>
+    </h:panelGrid>
 	<br/>
 	<p:commandButton value="Entrar" ajax="false" icon="ui-icon-check" class="btn" actionListener="#{usuarioMB.realizarLogin}" />  
 	  
