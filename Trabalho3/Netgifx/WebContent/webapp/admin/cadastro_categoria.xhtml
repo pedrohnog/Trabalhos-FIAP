@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:p="http://primefaces.org/ui">
+	  
+	  
+	<h:form>
+		<h2>Informe os dados da nova categoria</h2>
+		<p:messages id="messages" />
+		<p:panelGrid columns="2" id="painelCategoria" >		  
+			<p:row>		
+				<p:column>
+					<p:outputLabel for="nome" value="Nome da categoria:" />
+				</p:column>
+				<p:column>
+					<p:inputText id="nome" value="#{cadastroCategoriaMB.descricaoCategoria}" required="true" requiredMessage="Necessário informar o nome da categoria"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<p:commandButton value="Cadastrar" icon="ui-icon-star"
+						action="#{cadastroCategoriaMB.cadastrarCategoria}" update="messages">
+					</p:commandButton>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+	
+	<h:form id="formCategoriasCadastradas">
+	    <p:dataList value="#{cadastroCategoriaMB.categoriasCadastradas}" var="categoria" type="unordered">
+	        <f:facet name="header">
+	            Categorias
+	        </f:facet>
+	        #{categoria.nome}
+	    </p:dataList>
+	</h:form>	
+    
+</ui:composition>
