@@ -18,8 +18,8 @@ public class Main {
 
 		System.out.println("teste");
 
-		cargaInicial();
-//		listarCategorias();
+//		cargaInicial();
+		listarCategorias();
 //		buscarUsuario();
 //		buscarGif();
 //		atualizarFavoritos();
@@ -106,7 +106,6 @@ public class Main {
 	private static void criarGifs() {
 		Gif gif1 = new Gif();
 		gif1.setNome("primeiro");
-		gif1.setClassificacao(Double.valueOf("3"));
 		gif1.setCaminho("01");
 		gif1.setDescricao("primeiro");
 		gif1.setClassificacaoEtaria("Jovens");
@@ -117,13 +116,11 @@ public class Main {
 	
 		Gif gif2 = new Gif();
 		gif2.setNome("Segundo");
-		gif2.setClassificacao(Double.valueOf("3"));
 		gif2.setCaminho("02");
 		gif2.setDescricao("segundo");
 		
 		Gif gif3 = new Gif();
 		gif3.setNome("terceiro");
-		gif3.setClassificacao(Double.valueOf("5"));
 		gif3.setCaminho("03");
 		gif3.setDescricao("terceiro");
 		

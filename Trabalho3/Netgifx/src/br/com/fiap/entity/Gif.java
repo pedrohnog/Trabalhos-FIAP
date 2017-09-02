@@ -41,10 +41,7 @@ public class Gif {
 	
 	@Column(name = "DataPublicacao")
 	private LocalDate dataPublicacao;
-	
-	@Column(name = "Classificacao")
-	private Double classificacao;
-	
+		
 	@Column(name = "Caminho", length = 45)
 	private String caminho;
 
@@ -87,14 +84,6 @@ public class Gif {
 
 	public void setDataPublicacao(LocalDate dataPublicacao) {
 		this.dataPublicacao = dataPublicacao;
-	}
-
-	public Double getClassificacao() {
-		return classificacao;
-	}
-
-	public void setClassificacao(Double classificacao) {
-		this.classificacao = classificacao;
 	}
 
 	public String getCaminho() {
