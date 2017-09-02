@@ -18,8 +18,8 @@ public class Main {
 
 		System.out.println("teste");
 
-//		cargaInicial();
-		listarCategorias();
+		cargaInicial();
+//		listarCategorias();
 //		buscarUsuario();
 //		buscarGif();
 //		atualizarFavoritos();
