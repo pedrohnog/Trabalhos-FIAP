@@ -17,7 +17,7 @@ public class UsuarioCommand {
 		return usuario;
 	}
 	
-	public synchronized void cadastrarUsuario(String nome,String apelido, String senha, String cpf, LocalDate dataNasc, String telefone, String email ) {
+	public synchronized void cadastrarUsuario(String nome,String apelido, String senha, String cpf, LocalDate dataNasc, String telefone, String email, boolean admin ) {
 		Usuario usuario = new Usuario();
 		
 		usuario.setNome(nome);
@@ -27,6 +27,7 @@ public class UsuarioCommand {
 		usuario.setTelefone(telefone);
 		usuario.setApelido(apelido);
 		usuario.setDataNasc(dataNasc);
+		usuario.setAdmin(admin);
 
 		cadastrarUsuario(usuario);
 	}

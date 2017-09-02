@@ -11,7 +11,7 @@ import br.com.fiap.entity.Usuario;
 public class NetgifxCommand {
 
 	public void cadastrarUsuario(String nome,String apelido, String senha, String cpf, LocalDate dataNasc, String telefone, String email ) {
-		(new UsuarioCommand()).cadastrarUsuario(nome, apelido, senha, cpf, dataNasc, telefone, email );
+		(new UsuarioCommand()).cadastrarUsuario(nome, apelido, senha, cpf, dataNasc, telefone, email, true );
 	}
 	
 	public void cadastrarUsuario(Usuario usuario) {

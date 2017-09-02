@@ -44,7 +44,10 @@ public class Usuario {
 	
 	@Column(name = "Email", length = 20)
 	private String email;
-
+	
+	@Column(name = "Admin", length = 20)
+	private Boolean admin;
+	
 	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)
 	@JoinTable(name="FAVORITOS", 
 			joinColumns=@JoinColumn(name="idUsuario"),
@@ -122,7 +125,13 @@ public class Usuario {
 	public void setGifs(Set<Gif> gifs) {
 		this.gifs = gifs;
 	}
-	
-	
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
 	
 }
