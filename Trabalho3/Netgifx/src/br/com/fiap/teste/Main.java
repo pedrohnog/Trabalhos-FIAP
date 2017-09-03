@@ -16,11 +16,18 @@ public class Main {
 	static NetgifxCommand netgifxCommand = new NetgifxCommand();
 
 	public static void main(String[] args) {
-		cargaInicial();
+//		cargaInicial();
+		
+		//As buscas são executadas duas vezes para testar o cache
+		
+//		buscarUsuario();
+//		buscarUsuario();
+		
+//		buscarGif();
+//		buscarGif();
 		
 //		listarCategorias();
-//		buscarUsuario();
-//		buscarGif();
+//		listarCategorias();
 	}
 
 	private static void buscarGif() {
