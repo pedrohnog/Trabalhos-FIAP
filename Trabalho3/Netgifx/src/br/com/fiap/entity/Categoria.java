@@ -1,5 +1,6 @@
 package br.com.fiap.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,7 +14,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CATEGORIA")
-public class Categoria {
+public class Categoria implements Serializable {
+
+	private static final long serialVersionUID = -6044675363782344196L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package br.com.fiap.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -17,7 +18,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USUARIO")
-public class Usuario {
+public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = 7149994243577908142L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +33,7 @@ public class Usuario {
 	@Column(name = "apelido", length = 45)
 	private String apelido;
 
-	@Column(name = "Senha", length = 45)
+	@Column(name = "Senha", length = 50, nullable=false)
 	private String senha;
 	
 	@Column(name = "cpf", length = 11)
@@ -42,10 +45,10 @@ public class Usuario {
 	@Column(name = "Telefone", length = 20)
 	private String telefone;
 	
-	@Column(name = "Email", length = 20)
+	@Column(name = "Email", length = 50, nullable=false, unique=true)
 	private String email;
 	
-	@Column(name = "Admin", length = 20)
+	@Column(name = "Admin", length = 20, nullable=false)
 	private Boolean admin;
 	
 	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)

@@ -1,5 +1,6 @@
 package br.com.fiap.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -17,7 +18,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "GIF")
-public class Gif {
+public class Gif implements Serializable {
+
+	private static final long serialVersionUID = 5950757325263341070L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

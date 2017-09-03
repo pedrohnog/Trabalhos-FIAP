@@ -18,8 +18,8 @@ public class Main {
 
 		System.out.println("teste");
 
-//		cargaInicial();
-		listarCategorias();
+		cargaInicial();
+//		listarCategorias();
 //		buscarUsuario();
 //		buscarGif();
 //		atualizarFavoritos();
@@ -92,6 +92,7 @@ public class Main {
 		usuario.setSenha("123");
 		usuario.setTelefone("123");
 		usuario.setApelido("everton");
+		usuario.setAdmin(false);
 		
 		Set<Usuario> usuarios = new HashSet<Usuario>();
 		

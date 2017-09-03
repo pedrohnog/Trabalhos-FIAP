@@ -12,6 +12,9 @@
 		<jsf.version>2.2.14</jsf.version>
 		<hibernate.version>5.2.10.Final</hibernate.version>
 		<mysql.version>5.1.42</mysql.version>
+		<version.logback>1.2.1</version.logback>
+		<version.slf4j>1.7.24</version.slf4j>
+		<version.ehcache>3.2.0</version.ehcache>
 
 		<java.version>1.8</java.version>
 	</properties>
@@ -41,11 +44,27 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-site</artifactId>
+			<version>${version.logback}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${version.slf4j}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>${version.ehcache}</version>
 		</dependency>
 	</dependencies>
 	<build>
