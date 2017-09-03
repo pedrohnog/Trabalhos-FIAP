@@ -22,10 +22,10 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idCategoria")
 	private int idCategoria;
-	
-	@Column(name = "Nome", length = 45)
+
+	@Column(name = "nome", length = 45)
 	private String nome;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categorias")
 	private Set<Gif> gifs;
 
@@ -52,5 +52,5 @@ public class Categoria implements Serializable {
 	public void setGifs(Set<Gif> gifs) {
 		this.gifs = gifs;
 	}
-	
+
 }

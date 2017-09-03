@@ -26,37 +26,35 @@ public class Gif implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idGif")
 	private int idGif;
-	
-	@Column(name = "Nome", length = 45)
+
+	@Column(name = "nome", length = 45)
 	private String nome;
-	
-	@Column(name = "Descricao", length = 45)
+
+	@Column(name = "descricao", length = 45)
 	private String descricao;
-	
-	@Column(name = "Genero", length = 45)
+
+	@Column(name = "genero", length = 45)
 	private String genero;
-	
-	@Column(name = "ClassificacaoEtaria", length = 45)
+
+	@Column(name = "classificacaoEtaria", length = 45)
 	private String classificacaoEtaria;
-	
-	@Column(name = "Idioma", length = 45)
+
+	@Column(name = "idioma", length = 45)
 	private String idioma;
-	
-	@Column(name = "DataPublicacao")
+
+	@Column(name = "dataPublicacao")
 	private LocalDate dataPublicacao;
-		
-	@Column(name = "Caminho", length = 45)
+
+	@Column(name = "caminho", length = 45)
 	private String caminho;
 
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "gifs")
 	private Set<Usuario> usuarios;
-	
-	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)
-	@JoinTable(name="GIF_CATEGORIA", 
-			joinColumns=@JoinColumn(name="idGif"),
-			inverseJoinColumns=@JoinColumn(name="idCategoria"))
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "GIF_CATEGORIA", joinColumns = @JoinColumn(name = "idGif"), inverseJoinColumns = @JoinColumn(name = "idCategoria"))
 	private Set<Categoria> categorias;
-	
+
 	public int getIdGif() {
 		return idGif;
 	}
@@ -136,5 +134,5 @@ public class Gif implements Serializable {
 	public void setIdioma(String idioma) {
 		this.idioma = idioma;
 	}
-	
+
 }

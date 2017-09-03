@@ -26,37 +26,35 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idUsuario")
 	private int idUsuario;
-	
-	@Column(name = "Nome", length = 45)
+
+	@Column(name = "nome", length = 45)
 	private String nome;
 
 	@Column(name = "apelido", length = 45)
 	private String apelido;
 
-	@Column(name = "Senha", length = 50, nullable=false)
+	@Column(name = "senha", length = 50, nullable = false)
 	private String senha;
-	
+
 	@Column(name = "cpf", length = 11)
 	private String cpf;
-	
-	@Column(name = "DataNasc")
+
+	@Column(name = "dataNasc")
 	private LocalDate dataNasc;
-	
-	@Column(name = "Telefone", length = 20)
+
+	@Column(name = "telefone", length = 20)
 	private String telefone;
-	
-	@Column(name = "Email", length = 50, nullable=false, unique=true)
+
+	@Column(name = "email", length = 50, nullable = false, unique = true)
 	private String email;
-	
-	@Column(name = "Admin", length = 20, nullable=false)
+
+	@Column(name = "admin", length = 20, nullable = false)
 	private Boolean admin;
-	
-	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)
-	@JoinTable(name="FAVORITOS", 
-			joinColumns=@JoinColumn(name="idUsuario"),
-			inverseJoinColumns=@JoinColumn(name="idGif"))
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "FAVORITOS", joinColumns = @JoinColumn(name = "idUsuario"), inverseJoinColumns = @JoinColumn(name = "idGif"))
 	private Set<Gif> gifs;
-	
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -136,5 +134,5 @@ public class Usuario implements Serializable {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
-	
+
 }
