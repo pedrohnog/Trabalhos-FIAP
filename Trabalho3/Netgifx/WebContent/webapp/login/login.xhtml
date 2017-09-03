@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<link rel="stylesheet" type="text/css" href="resources/static/css/login/login.css" />
+	
+	<span class="formParent">
+		<h:form id="frmLogin" prependId="false" styleClass="form" >
+	
+			<span class="titulo">
+				<h3>Faça seu login e tenha acesso aos melhores Gif's</h3>
+			</span>
+			
+			<br/>
+	
+			<div class="ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4, ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank">
+					<h:outputLabel id="lblUsername" for="txtUsername" styleClass="label">Usuário:</h:outputLabel>
+					<p:inputText id="txtUsername" immediate="true" maxlength="50" value="#{usuarioMB.usuario.apelido}" required="true" requiredMessage="O nome de usuário é obrigatório!" />
+				</p:panelGrid>
+			</div>
+			<p:message for="txtUsername" showDetail="true" showSummary="false"/>
+			
+			<br/>
+			
+			<div class="ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4, ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank">
+					<h:outputLabel id="lblSenha" for="txtSenha" styleClass="label">Senha:</h:outputLabel>
+					<p:password id="txtSenha" immediate="true" maxlength="50" value="#{usuarioMB.usuario.senha}" required="true" requiredMessage="A senha é obrigatória!" />
+				</p:panelGrid>
+			</div>
+			<p:message for="txtSenha" showDetail="true" showSummary="false"/>
+			
+			<br/>
+			
+			<span class="botao">
+				<p:commandButton id="btnLogin" value="ENTRAR" action="#{usuarioMB.realizarLogin}" ajax="false"/>
+			</span>
+			
+			<br/><br/>
+			
+			<p:messages showDetail="true" showSummary="true" />
+		</h:form>
+	</span>
+
+</ui:composition>

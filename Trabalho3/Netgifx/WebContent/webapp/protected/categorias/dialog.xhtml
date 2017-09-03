@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<p:dialog id="gifDetalhes" header="Netgifx" widgetVar="gifDialog" modal="true">
+		<p:outputPanel style="text-align:center;background-color:#141414">
+			<p:panelGrid columns="2" columnClasses="label,value">
+				<p:graphicImage name="#{categoriaMB.gifSelecionado.caminho}.png" height="550px" width="800px" />
+				<h1><h:outputText value="#{categoriaMB.gifSelecionado.nome}" /></h1>
+				<p class="sinopse"><h:outputText value="#{categoriaMB.gifSelecionado.descricao}" /></p>
+			</p:panelGrid>
+		</p:outputPanel>
+
+	</p:dialog>
+
+</ui:composition>

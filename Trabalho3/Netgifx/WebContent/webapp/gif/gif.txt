@@ -1,3 +1,0 @@
-Pasta onde serão adicionadas as telas dos gifs animados
-
-Deve ter um filtro que impeça o acesso de usuários nessa pasta se não estiver logado

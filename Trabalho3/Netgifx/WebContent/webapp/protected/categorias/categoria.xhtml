@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<link rel="stylesheet" type="text/css" href="../../resources/static/css/categorias/carrossel.css" />
+
+	<br /><br />
+
+	<form id="formCategorias>">
+		<c:if test="${not empty usuarioMB.usuario.gifs}">
+			<p:carousel value="#{usuarioMB.usuario.gifs}" headerText="Favoritos" var="gif" responsive="true" circular="true" numVisible="6">
+				<p:commandLink process="@this" onclick="PF('gifDialog').show()">
+					<p:graphicImage name="#{gif.caminho}.png" height="140" width="220" />
+					<f:setPropertyActionListener value="#{gif}" target="#{categoriaMB.gifSelecionado}" />
+				</p:commandLink>
+			</p:carousel>
+			<br />
+		</c:if>
+		
+		<c:forEach items="#{categoriaMB.categorias}" var="categoria">
+			<p:carousel value="#{categoria.gifs}" headerText="#{categoria.nome}" var="gif" responsive="true" circular="true" numVisible="6">
+				<p:graphicImage name="#{gif.caminho}.png" height="140" width="220" />
+			</p:carousel>
+			<br />
+		</c:forEach>
+	</form>
+</ui:composition>
