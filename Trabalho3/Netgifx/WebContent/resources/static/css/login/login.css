@@ -1,0 +1,23 @@
+.label {
+	font-family: Verdana;
+	color: white;
+}
+
+.titulo {
+	color: white;
+}
+
+.ui-button, botao {
+	border: 1px solid black;
+	background-color: black;
+	color: white;
+	text-shadow: none;
+}
+
+.styleFilterCommandButton-BackgroundColor, .ui-widget-content .styleFilterCommandButton-BackgroundColor,
+	.ui-widget-header .styleFilterCommandButton-BackgroundColor* {
+	border: 1px solid black;
+	background-color: black;
+	color: white;
+	text-shadow: none;
+}

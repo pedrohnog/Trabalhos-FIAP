@@ -1,0 +1,11 @@
+.ui-widget-header {
+	border: none;
+	background-color: black;
+	text-shadow: none;
+	color: white;
+}
+
+.ui-widget-content {
+	border: none;
+	background-color: #101010;
+}

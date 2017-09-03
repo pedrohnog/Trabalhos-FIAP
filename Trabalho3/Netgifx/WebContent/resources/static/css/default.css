@@ -1,0 +1,19 @@
+body {
+	background-color: black;
+	font-family: Verdana;
+}
+
+.ui-fluid {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.ui-panelgrid {
+	width: 100%;
+}
+
+.mainPanel {
+	background-color: black;
+	font-family: Verdana;
+}
