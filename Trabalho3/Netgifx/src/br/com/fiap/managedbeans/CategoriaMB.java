@@ -1,5 +1,5 @@
 package br.com.fiap.managedbeans;
- 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,46 +8,44 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.fiap.commons.CategoriaVO;
-import br.com.fiap.commons.GifVO;
- 
+import br.com.fiap.commands.NetgifxCommand;
+import br.com.fiap.entity.Categoria;
+import br.com.fiap.entity.Gif;
+
 @ManagedBean
 @ViewScoped
 public class CategoriaMB implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
-	private List<CategoriaVO> categorias;
-	private GifVO gifSelecionado;
-         
-    @PostConstruct
-    public void init() {
-    	if(categorias == null){
-    		categorias = new ArrayList<>();
-    	}
-    	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Lancamentos"));
-    	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Infantil"));
-    	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Familia"));
-    	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Escola"));
-    	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Faculdade"));
-    	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Creche"));
-    	categorias.addAll(CategoriaService.INSTANCIA.criarCategorias("Animais"));
-    }
+	private List<Categoria> categorias = new ArrayList<>();
+	private Gif gifSelecionado;
+	
+	private NetgifxCommand netgifxCommand = new NetgifxCommand();
 
-	public List<CategoriaVO> getCategorias() {
+	@PostConstruct
+	public void init() {
+		categorias = netgifxCommand.listarCategorias();
+
+		if (categorias == null) {
+			categorias = new ArrayList<>();
+		}
+	}
+
+	public List<Categoria> getCategorias() {
 		return categorias;
 	}
 
-	public void setCategorias(List<CategoriaVO> categorias) {
+	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
 
-	public GifVO getGifSelecionado() {
+	public Gif getGifSelecionado() {
 		return gifSelecionado;
 	}
 
-	public void setGifSelecionado(GifVO gifSelecionado) {
+	public void setGifSelecionado(Gif gifSelecionado) {
 		this.gifSelecionado = gifSelecionado;
 	}
-    
+
 }
