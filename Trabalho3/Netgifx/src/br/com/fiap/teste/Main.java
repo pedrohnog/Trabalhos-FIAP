@@ -87,7 +87,7 @@ public class Main {
 		
 		Gif gif1 = new Gif();
 		gif1.setNome("Um");
-		gif1.setCaminho("static/img/gif/01");
+		gif1.setCaminho("static/img/01");
 		gif1.setDescricao("Primeiro");
 		gif1.setClassificacaoEtaria("Livre");
 		gif1.setDataPublicacao(LocalDate.now());
@@ -96,7 +96,7 @@ public class Main {
 
 		Gif gif2 = new Gif();
 		gif2.setNome("Dois");
-		gif2.setCaminho("static/img/gif/02");
+		gif2.setCaminho("static/img/02");
 		gif2.setDescricao("Segundo");
 		gif2.setClassificacaoEtaria("Livre");
 		gif2.setDataPublicacao(LocalDate.now());
@@ -105,7 +105,7 @@ public class Main {
 
 		Gif gif3 = new Gif();
 		gif3.setNome("Três");
-		gif3.setCaminho("static/img/gif/03");
+		gif3.setCaminho("static/img/03");
 		gif3.setDescricao("Terceiro");
 		gif3.setClassificacaoEtaria("Livre");
 		gif3.setDataPublicacao(LocalDate.now());
@@ -114,7 +114,7 @@ public class Main {
 
 		Gif gif4 = new Gif();
 		gif4.setNome("Quatro");
-		gif4.setCaminho("static/img/gif/04");
+		gif4.setCaminho("static/img/04");
 		gif4.setDescricao("Quarto");
 		gif4.setClassificacaoEtaria("Livre");
 		gif4.setDataPublicacao(LocalDate.now());
@@ -123,7 +123,7 @@ public class Main {
 
 		Gif gif5 = new Gif();
 		gif5.setNome("Cinco");
-		gif5.setCaminho("static/img/gif/05");
+		gif5.setCaminho("static/img/05");
 		gif5.setDescricao("Quinto");
 		gif5.setClassificacaoEtaria("Livre");
 		gif5.setDataPublicacao(LocalDate.now());
@@ -132,7 +132,7 @@ public class Main {
 
 		Gif gif6 = new Gif();
 		gif6.setNome("Seis");
-		gif6.setCaminho("static/img/gif/06");
+		gif6.setCaminho("static/img/06");
 		gif6.setDescricao("Sexto");
 		gif6.setClassificacaoEtaria("Livre");
 		gif6.setDataPublicacao(LocalDate.now());
@@ -141,7 +141,7 @@ public class Main {
 
 		Gif gif7 = new Gif();
 		gif7.setNome("Sete");
-		gif7.setCaminho("static/img/gif/07");
+		gif7.setCaminho("static/img/07");
 		gif7.setDescricao("Sétimo");
 		gif7.setClassificacaoEtaria("Livre");
 		gif7.setDataPublicacao(LocalDate.now());
@@ -150,7 +150,7 @@ public class Main {
 
 		Gif gif8 = new Gif();
 		gif8.setNome("Oito");
-		gif8.setCaminho("static/img/gif/08");
+		gif8.setCaminho("static/img/08");
 		gif8.setDescricao("Oitavo");
 		gif8.setClassificacaoEtaria("Livre");
 		gif8.setDataPublicacao(LocalDate.now());
