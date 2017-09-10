@@ -21,13 +21,16 @@ public class UsuarioMB implements Serializable {
 	
 	public String realizarLogin() {
 		Usuario usuario = netgifxCommand.buscarUsuario(this.usuario.getApelido());
+		FacesContext context = FacesContext.getCurrentInstance();
 		
 		if (usuario != null) {
 			this.usuario = usuario;
-			//TODO Criar uma sessao para o usuario
+			
+			context.getExternalContext().getSessionMap().put("usuario", usuario);
+			
 			return "webapp/protected/main.xhtml?faces-redirect=true";
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não cadastrado!", "O usuário não possui um cadastro. Entre em contato com um administrador para cadastrar!"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não cadastrado!", "O usuário não possui um cadastro. Entre em contato com um administrador para cadastrar!"));
 			return null;
 		}
 	}

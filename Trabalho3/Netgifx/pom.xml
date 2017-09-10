@@ -5,6 +5,8 @@
 	<artifactId>Netgifx</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+	
+	<name>Netgifx</name>
 
 	<properties>
 		<primefaces.version>6.1</primefaces.version>
