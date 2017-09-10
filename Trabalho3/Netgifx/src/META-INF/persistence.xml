@@ -10,7 +10,7 @@
 		<properties>
 			<property name="javax.persistence.schemageneration.database.action" value="none" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://104.198.173.192:3306/DBNetgifx?createDatabaseIfNotExist=true" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://104.198.173.192:3306/DBNetgifx?useSSL=false" />
 			<property name="javax.persistence.jdbc.user" value="fiap" />
 			<property name="javax.persistence.jdbc.password" value="fiap" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
