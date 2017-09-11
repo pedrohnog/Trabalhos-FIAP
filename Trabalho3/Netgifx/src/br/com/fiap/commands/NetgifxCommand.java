@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import br.com.fiap.cache.builder.impl.CacheBuilderImpl;
+import br.com.fiap.cache.constants.TamanhoMemoria;
 import br.com.fiap.cache.constants.TempoVida;
 import br.com.fiap.cache.manager.GerenciadorCache;
 import br.com.fiap.entity.Categoria;
@@ -24,7 +25,10 @@ public class NetgifxCommand {
 	}
 
 	public Usuario buscarUsuario(String apelido) {
-		GerenciadorCache<String, Usuario> cache = CacheBuilderImpl.init(String.class, Usuario.class) .definirTempoVida(15L, TempoVida.MINUTOS).build("BUSCA USUARIO");
+		GerenciadorCache<String, Usuario> cache = CacheBuilderImpl.init(String.class, Usuario.class)
+				.definirTamanhoMaximoMemoria(1L, TamanhoMemoria.MEGABYTES)
+				.definirTempoVida(15L, TempoVida.MINUTOS)
+				.build("BUSCA USUARIO");
 
 		if (cache.verificarExistencia(apelido)) {
 			return cache.recuperar(apelido);
@@ -38,7 +42,7 @@ public class NetgifxCommand {
 	}
 
 	public Gif buscarGif(Integer id) {
-		GerenciadorCache<Integer, Gif> cache = CacheBuilderImpl.init(Integer.class, Gif.class) .definirTempoVida(15L, TempoVida.MINUTOS).build("BUSCA GIF");
+		GerenciadorCache<Integer, Gif> cache = CacheBuilderImpl.init(Integer.class, Gif.class).definirTamanhoMaximoMemoria(1L, TamanhoMemoria.MEGABYTES).definirTempoVida(15L, TempoVida.MINUTOS).build("BUSCA GIF");
 
 		if (cache.verificarExistencia(id)) {
 			return cache.recuperar(id);
@@ -52,7 +56,7 @@ public class NetgifxCommand {
 	}
 
 	public List<Categoria> listarCategorias() {
-		GerenciadorCache<String, Categoria[]> cache = CacheBuilderImpl.init(String.class, Categoria[].class) .definirTempoVida(1L, TempoVida.DIAS).build("LISTAR CATEGORIAS");
+		GerenciadorCache<String, Categoria[]> cache = CacheBuilderImpl.init(String.class, Categoria[].class).definirTamanhoMaximoMemoria(1L, TamanhoMemoria.MEGABYTES).definirTempoVida(1L, TempoVida.DIAS).build("LISTAR CATEGORIAS");
 		
 		if (cache.verificarExistencia("CHAVE")) {
 			return Arrays.asList(cache.recuperar("CHAVE"));
