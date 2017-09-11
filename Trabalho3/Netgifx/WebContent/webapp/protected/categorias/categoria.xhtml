@@ -22,10 +22,15 @@
 		</c:if>
 		
 		<c:forEach items="#{categoriaMB.categorias}" var="categoria">
-			<p:carousel value="#{categoria.gifs}" headerText="#{categoria.nome}" var="gif" responsive="true" circular="true" numVisible="6">
-				<p:graphicImage name="#{gif.caminho}.png" height="140" width="220" />
-			</p:carousel>
-			<br />
+			<c:if test="${not empty categoria.gifs}">
+				<p:carousel value="#{categoria.gifs}" headerText="#{categoria.nome}" var="gif" responsive="true" circular="true" numVisible="6">
+					<p:commandLink update=":formGifDetalhes:gifDetalhes" process="@this" oncomplete="PF('gifDialog').show()">
+						<p:graphicImage name="#{gif.caminho}.png" height="140" width="220" />
+						<f:setPropertyActionListener value="#{gif}" target="#{categoriaMB.gifSelecionado}" />
+					</p:commandLink>
+				</p:carousel>
+				<br />
+			</c:if>
 		</c:forEach>
 	</h:form>
 </ui:composition>
