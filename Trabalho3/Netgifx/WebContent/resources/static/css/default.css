@@ -17,3 +17,7 @@ body {
 	background-color: black;
 	font-family: Verdana;
 }
+.panelGridDialog{
+	border-style: none;
+	border: none;
+}

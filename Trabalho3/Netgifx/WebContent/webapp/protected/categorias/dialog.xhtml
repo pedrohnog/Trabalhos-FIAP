@@ -7,12 +7,16 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	
 	<h:form id="formGifDetalhes" prependId="false">
-		<p:dialog id="gifDetalhes" header="Netgifx" widgetVar="gifDialog" modal="true">
+		<p:dialog id="gifDetalhes" header="Netgifx" widgetVar="gifDialog" modal="true" 
+			draggable="false" resizable="false" closeOnEscape="true">
+			
 			<p:outputPanel style="text-align:center;background-color:#141414">
-				<p:panelGrid columns="2" columnClasses="label,value">
+				<p:panelGrid columns="2" columnClasses="label,value" styleClass="panelGridDialog">
 					<p:graphicImage name="#{categoriaMB.gifSelecionado.caminho}.png" height="550px" width="800px" />
-					<h1><h:outputText value="#{categoriaMB.gifSelecionado.nome}" /></h1>
-					<p class="sinopse"><h:outputText value="#{categoriaMB.gifSelecionado.descricao}" /></p>
+					<p:outputLabel>
+						<h1><h:outputText value="#{categoriaMB.gifSelecionado.nome}" /></h1>
+						<p class="sinopse"><h:outputText value="#{categoriaMB.gifSelecionado.descricao}" /></p>
+					</p:outputLabel>
 				</p:panelGrid>
 			</p:outputPanel>
 	
