@@ -34,9 +34,9 @@ public class NetgifxCommand {
 			return cache.recuperar(apelido);
 		} else {
 			Usuario usuario = new UsuarioCommand().buscarUsuario(apelido);
-			
-			cache.gravar(apelido, usuario);
-			
+			if(usuario != null){
+				cache.gravar(apelido, usuario);
+			}
 			return usuario;
 		}
 	}
