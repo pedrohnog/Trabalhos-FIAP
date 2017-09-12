@@ -41,6 +41,23 @@ public class NetgifxCommand {
 		}
 	}
 
+	public Categoria buscarCategoria(String nome) {
+		GerenciadorCache<String, Categoria> cache = CacheBuilderImpl.init(String.class, Categoria.class)
+				.definirTamanhoMaximoMemoria(1L, TamanhoMemoria.MEGABYTES)
+				.definirTempoVida(15L, TempoVida.MINUTOS)
+				.build("BUSCA CATEGORIA");
+
+		if (cache.verificarExistencia(nome)) {
+			return cache.recuperar(nome);
+		} else {
+			Categoria categoria = new CategoriaCommand().buscarCategoria(nome);
+			if(categoria != null){
+				cache.gravar(nome, categoria);
+			}
+			return categoria;
+		}
+	}
+	
 	public Gif buscarGif(Integer id) {
 		GerenciadorCache<Integer, Gif> cache = CacheBuilderImpl.init(Integer.class, Gif.class).definirTamanhoMaximoMemoria(1L, TamanhoMemoria.MEGABYTES).definirTempoVida(15L, TempoVida.MINUTOS).build("BUSCA GIF");
 

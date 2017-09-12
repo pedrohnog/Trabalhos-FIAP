@@ -18,6 +18,13 @@ public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = -6044675363782344196L;
 
+	public Categoria(){
+	}
+	
+	public Categoria(String nome){
+		this.nome = nome;
+	}	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idCategoria")

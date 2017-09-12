@@ -21,20 +21,22 @@
 			<p:row>
 				<p:column colspan="2">
 					<p:commandButton value="Cadastrar" icon="ui-icon-star"
-						action="#{cadastroCategoriaMB.cadastrarCategoria}" update="messages">
+						action="#{cadastroCategoriaMB.cadastrarCategoria}" update="messages" process="@widgetVar(listCategorias)">
 					</p:commandButton>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
 	</h:form>
-	
-	<h:form id="formCategoriasCadastradas">
-	    <p:dataList value="#{cadastroCategoriaMB.categoriasCadastradas}" var="categoria" type="unordered">
-	        <f:facet name="header">
-	            Categorias
-	        </f:facet>
-	        #{categoria.nome}
-	    </p:dataList>
-	</h:form>	
+	<br/>
+	<div class="ui-g-4">
+		<h:form id="formCategoriasCadastradas" prependId="false" >
+		    <p:dataList widgetVar="listCategorias" value="#{cadastroCategoriaMB.categoriasCadastradas}" var="categoria" type="ordered">
+		        <f:facet name="header">
+		            Categorias
+		        </f:facet>
+		        #{categoria.nome}
+		    </p:dataList>
+		</h:form>	
+	</div>
     
 </ui:composition>

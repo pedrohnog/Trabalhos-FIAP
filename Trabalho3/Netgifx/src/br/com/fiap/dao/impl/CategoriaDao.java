@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.fiap.dao.DaoGenerico;
 import br.com.fiap.entity.Categoria;
+import br.com.fiap.entity.Usuario;
 
 public class CategoriaDao extends  DaoGenerico<Categoria>{
 
@@ -39,4 +40,5 @@ public class CategoriaDao extends  DaoGenerico<Categoria>{
 			return null;
 		}
 	}
+	
 }
