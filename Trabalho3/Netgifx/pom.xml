@@ -19,6 +19,7 @@
 		<version.ehcache>3.2.0</version.ehcache>
 
 		<java.version>1.8</java.version>
+		<version.servlet>1.0.0.Final</version.servlet>
 	</properties>
 
 	<dependencies>
@@ -67,6 +68,12 @@
 			<groupId>org.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 			<version>${version.ehcache}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss.spec.javax.servlet</groupId>
+		    <artifactId>jboss-servlet-api_3.1_spec</artifactId>
+		    <version>${version.servlet}</version>
+		    <scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
