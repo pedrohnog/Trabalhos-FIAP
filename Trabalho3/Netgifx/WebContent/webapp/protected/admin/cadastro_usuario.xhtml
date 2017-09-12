@@ -11,17 +11,44 @@
 		<p:messages id="messages" />
 		<p:panelGrid columns="2" id="painelUsuario" >	
 		
-			<p:outputLabel for="login" value="Informe o login:" />
-			<p:inputText id="login" value="#{cadastroUsuarioMB.login}" required="true" requiredMessage="Necessário informar um nome para o login"/>
+			<p:outputLabel for="nome" value="Nome:" />
+			<p:inputText id="nome" value="#{cadastroUsuarioMB.usuario.nome}" 
+			required="true" requiredMessage="Necessário informar o nome do usuário" maxlength="45"/>
 			
-			<p:outputLabel for="senha" value="Informe a senha:" />
-			<p:password id="senha" value="#{cadastroUsuarioMB.senha}" match="senha2" label="Senha 1" feedback="true" required="true" requiredMessage="Necessário informar um nome para o login"/>
+			<p:outputLabel for="cpf" value="CPF:" />
+			<p:inputText id="cpf" value="#{cadastroUsuarioMB.usuario.cpf}" maxlength="11"/>
 			
-			<p:outputLabel for="senha2" value="Informe novamente a senha:" />
-			<p:password id="senha2" value="#{cadastroUsuarioMB.senha}" feedback="true" label="Senha 2" required="true" requiredMessage="Necessário informar um nome para o login"/>
+			<p:outputLabel for="dataNasc" value="Data Nasc:" />
+			<p:inputText id="dataNasc" value="#{cadastroUsuarioMB.usuario.dataNasc}" maxlength="8"/>
+			
+			<p:outputLabel for="telefone" value="Telefone:" />
+			<p:inputText id="telefone" value="#{cadastroUsuarioMB.usuario.telefone}" maxlength="20"/>
+			
+			<p:outputLabel for="email" value="Email:" />
+			<p:inputText id="email" value="#{cadastroUsuarioMB.usuario.email}" 
+			required="true" requiredMessage="Necessário informar um email para o login" maxlength="50"/>
+			
+			<p:outputLabel for="login" value="Login:" />
+			<p:inputText id="login" value="#{cadastroUsuarioMB.usuario.apelido}" 
+			required="true" requiredMessage="Necessário informar um nome para o login" maxlength="20"/>
+			
+			<p:outputLabel for="senha" value="Senha:" />
+			<p:password id="senha" value="#{cadastroUsuarioMB.usuario.senha}" match="senha2"
+			 label="Senha 1" feedback="true" required="true" 
+			 requiredMessage="Necessário informar uma senha"  maxlength="20"/>
+			
+			<p:outputLabel for="senha2" value="Confirmar Senha:" />			
+			<p:password id="senha2" value="#{cadastroUsuarioMB.usuario.senha}" 
+			feedback="true" label="Senha 2" required="true" 
+			requiredMessage="Necessário informar uma senha"  maxlength="20"/>
+			
+			<p:outputLabel for="admin" value="Admin:" />		
+			<p:selectBooleanCheckbox id="admin" value="#{cadastroUsuarioMB.usuario.admin}" />
+			
 			
 			<p:commandButton value="Cadastrar" icon="ui-icon-star"
 				action="#{cadastroUsuarioMB.cadastrarUsuario}" update="messages">
+				<p:resetInput target="painelUsuario" />
 			</p:commandButton>
 			
 		</p:panelGrid>
