@@ -16,16 +16,16 @@ public class Main {
 	static NetgifxCommand netgifxCommand = new NetgifxCommand();
 
 	public static void main(String[] args) {
-//		cargaInicial();
+		cargaInicial();
 		
 		//As buscas são executadas duas vezes para testar o cache
 		
 //		buscarUsuario();
 //		buscarUsuario();
-		
+//		
 //		buscarGif();
 //		buscarGif();
-		
+//		
 //		listarCategorias();
 //		listarCategorias();
 	}
@@ -38,7 +38,7 @@ public class Main {
 	}
 
 	private static void buscarUsuario() {
-		Usuario usuario = netgifxCommand.buscarUsuario("everton");
+		Usuario usuario = netgifxCommand.buscarUsuario("admin");
 		System.out.println(usuario.getApelido());
 	}
 
@@ -56,27 +56,42 @@ public class Main {
 	}
 
 	private static void cargaInicial() {
-		Usuario usuario = new Usuario();
-		
-		criarUsuario(usuario);
 		Set<Gif> gifs = criarGifs();
 		List<Categoria> categorias = criarCategorias();
-
-		atualizarFavoritos(usuario, gifs);
 		
 		List<Gif> listaGifs = new ArrayList<>();
 		listaGifs.addAll(gifs);
 		
 		atualizarGifCategoria(categorias, listaGifs);
+		
+		Usuario usuarioAdministrador = new Usuario();
+		criarUsuarioAdministrador(usuarioAdministrador);
+		atualizarFavoritos(usuarioAdministrador, gifs);
+		
+		Usuario usuarioComum = new Usuario();
+		criarUsuarioComum(usuarioComum);
+		atualizarFavoritos(usuarioComum, gifs);
 	}
 
-	private static void criarUsuario(Usuario usuario) {
-		usuario.setNome("Everton");
-		usuario.setCpf("123");
-		usuario.setEmail("everton@everton.com");
-		usuario.setSenha("123");
-		usuario.setTelefone("123");
-		usuario.setApelido("everton");
+	private static void criarUsuarioAdministrador(Usuario usuario) {
+		usuario.setNome("Administrador");
+		usuario.setCpf("01010101099");
+		usuario.setEmail("admin@netgifx.com");
+		usuario.setSenha("admin");
+		usuario.setTelefone("11987654321");
+		usuario.setApelido("admin");
+		usuario.setAdmin(true);
+
+		netgifxCommand.cadastrarUsuario(usuario);
+	}
+
+	private static void criarUsuarioComum(Usuario usuario) {
+		usuario.setNome("Usuário");
+		usuario.setCpf("05210105209");
+		usuario.setEmail("usuario@gmail.com");
+		usuario.setSenha("user");
+		usuario.setTelefone("11912345678");
+		usuario.setApelido("user");
 		usuario.setAdmin(false);
 
 		netgifxCommand.cadastrarUsuario(usuario);
@@ -89,73 +104,49 @@ public class Main {
 		gif1.setNome("Um");
 		gif1.setCaminho("static/img/01");
 		gif1.setDescricao("Primeiro");
-		gif1.setClassificacaoEtaria("Livre");
 		gif1.setDataPublicacao(LocalDate.now());
-		gif1.setGenero("?");
-		gif1.setIdioma("Português");
 
 		Gif gif2 = new Gif();
 		gif2.setNome("Dois");
 		gif2.setCaminho("static/img/02");
 		gif2.setDescricao("Segundo");
-		gif2.setClassificacaoEtaria("Livre");
 		gif2.setDataPublicacao(LocalDate.now());
-		gif2.setGenero("?");
-		gif2.setIdioma("Português");
 
 		Gif gif3 = new Gif();
 		gif3.setNome("Três");
 		gif3.setCaminho("static/img/03");
 		gif3.setDescricao("Terceiro");
-		gif3.setClassificacaoEtaria("Livre");
 		gif3.setDataPublicacao(LocalDate.now());
-		gif3.setGenero("?");
-		gif3.setIdioma("Português");
 
 		Gif gif4 = new Gif();
 		gif4.setNome("Quatro");
 		gif4.setCaminho("static/img/04");
 		gif4.setDescricao("Quarto");
-		gif4.setClassificacaoEtaria("Livre");
 		gif4.setDataPublicacao(LocalDate.now());
-		gif4.setGenero("?");
-		gif4.setIdioma("Português");
 
 		Gif gif5 = new Gif();
 		gif5.setNome("Cinco");
 		gif5.setCaminho("static/img/05");
 		gif5.setDescricao("Quinto");
-		gif5.setClassificacaoEtaria("Livre");
 		gif5.setDataPublicacao(LocalDate.now());
-		gif5.setGenero("?");
-		gif5.setIdioma("Português");
 
 		Gif gif6 = new Gif();
 		gif6.setNome("Seis");
 		gif6.setCaminho("static/img/06");
 		gif6.setDescricao("Sexto");
-		gif6.setClassificacaoEtaria("Livre");
 		gif6.setDataPublicacao(LocalDate.now());
-		gif6.setGenero("?");
-		gif6.setIdioma("Português");
 
 		Gif gif7 = new Gif();
 		gif7.setNome("Sete");
 		gif7.setCaminho("static/img/07");
 		gif7.setDescricao("Sétimo");
-		gif7.setClassificacaoEtaria("Livre");
 		gif7.setDataPublicacao(LocalDate.now());
-		gif7.setGenero("?");
-		gif7.setIdioma("Português");
 
 		Gif gif8 = new Gif();
 		gif8.setNome("Oito");
 		gif8.setCaminho("static/img/08");
 		gif8.setDescricao("Oitavo");
-		gif8.setClassificacaoEtaria("Livre");
 		gif8.setDataPublicacao(LocalDate.now());
-		gif8.setGenero("?");
-		gif8.setIdioma("Português");
 		
 		gifs.add(gif1);
 		gifs.add(gif2);
