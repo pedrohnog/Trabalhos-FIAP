@@ -2,13 +2,8 @@ package br.com.fiap.commands;
 
 import java.util.List;
 
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-
 import br.com.fiap.dao.impl.CategoriaDao;
-import br.com.fiap.dao.impl.UsuarioDao;
 import br.com.fiap.entity.Categoria;
-import br.com.fiap.entity.Usuario;
 
 public class CategoriaCommand {
 
