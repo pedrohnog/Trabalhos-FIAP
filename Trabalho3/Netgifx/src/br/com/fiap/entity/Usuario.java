@@ -16,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import br.com.fiap.utils.CriptografiaUtil;
+
 @Entity
 @Table(name = "USUARIO")
 public class Usuario implements Serializable {
@@ -84,7 +86,7 @@ public class Usuario implements Serializable {
 	}
 
 	public void setSenha(String senha) {
-		this.senha = senha;
+		this.senha = CriptografiaUtil.gerarHash(senha);
 	}
 
 	public String getCpf() {
