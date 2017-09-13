@@ -2,7 +2,6 @@ package br.com.fiap.managedbeans;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -18,12 +17,6 @@ public class CadastroCategoriaMB {
 
 	private String descricaoCategoria;
 	List<Categoria> categoriasCadastradas;
-	
-   @PostConstruct
-    public void init() {		
-	   NetgifxCommand command = new NetgifxCommand();
-	   categoriasCadastradas = command.listarCategorias();
-    }
 
 	public String getDescricaoCategoria() {
 		return descricaoCategoria;
@@ -36,6 +29,8 @@ public class CadastroCategoriaMB {
 
 
 	public List<Categoria> getCategoriasCadastradas() {
+		NetgifxCommand command = new NetgifxCommand();
+		categoriasCadastradas = command.listarCategorias();
 		return categoriasCadastradas;
 	}
 
@@ -45,11 +40,9 @@ public class CadastroCategoriaMB {
 	
 
 	public void cadastrarCategoria(){
-		
 		NetgifxCommand command = new NetgifxCommand();
 
 		if (command.buscarCategoria(descricaoCategoria) == null) {
-			
 			command.cadastrarCategoria(new Categoria(descricaoCategoria));
 			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -62,7 +55,6 @@ public class CadastroCategoriaMB {
 					"Categoria já cadastrada!", "Categoria já cadastrada!"));
 		}
 		
-			 
 	}
 	
 	

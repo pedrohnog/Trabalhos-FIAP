@@ -92,6 +92,8 @@ public class NetgifxCommand {
 
 	public void cadastrarCategoria(Categoria categoria) {
 		(new CategoriaCommand()).cadastrarCategoria(categoria);
+		GerenciadorCache<String, Categoria[]> cache = CacheBuilderImpl.init(String.class, Categoria[].class).build("LISTAR CATEGORIAS");
+		cache.limpar();
 	}
 
 	public void atualizarGifCategoria(Gif gif, List<Categoria> categoriasNovas) {
