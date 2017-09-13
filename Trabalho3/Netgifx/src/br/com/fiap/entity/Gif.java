@@ -30,7 +30,7 @@ public class Gif implements Serializable {
 	@Column(name = "nome", length = 45)
 	private String nome;
 
-	@Column(name = "descricao", length = 45)
+	@Column(name = "descricao", length = 200)
 	private String descricao;
 
 	@Column(name = "genero", length = 45)
