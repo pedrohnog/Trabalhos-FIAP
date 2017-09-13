@@ -5,7 +5,7 @@
 	  xmlns:c="http://java.sun.com/jsp/jstl/core"
 	  xmlns:p="http://primefaces.org/ui">
 	  
-	  <h:form id="formCadastroGif">
+	  <h:form id="formCadastroGif" enctype="multipart/form-data">
 	  	<h2>Informe os dados do novo gif</h2>
 		<p:messages id="messages" />
 		<p:panelGrid columns="2" id="painelGif" >	
@@ -19,10 +19,15 @@
 	    <br/>
 		<p:outputLabel for="gifUpload" value="Faça upload do gif" />	
 	    <br/>		
-	  	<p:fileUpload id="gifUpload" value="#{cadastroGifMB.file}" mode="simple" skinSimple="true"/>
+	  	<p:fileUpload id="gifUpload" value="#{cadastroGifMB.arquivo}" mode="simple"/>
 	    <br/>
 	    <br/>	  	
-		<p:commandButton value="Cadastrar" icon="ui-icon-star" ajax="false" update="messages"/>
+		<p:commandButton value="Cadastrar" action="#{cadastroGifMB.cadastrarGif}" icon="ui-icon-star" ajax="false" update="messages"/>
+	  </h:form>
+	  
+	  <h:form enctype="multipart/form-data">
+		<p:fileUpload value="#{fileBean.file}" mode="simple" />
+		<p:commandButton value="Submit" ajax="false"/>
 	  </h:form>
 	  
 </ui:composition>

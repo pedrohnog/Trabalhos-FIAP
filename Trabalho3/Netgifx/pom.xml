@@ -20,6 +20,8 @@
 
 		<java.version>1.8</java.version>
 		<version.servlet>1.0.0.Final</version.servlet>
+		<version.common.fileupload>1.2.1</version.common.fileupload>
+		<version.common.io>1.4</version.common.io>
 	</properties>
 
 	<dependencies>
@@ -74,6 +76,16 @@
 		    <artifactId>jboss-servlet-api_3.1_spec</artifactId>
 		    <version>${version.servlet}</version>
 		    <scope>provided</scope>
+		</dependency>
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>${version.common.fileupload}</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>${version.common.io}</version>
 		</dependency>
 	</dependencies>
 	<build>
