@@ -21,12 +21,10 @@ public class UsuarioMB implements Serializable {
 	private NetgifxCommand netgifxCommand = new NetgifxCommand();
 	
 	public String realizarLogin() {
-		String senha = CriptografiaUtil.gerarHash(this.usuario.getSenha());
-		
 		Usuario usuario = netgifxCommand.buscarUsuario(this.usuario.getApelido());
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		if (usuario != null && usuario.getSenha().equals(senha)) {
+		if (usuario != null && usuario.getSenha().equals(this.usuario.getSenha())) {
 			this.usuario = usuario;
 			
 			context.getExternalContext().getSessionMap().put("usuario", usuario);
