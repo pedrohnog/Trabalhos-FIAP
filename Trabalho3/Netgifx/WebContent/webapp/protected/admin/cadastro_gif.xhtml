@@ -16,7 +16,7 @@
     	<p:inputTextarea id="Descricao" value="#{cadastroGifMB.gif.descricao}" rows="6" cols="50" maxlength="200" required="true" requiredMessage="Necessário adicionar uma história com no mínimo 40 caracteres."/> <br/> <br/>
         
         <h3>Categorias</h3>        
-        <p:selectManyCheckbox value="#{cadastroGifMB.categoriasSelecionadas}" layout="grid" columns="3">
+        <p:selectManyCheckbox id="grid" value="#{cadastroGifMB.categoriasSelecionadas}" layout="grid" columns="3">
         	<f:selectItems value="#{cadastroCategoriaMB.categoriasCadastradas}" var="categoria" itemLabel="#{categoria.nome}" itemValue="#{categoria}"/>
     	</p:selectManyCheckbox>
     

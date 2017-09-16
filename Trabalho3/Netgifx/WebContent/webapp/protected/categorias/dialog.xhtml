@@ -12,7 +12,9 @@
 			
 			<p:outputPanel style="text-align:center;background-color:#141414">
 				<p:panelGrid columns="2" columnClasses="label,value" styleClass="panelGridDialog">
-					<p:graphicImage name="#{categoriaMB.gifSelecionado.caminho}.png" height="550px" width="800px" />
+					<p:commandLink update=":formGifDetalhesTelaCheia:gifDetalhesTelaCheia" process="@this" oncomplete="PF('gifDetalhesTelaCheia').show()">
+						<p:graphicImage name="#{categoriaMB.gifSelecionado.caminho}.png" height="330px" width="480px" />
+					</p:commandLink>
 					<p:outputLabel>
 						<h1><h:outputText value="#{categoriaMB.gifSelecionado.nome}" /></h1>
 						<p class="sinopse"><h:outputText value="#{categoriaMB.gifSelecionado.descricao}" /></p>
@@ -20,6 +22,35 @@
 				</p:panelGrid>
 			</p:outputPanel>
 	
+		</p:dialog>		
+	</h:form>
+		
+	<style>
+		#gifDetalhesTelaCheia{
+			width: 100% !important; 
+			height: 100% !important; 
+			left: 0px !important; 
+			top: 0px !important;
+			border: 0px !important;
+		}
+		.ui-panelgrid .ui-panelgrid-cell {
+		    border-width: 0px !important;
+		    border-style: none !important;
+		    }
+		
+	</style>		
+
+	<h:form id="formGifDetalhesTelaCheia" prependId="false">		
+		<p:dialog id="gifDetalhesTelaCheia" header="Netgifx" widgetVar="gifDetalhesTelaCheia" modal="true" 
+			draggable="false" resizable="false" closeOnEscape="true" class="dialogCss">
+			
+			<p:outputPanel style="text-align:center;background-color:#141414">
+				<p:panelGrid columns="2" columnClasses="label,value" styleClass="panelGridDialog">
+						<p:graphicImage name="#{categoriaMB.gifSelecionado.caminho}.gif" height="550px" width="800px"/>
+				</p:panelGrid>
+			</p:outputPanel>
+	
 		</p:dialog>
 	</h:form>
+		
 </ui:composition>
