@@ -32,7 +32,7 @@ public class AdminFilter implements Filter {
         
         HttpSession session = request.getSession(false);
         
-        String redirecionamento = request.getContextPath() + "/index.xhtml";
+        String redirecionamento = request.getContextPath() + "/login.xhtml";
         
         if (session == null || session.getAttribute("usuario") == null) {
         	response.sendRedirect(redirecionamento);

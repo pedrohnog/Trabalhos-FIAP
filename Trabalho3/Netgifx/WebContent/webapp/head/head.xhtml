@@ -9,5 +9,9 @@
 	<c:if test="#{adminMB.validarAdmin()}">
 			<p:button outcome="admin/admin" value="Painel Administrativo" icon="ui-icon-locked"/>
 	</c:if>
-	
+	<c:if test="#{adminMB.validarUsuarioLogado()}">
+		<h:form>
+			<p:commandButton id="botaoSair" value="Sair" action="#{usuarioMB.realizarLogout()}" ajax="false"/>
+		</h:form>
+	</c:if>
 </ui:composition>

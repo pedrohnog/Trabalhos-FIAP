@@ -6,6 +6,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	
+	<link rel="stylesheet" type="text/css" href="../../resources/static/css/categorias/modal.css" />
+	
 	<h:form id="formGifDetalhes" prependId="false">
 		<p:dialog id="gifDetalhes" header="Netgifx" widgetVar="gifDialog" modal="true" 
 			draggable="false" resizable="false" closeOnEscape="true">
@@ -16,29 +18,21 @@
 						<p:graphicImage name="#{categoriaMB.gifSelecionado.caminho}.png" height="330px" width="480px" />
 					</p:commandLink>
 					<p:outputLabel>
-						<h1><h:outputText value="#{categoriaMB.gifSelecionado.nome}" /></h1>
-						<p class="sinopse"><h:outputText value="#{categoriaMB.gifSelecionado.descricao}" /></p>
+						<p:panelGrid columns="1">
+							<h1>#{categoriaMB.gifSelecionado.nome}</h1>
+							
+							<p:commandLink actionListener="#{usuarioMB.favoritarGif(categoriaMB.gifSelecionado)}">
+								<p:graphicImage name="static/logo/favoritar.png" width="30px" title="Favoritar Gif"/>
+							</p:commandLink>
+							
+							<p class="sinopse"><h:outputText value="#{categoriaMB.gifSelecionado.descricao}" /></p>
+						</p:panelGrid>
 					</p:outputLabel>
 				</p:panelGrid>
 			</p:outputPanel>
 	
 		</p:dialog>		
-	</h:form>
-		
-	<style>
-		#gifDetalhesTelaCheia{
-			width: 100% !important; 
-			height: 100% !important; 
-			left: 0px !important; 
-			top: 0px !important;
-			border: 0px !important;
-		}
-		.ui-panelgrid .ui-panelgrid-cell {
-		    border-width: 0px !important;
-		    border-style: none !important;
-		    }
-		
-	</style>		
+	</h:form>	
 
 	<h:form id="formGifDetalhesTelaCheia" prependId="false">		
 		<p:dialog id="gifDetalhesTelaCheia" header="Netgifx" widgetVar="gifDetalhesTelaCheia" modal="true" 

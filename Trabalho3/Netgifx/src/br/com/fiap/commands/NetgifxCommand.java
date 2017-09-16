@@ -168,6 +168,10 @@ public class NetgifxCommand {
 		new UsuarioCommand().atualizarUsuario(usuario);
 	}
 	
+	public void atualizarDadosUsuario(Usuario usuario) {
+		new UsuarioCommand().atualizarUsuario(usuario);
+	}
+	
 	private void limparCacheCategorias(){
 		GerenciadorCache<String, Categoria[]> cache = CacheBuilderImpl.init(String.class, Categoria[].class).build("LISTAR CATEGORIAS");
 		cache.limpar();

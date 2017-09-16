@@ -31,7 +31,7 @@ public class ProtectedFilter implements Filter {
         HttpSession session = request.getSession(false);
         
         if (session == null || session.getAttribute("usuario") == null) {
-        	response.sendRedirect(request.getContextPath() + "/index.xhtml");
+        	response.sendRedirect(request.getContextPath() + "/login.xhtml");
         } else {
         	chain.doFilter(request, response);
         }

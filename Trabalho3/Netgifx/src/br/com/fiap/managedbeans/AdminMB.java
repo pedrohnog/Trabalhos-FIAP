@@ -17,6 +17,11 @@ public class AdminMB {
 				((Usuario)httpSession.getAttribute("usuario")).getAdmin();
 	}
 	
+	public boolean validarUsuarioLogado(){
+		HttpSession  httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		return httpSession != null && httpSession.getAttribute("usuario") != null;
+	}
+	
 	public String abrirPainel(){
 		System.out.println("Redirecionando pagina");
 		return "webapp/protected/admin/admin.xhtml?faces-redirect=true";

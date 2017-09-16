@@ -8,11 +8,16 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
 	<h:head>
-		<script language="javascript">
-		    window.location.href = "webapp/protected/main.xhtml"
-		</script>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8;" />
+	
+		<title>Netgifx - A sua próxima risada, agora</title>
+	
+		<link rel="stylesheet" type="text/css" href="resources/static/css/default.css" />
 	</h:head>
 	<h:body>
-
+			<ui:include src="webapp/head/head.xhtml" />
+			<div class="ui-fluid">
+				<ui:include src="webapp/login/login.xhtml" />
+			</div>
 	</h:body>
 </html>

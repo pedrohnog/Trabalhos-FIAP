@@ -6,10 +6,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import br.com.fiap.commands.NetgifxCommand;
+import br.com.fiap.entity.Gif;
 import br.com.fiap.entity.Usuario;
-import br.com.fiap.utils.CriptografiaUtil;
 
 @ManagedBean
 @SessionScoped
@@ -36,12 +37,37 @@ public class UsuarioMB implements Serializable {
 		}
 	}
 
+	public String realizarLogout() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getSessionMap().remove("#{usuarioMB}");
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		session.invalidate();
+
+		return "../../login.xhtml?faces-redirect=true";
+	}
+
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public void favoritarGif(Gif gif){
+		if(!(usuario.getGifs().stream().filter(us -> us.getIdGif() == gif.getIdGif()).count() > 0)){
+			System.out.println("Favoritar porque ainda nao é favorito!");
+			
+			NetgifxCommand command = new NetgifxCommand();
+			
+			usuario.getGifs().add(gif);									
+			command.atualizarDadosUsuario(usuario);			
+			
+		}else{
+			System.out.println("Já é favorito!");
+		}
 	}
 
 }
