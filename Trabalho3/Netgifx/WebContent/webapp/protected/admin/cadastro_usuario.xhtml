@@ -8,7 +8,7 @@
 	  
 	<h:form>
 		<h2>Informe os dados do novo usuário</h2>
-		<p:messages id="messages" />
+		<p:messages id="messagesUsuario" />
 		<p:panelGrid columns="2" id="painelUsuario" >	
 		
 			<p:outputLabel for="nome" value="Nome:" />
@@ -47,7 +47,7 @@
 			
 			
 			<p:commandButton value="Cadastrar" icon="ui-icon-star"
-				action="#{cadastroUsuarioMB.cadastrarUsuario}" update="messages">
+				action="#{cadastroUsuarioMB.cadastrarUsuario}" update="messagesUsuario">
 				<p:resetInput target="painelUsuario" />
 			</p:commandButton>
 			

@@ -6,28 +6,28 @@
 	  xmlns:p="http://primefaces.org/ui">
 	  
 	  <h:form id="formCadastroGif" enctype="multipart/form-data">
-	  	<h2>Informe os dados do novo gif</h2>
-		<p:messages id="messages" />
-		<p:panelGrid columns="2" id="painelGif" >	
-			<p:outputLabel for="Nome" value="Nome do gif" />
-			<p:inputText id="Nome" required="true" size="32" requiredMessage="Necessário informar o nome do gif"/>
-		</p:panelGrid>
-		<p:outputLabel for="Descricao" value="Descrição do gif" />
-		<br/>
-    	<p:inputTextarea id="Descricao" rows="6" cols="50" maxlength="200"/>
+	  	<h3>Informe os dados do novo gif</h3>
+		<p:messages id="messagesGif" />
+			
+		<p:outputLabel for="Nome" value="Nome do gif" />
+		<p:inputText id="Nome" value="#{cadastroGifMB.gif.nome}" maxlength="20" required="true" size="32" requiredMessage="Necessário informar o nome do gif"/>	<br/><br/>
+		
+		<p:outputLabel for="Descricao" value="História do gif" /> <br/>
+    	<p:inputTextarea id="Descricao" value="#{cadastroGifMB.gif.descricao}" rows="6" cols="50" maxlength="200" required="true" requiredMessage="Necessário adicionar uma história com no mínimo 40 caracteres."/> <br/> <br/>
+        
+        <h3>Categorias</h3>        
+        <p:selectManyCheckbox id="grid" value="#{cadastroGifMB.categoriasSelecionadas}" layout="grid" columns="3">
+        	<f:selectItems value="#{cadastroCategoriaMB.categoriasCadastradas}" var="categoria" itemLabel="#{categoria.nome}" itemValue="#{categoria}"/>
+    	</p:selectManyCheckbox>
+    
 	    <br/>
 	    <br/>
-		<p:outputLabel for="gifUpload" value="Faça upload do gif" />	
-	    <br/>		
+    
+		<h3>Arquivo Gif</h3>
 	  	<p:fileUpload id="gifUpload" value="#{cadastroGifMB.arquivo}" mode="simple"/>
 	    <br/>
 	    <br/>	  	
-		<p:commandButton value="Cadastrar" action="#{cadastroGifMB.cadastrarGif}" icon="ui-icon-star" ajax="false" update="messages"/>
-	  </h:form>
-	  
-	  <h:form enctype="multipart/form-data">
-		<p:fileUpload value="#{fileBean.file}" mode="simple" />
-		<p:commandButton value="Submit" ajax="false"/>
+		<p:commandButton value="Cadastrar" action="#{cadastroGifMB.cadastrarGif}" icon="ui-icon-star" ajax="false" update="messagesGif, formCadastroGif"/>			
 	  </h:form>
 	  
 </ui:composition>

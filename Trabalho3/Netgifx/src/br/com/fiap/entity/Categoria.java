@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CATEGORIA")
-public class Categoria implements Serializable {
+public class Categoria implements Serializable{
 
 	private static final long serialVersionUID = -6044675363782344196L;
 
@@ -23,7 +23,12 @@ public class Categoria implements Serializable {
 	
 	public Categoria(String nome){
 		this.nome = nome;
-	}	
+	}
+	
+	public Categoria(int idCategoria, String nome){
+		this.idCategoria = idCategoria;
+		this.nome = nome;
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +41,7 @@ public class Categoria implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categorias")
 	private Set<Gif> gifs;
 
-	public int getIdCategoria() {
+	public Integer getIdCategoria() {
 		return idCategoria;
 	}
 
@@ -58,6 +63,45 @@ public class Categoria implements Serializable {
 
 	public void setGifs(Set<Gif> gifs) {
 		this.gifs = gifs;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((gifs == null) ? 0 : gifs.hashCode());
+		result = prime * result + idCategoria;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Categoria other = (Categoria) obj;
+		if (gifs == null) {
+			if (other.gifs != null)
+				return false;
+		} else if (!gifs.equals(other.gifs))
+			return false;
+		if (idCategoria != other.idCategoria)
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Categoria [idCategoria=" + idCategoria + ", nome=" + nome + ", gifs=" + gifs + "]";
 	}
 
 }

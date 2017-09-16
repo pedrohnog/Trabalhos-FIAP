@@ -2,8 +2,8 @@ package br.com.fiap.managedbeans;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -13,7 +13,11 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.model.UploadedFile;
 
+import br.com.fiap.commands.NetgifxCommand;
+import br.com.fiap.entity.Categoria;
 import br.com.fiap.entity.Gif;
+import br.com.fiap.utils.ArquivoUtil;
+import br.com.fiap.utils.ConversorImagensUtil;
 
 
 @ManagedBean
@@ -22,6 +26,7 @@ public class CadastroGifMB {
 
 	private Gif gif;
 	private UploadedFile arquivo;
+	private Categoria[] categoriasSelecionadas;
 	
 	@PostConstruct
 	public void init(){
@@ -44,44 +49,76 @@ public class CadastroGifMB {
 		this.arquivo = arquivo;
 	}
 
-	public void cadastrarGif(){
-		System.out.println("teste");
-		 try {
-		        UploadedFile arq = arquivo;
-		        InputStream in = new BufferedInputStream(arq.getInputstream());            
-		        File file = new File("../standalone/deployments/Netgifx-0.0.1-SNAPSHOT.war/resources/static/img/"+arq.getFileName());
-		        
-		        gif.setCaminho(file.getAbsolutePath());
-		        FileOutputStream fout = new FileOutputStream(file);
-		        while (in.available() != 0) {
-		            fout.write(in.read());
-		        }
-	
-		        fout.close();
-		        FacesMessage msg = new FacesMessage("O Arquivo ", file.getName() + " salvo.");
-		        FacesContext.getCurrentInstance().addMessage("msgUpdate", msg);
-		    } catch (Exception ex) {
-		        System.out.println("erro no upload "+ex.getMessage());
-		    }
-	}	
-	
-//	public void fileUploadAction(FileUploadEvent event) throws IOException {
-//	    try {
-//	        UploadedFile arq = event.getFile();
-//	        InputStream in = new BufferedInputStream(arq.getInputstream());            
-//	        File file = new File("resources/static/img/"+arq.getFileName());
-//	        gif.setCaminho(file.getAbsolutePath());
-//	        FileOutputStream fout = new FileOutputStream(file);
-//	        while (in.available() != 0) {
-//	            fout.write(in.read());
-//	        }
-//
-//	        fout.close();
-//	        FacesMessage msg = new FacesMessage("O Arquivo ", file.getName() + " salvo.");
-//	        FacesContext.getCurrentInstance().addMessage("msgUpdate", msg);
-//	    } catch (Exception ex) {
-//	        System.out.println("erro no upload "+ex.getMessage());
-//	    }
-//	}
+	public Categoria[] getCategoriasSelecionadas() {
+		return categoriasSelecionadas;
+	}
+
+	public void setCategoriasSelecionadas(Categoria[] categoriasSelecionadas) {
+		this.categoriasSelecionadas = categoriasSelecionadas;
+	}
+
+	public void cadastrarGif() {
+		
+		if(validarDados()){
+			NetgifxCommand command = new NetgifxCommand();
+			UploadedFile arq = arquivo;
+			try {
+				
+				InputStream in = new BufferedInputStream(arq.getInputstream());
+				File file = new File(
+						FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/static/img") + "/"
+								+ arq.getFileName());
+				
+				gif.setCaminho("static/img/" + file.getName().replace(".gif", ""));
+				gif.setDataPublicacao(LocalDate.now());
+				
+				command.cadastrarGif(gif);			
+				ArquivoUtil.gravarArquivo(in, file);			
+				ConversorImagensUtil.converterGifParaPng(file);
+				
+				FacesContext.getCurrentInstance().addMessage(
+		                 null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+		                 "GIF cadastrado com sucesso!", "GIF cadastrado com sucesso!"));
+				
+			} catch (Exception ex) {
+				FacesContext.getCurrentInstance().addMessage(
+		                 null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		                 "Ocorreu um erro ao tentar cadastrar o gif!", "Ocorreu um erro ao tentar cadastrar o gif!"));
+			}
+		}
+	}
+
+	private boolean validarDados() {
+		
+		boolean dadosValido;
+		
+		if(gif.getDescricao().length() < 40){
+			dadosValido = false;
+			FacesContext.getCurrentInstance().addMessage(
+	                 null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	                 "A história deve conter pelo menos 40 caracteres!", "A história deve conter pelo menos 40 caracteres"));
+			
+		}else if(arquivo == null || !arquivo.getFileName().contains(".gif")){
+			dadosValido = false;
+			FacesContext.getCurrentInstance().addMessage(
+	                 null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	                 "Adicione um arquivo com a extensão .gif!", "Adicione um arquivo com a extensão .gif!"));
+		}else if(categoriasSelecionadas.length > 0){
+			
+			for (int i = 0; i < categoriasSelecionadas.length; i++) {
+				Categoria categoria = new Categoria(categoriasSelecionadas[i].getIdCategoria(),categoriasSelecionadas[i].getNome());
+				gif.getCategorias().add(categoria);
+			}
+			dadosValido = true;
+			
+		}else{
+			dadosValido = false;
+			FacesContext.getCurrentInstance().addMessage(
+	                 null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	                 "Necessário adicionar pelo menos uma categoria!", "Necessário adicionar pelo menos uma categoria!"));
+		}
+		
+		return dadosValido;
+	}
 	
 }

@@ -88,12 +88,12 @@ public class NetgifxCommand {
 
 	public void cadastrarGif(Gif gif) {
 		(new GifCommand()).cadastrarGif(gif);
+		limparCacheCategorias();
 	}
 
 	public void cadastrarCategoria(Categoria categoria) {
 		(new CategoriaCommand()).cadastrarCategoria(categoria);
-		GerenciadorCache<String, Categoria[]> cache = CacheBuilderImpl.init(String.class, Categoria[].class).build("LISTAR CATEGORIAS");
-		cache.limpar();
+		limparCacheCategorias();
 	}
 
 	public void atualizarGifCategoria(Gif gif, List<Categoria> categoriasNovas) {
@@ -166,5 +166,10 @@ public class NetgifxCommand {
 		// add ao usuario a nova lista de gif
 		usuario.getGifs().addAll(gifsNovos);
 		new UsuarioCommand().atualizarUsuario(usuario);
+	}
+	
+	private void limparCacheCategorias(){
+		GerenciadorCache<String, Categoria[]> cache = CacheBuilderImpl.init(String.class, Categoria[].class).build("LISTAR CATEGORIAS");
+		cache.limpar();
 	}
 }
