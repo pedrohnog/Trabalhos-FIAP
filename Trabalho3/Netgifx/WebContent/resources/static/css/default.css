@@ -3,12 +3,6 @@ body {
 	font-family: Verdana;
 }
 
-.ui-fluid {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .ui-panelgrid {
 	width: 100%;
 }
