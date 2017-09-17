@@ -137,6 +137,8 @@ public class Usuario implements Serializable {
 		this.admin = admin;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "Usuario [idUsuario=" + idUsuario + ", nome=" + nome + ", apelido=" + apelido + ", senha=" + senha

@@ -17,5 +17,10 @@ font-weight: 400;
 .ui-panelgrid .ui-panelgrid-cell {
     border-width: 0px !important;
     border-style: none !important;
-   }
-		
+}
+#texto-gif{
+	color:white;
+}
+.titulo-gif{
+	color:white;
+}		

@@ -12,7 +12,7 @@
 
 	<h:form id="formCategorias">
 		<c:if test="${not empty usuarioMB.usuario.gifs}">
-			<p:carousel value="#{usuarioMB.usuario.gifs}" headerText="Favoritos" var="gif" responsive="true" circular="true" numVisible="6">
+			<p:carousel id="carouselFavoritos" value="#{usuarioMB.usuario.gifs}" headerText="Favoritos" var="gif" responsive="true" circular="true" numVisible="6">
 				<p:commandLink update=":formGifDetalhes:gifDetalhes" process="@this" oncomplete="PF('gifDialog').show()">
 					<p:graphicImage name="#{gif.caminho}.png" height="140" width="220" />
 					<f:setPropertyActionListener value="#{gif}" target="#{categoriaMB.gifSelecionado}" />

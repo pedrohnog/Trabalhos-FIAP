@@ -106,6 +106,66 @@ public class Gif implements Serializable {
 	public void setCategorias(Set<Categoria> categorias) {
 		this.categorias = categorias;
 	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((caminho == null) ? 0 : caminho.hashCode());
+		result = prime * result + ((categorias == null) ? 0 : categorias.hashCode());
+		result = prime * result + ((dataPublicacao == null) ? 0 : dataPublicacao.hashCode());
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + idGif;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((usuarios == null) ? 0 : usuarios.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Gif other = (Gif) obj;
+		if (caminho == null) {
+			if (other.caminho != null)
+				return false;
+		} else if (!caminho.equals(other.caminho))
+			return false;
+		if (categorias == null) {
+			if (other.categorias != null)
+				return false;
+		} else if (!categorias.equals(other.categorias))
+			return false;
+		if (dataPublicacao == null) {
+			if (other.dataPublicacao != null)
+				return false;
+		} else if (!dataPublicacao.equals(other.dataPublicacao))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (idGif != other.idGif)
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (usuarios == null) {
+			if (other.usuarios != null)
+				return false;
+		} else if (!usuarios.equals(other.usuarios))
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {

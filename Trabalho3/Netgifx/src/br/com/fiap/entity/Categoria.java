@@ -69,7 +69,6 @@ public class Categoria implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((gifs == null) ? 0 : gifs.hashCode());
 		result = prime * result + idCategoria;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
@@ -84,11 +83,6 @@ public class Categoria implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Categoria other = (Categoria) obj;
-		if (gifs == null) {
-			if (other.gifs != null)
-				return false;
-		} else if (!gifs.equals(other.gifs))
-			return false;
 		if (idCategoria != other.idCategoria)
 			return false;
 		if (nome == null) {
