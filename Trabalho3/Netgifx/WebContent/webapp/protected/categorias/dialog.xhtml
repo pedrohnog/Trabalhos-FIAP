@@ -16,12 +16,11 @@
 				<p:panelGrid columns="2" columnClasses="label,value" styleClass="panelGridDialog">
 					<p:commandLink update=":formGifDetalhesTelaCheia:gifDetalhesTelaCheia" process="@this" oncomplete="PF('gifDetalhesTelaCheia').show()">
 						<p:graphicImage name="#{categoriaMB.gifSelecionado.caminho}.png" height="330px" width="480px" />
-						<p:outputLabel>Favoritar</p:outputLabel>
 					</p:commandLink>
 					<p:outputLabel>
 						<p:panelGrid columns="1" id="panelDadosGif">
 							<h1 class="titulo-gif">#{categoriaMB.gifSelecionado.nome}</h1>
-							
+							<p:separator/>
 							<c:if test="#{(not empty categoriaMB.gifSelecionado) and (not usuarioMB.validarGifFavorito(categoriaMB.gifSelecionado))}">
 								<p:commandLink actionListener="#{usuarioMB.favoritarGif(categoriaMB.gifSelecionado)}" 
 									update="#{not empty usuarioMB.usuario.gifs ? 'panelDadosGif, :formCategorias:carouselFavoritos' : 'panelDadosGif'}">
