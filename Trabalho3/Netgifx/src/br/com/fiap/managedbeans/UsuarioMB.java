@@ -1,10 +1,12 @@
 package br.com.fiap.managedbeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -38,13 +40,19 @@ public class UsuarioMB implements Serializable {
 	}
 
 	public String realizarLogout() {
-
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.getExternalContext().getSessionMap().remove("#{usuarioMB}");
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+		
 		session.invalidate();
-
-		return "../../login.xhtml?faces-redirect=true";
+		
+		try {
+			context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + "/index.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "webapp/login/login.xhtml?faces-redirect=true";
 	}
 
 	
