@@ -18,14 +18,20 @@
 						<p:graphicImage name="#{categoriaMB.gifSelecionado.caminho}.png" height="330px" width="480px" />
 					</p:commandLink>
 					<p:outputLabel>
-						<p:panelGrid columns="1">
+						<p:panelGrid columns="1" id="panelDadosGif">
 							<h1>#{categoriaMB.gifSelecionado.nome}</h1>
 							
-							<p:commandLink actionListener="#{usuarioMB.favoritarGif(categoriaMB.gifSelecionado)}">
-								<p:graphicImage name="static/logo/favoritar.png" width="30px" title="Favoritar Gif"/>
-							</p:commandLink>
-							
-							<p class="sinopse"><h:outputText value="#{categoriaMB.gifSelecionado.descricao}" /></p>
+							<c:if test="#{(not empty categoriaMB.gifSelecionado) and (not usuarioMB.validarGifFavorito(categoriaMB.gifSelecionado))}">
+								<p:commandLink actionListener="#{usuarioMB.favoritarGif(categoriaMB.gifSelecionado)}" update="panelDadosGif">
+									<p:graphicImage name="static/logo/favoritar.png" width="30px" title="Favoritar Gif"/>
+								</p:commandLink>	
+							</c:if>
+							<c:if test="#{(not empty categoriaMB.gifSelecionado) and (usuarioMB.validarGifFavorito(categoriaMB.gifSelecionado))}">
+								<p:commandLink actionListener="#{usuarioMB.desfavoritarGif(categoriaMB.gifSelecionado)}" update="panelDadosGif">
+									<p:graphicImage name="static/logo/desfavoritar.png" width="30px" title="Favoritar Gif"/>
+								</p:commandLink>
+							</c:if>
+								<p class="sinopse"><h:outputText value="#{categoriaMB.gifSelecionado.descricao}" /></p>
 						</p:panelGrid>
 					</p:outputLabel>
 				</p:panelGrid>

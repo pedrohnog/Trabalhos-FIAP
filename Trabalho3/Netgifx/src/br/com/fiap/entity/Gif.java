@@ -107,4 +107,12 @@ public class Gif implements Serializable {
 		this.categorias = categorias;
 	}
 
+	@Override
+	public String toString() {
+		return "Gif [idGif=" + idGif + ", nome=" + nome + ", descricao=" + descricao + ", dataPublicacao="
+				+ dataPublicacao + ", caminho=" + caminho + "]";
+	}
+	
+	
+
 }

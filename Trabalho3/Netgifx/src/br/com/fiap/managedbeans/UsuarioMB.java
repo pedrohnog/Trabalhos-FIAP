@@ -57,17 +57,21 @@ public class UsuarioMB implements Serializable {
 	}
 	
 	public void favoritarGif(Gif gif){
-		if(!(usuario.getGifs().stream().filter(us -> us.getIdGif() == gif.getIdGif()).count() > 0)){
-			System.out.println("Favoritar porque ainda nao é favorito!");
 			
-			NetgifxCommand command = new NetgifxCommand();
+		NetgifxCommand command = new NetgifxCommand();		
+		usuario.getGifs().add(gif);									
+		command.atualizarDadosUsuario(usuario);
+	}
+
+	public void desfavoritarGif(Gif gif){
 			
-			usuario.getGifs().add(gif);									
-			command.atualizarDadosUsuario(usuario);			
-			
-		}else{
-			System.out.println("Já é favorito!");
-		}
+		NetgifxCommand command = new NetgifxCommand();		
+		usuario.getGifs().removeIf(g -> g.getIdGif() == gif.getIdGif());							
+		command.atualizarDadosUsuario(usuario);
+	}
+	
+	public boolean validarGifFavorito(Gif gif){
+		return usuario.getGifs().stream().filter(us -> us.getIdGif() == gif.getIdGif()).count() > 0;
 	}
 
 }
