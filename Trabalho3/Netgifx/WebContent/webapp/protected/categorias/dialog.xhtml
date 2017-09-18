@@ -24,13 +24,13 @@
 							<c:if test="#{(not empty categoriaMB.gifSelecionado) and (not usuarioMB.validarGifFavorito(categoriaMB.gifSelecionado))}">
 								<p:commandLink actionListener="#{usuarioMB.favoritarGif(categoriaMB.gifSelecionado)}" 
 									update="#{not empty usuarioMB.usuario.gifs ? 'panelDadosGif, :formCategorias:carouselFavoritos' : 'panelDadosGif'}">
-									<p:graphicImage name="static/logo/favoritar.png" width="30px" title="Desfavoritar Gif"/>
+									<p:graphicImage name="static/logo/favoritar.png" width="30px" title="Favoritar Gif"/>
 								</p:commandLink>	
 							</c:if>
 							<c:if test="#{(not empty categoriaMB.gifSelecionado) and (usuarioMB.validarGifFavorito(categoriaMB.gifSelecionado))}">
 								<p:commandLink actionListener="#{usuarioMB.desfavoritarGif(categoriaMB.gifSelecionado)}"
 									update="#{not empty usuarioMB.usuario.gifs ? 'panelDadosGif, :formCategorias:carouselFavoritos' : 'panelDadosGif'}">
-									<p:graphicImage name="static/logo/desfavoritar.png" width="30px" title="Favoritar Gif"/>
+									<p:graphicImage name="static/logo/desfavoritar.png" width="30px" title="Desfavoritar Gif"/>
 								</p:commandLink>
 							</c:if>
 							<h:outputText id="texto-gif" value="#{categoriaMB.gifSelecionado.descricao}" />
