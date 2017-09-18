@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "GIF")
 public class Gif implements Serializable {
 
-	private static final long serialVersionUID = 480069580562973503L;
+	private static final long serialVersionUID = 2944518807918395130L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +33,15 @@ public class Gif implements Serializable {
 
 	@Column(name = "descricao", length = 200)
 	private String descricao;
+
+	@Column(name = "genero", length = 45)
+	private String genero;
+
+	@Column(name = "classificacaoEtaria", length = 45)
+	private String classificacaoEtaria;
+
+	@Column(name = "idioma", length = 45)
+	private String idioma;
 
 	@Column(name = "dataPublicacao")
 	private transient LocalDate dataPublicacao;
@@ -104,6 +113,30 @@ public class Gif implements Serializable {
 
 	public void setCategorias(Set<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getClassificacaoEtaria() {
+		return classificacaoEtaria;
+	}
+
+	public void setClassificacaoEtaria(String classificacaoEtaria) {
+		this.classificacaoEtaria = classificacaoEtaria;
+	}
+
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
 	}
 
 	@Override
