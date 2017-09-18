@@ -8,9 +8,9 @@
 		<class>br.com.fiap.entity.Gif</class>
 		<class>br.com.fiap.entity.Categoria</class>
 		<properties>
-			<property name="javax.persistence.schemageneration.database.action" value="none" />
+			<property name="javax.persistence.schemageneration.database.action" value="create" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://104.198.173.192:3306/DBNetgifx?rewriteBatchedStatements=true" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/DBNetgifx?rewriteBatchedStatements=true" />
 			<property name="javax.persistence.jdbc.user" value="fiap" />
 			<property name="javax.persistence.jdbc.password" value="fiap" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />

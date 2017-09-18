@@ -22,7 +22,7 @@ import br.com.fiap.utils.CriptografiaUtil;
 @Table(name = "USUARIO")
 public class Usuario implements Serializable {
 
-	private static final long serialVersionUID = -5670405015551396491L;
+	private static final long serialVersionUID = -1546367137519337231L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -137,7 +137,47 @@ public class Usuario implements Serializable {
 		this.admin = admin;
 	}
 
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((apelido == null) ? 0 : apelido.hashCode());
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result + idUsuario;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Usuario)) {
+			return false;
+		}
+		Usuario other = (Usuario) obj;
+		if (apelido == null) {
+			if (other.apelido != null) {
+				return false;
+			}
+		} else if (!apelido.equals(other.apelido)) {
+			return false;
+		}
+		if (cpf == null) {
+			if (other.cpf != null) {
+				return false;
+			}
+		} else if (!cpf.equals(other.cpf)) {
+			return false;
+		}
+		if (idUsuario != other.idUsuario) {
+			return false;
+		}
+		return true;
+	}
 
 	@Override
 	public String toString() {

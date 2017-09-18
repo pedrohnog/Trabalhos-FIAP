@@ -108,22 +108,36 @@ public class Gif implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int PRIME = 31;
+		final int prime = 31;
 		int result = 1;
-		result = PRIME * result + idGif;
+		result = prime * result + ((caminho == null) ? 0 : caminho.hashCode());
+		result = prime * result + idGif;
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (!(obj instanceof Gif)) {
 			return false;
+		}
 		Gif other = (Gif) obj;
-		return idGif == other.idGif;
+		if (caminho == null) {
+			if (other.caminho != null) {
+				return false;
+			}
+		} else if (!caminho.equals(other.caminho)) {
+			return false;
+		}
+		if (idGif != other.idGif) {
+			return false;
+		}
+		return true;
 	}
 	
 }

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "CATEGORIA")
 public class Categoria implements Serializable{
 
-	private static final long serialVersionUID = -6044675363782344196L;
+	private static final long serialVersionUID = 4612019662284754381L;
 
 	public Categoria(){
 	}
@@ -67,35 +67,36 @@ public class Categoria implements Serializable{
 
 	@Override
 	public int hashCode() {
-		final int PRIME = 31;
+		final int prime = 31;
 		int result = 1;
-		result = PRIME * result + idCategoria;
-		result = PRIME * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + idCategoria;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (!(obj instanceof Categoria)) {
 			return false;
+		}
 		Categoria other = (Categoria) obj;
-		if (idCategoria != other.idCategoria)
+		if (idCategoria != other.idCategoria) {
 			return false;
+		}
 		if (nome == null) {
-			if (other.nome != null)
+			if (other.nome != null) {
 				return false;
-		} else if (!nome.equals(other.nome))
+			}
+		} else if (!nome.equals(other.nome)) {
 			return false;
+		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Categoria [idCategoria=" + idCategoria + ", nome=" + nome + ", gifs=" + gifs + "]";
 	}
 
 }
