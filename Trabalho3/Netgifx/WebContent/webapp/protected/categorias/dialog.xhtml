@@ -20,6 +20,7 @@
 					<p:outputLabel>
 						<p:panelGrid columns="1" id="panelDadosGif">
 							<h1 class="titulo-gif">#{categoriaMB.gifSelecionado.nome}</h1>
+							<h6>#{categoriaMB.gifSelecionado.genero} - #{categoriaMB.gifSelecionado.classificacaoEtaria} - #{categoriaMB.gifSelecionado.idioma}</h6>
 							<p:separator/>
 							<c:if test="#{(not empty categoriaMB.gifSelecionado) and (not usuarioMB.validarGifFavorito(categoriaMB.gifSelecionado))}">
 								<p:commandLink actionListener="#{usuarioMB.favoritarGif(categoriaMB.gifSelecionado)}" 

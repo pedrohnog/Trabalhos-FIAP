@@ -11,7 +11,17 @@
 			
 		<p:outputLabel for="Nome" value="Nome do gif" />
 		<p:inputText id="Nome" value="#{cadastroGifMB.gif.nome}" maxlength="20" required="true" size="32" requiredMessage="Necessário informar o nome do gif"/>	<br/><br/>
-		
+				
+        <p:outputLabel for="Genero" value="Gênero" /> <br/>
+    	<p:inputText id="Genero" value="#{cadastroGifMB.gif.genero}" maxlength="45" size="45"/>	<br/><br/>
+        
+        <p:outputLabel for="ClassificacaoEtaria" value="Classificação Etária" /> <br/>
+		<p:inputText id="ClassificacaoEtaria" value="#{cadastroGifMB.gif.classificacaoEtaria}" size="45"/>	<br/><br/>
+	        
+        <p:outputLabel for="Idioma" value="Idioma" /> <br/>
+    	<p:inputText id="Idioma" value="#{cadastroGifMB.gif.idioma}" maxlength="45" size="45"/>	<br/><br/>
+        
+        
 		<p:outputLabel for="Descricao" value="História do gif" /> <br/>
     	<p:inputTextarea id="Descricao" value="#{cadastroGifMB.gif.descricao}" rows="6" cols="50" maxlength="200" required="true" requiredMessage="Necessário adicionar uma história com no mínimo 40 caracteres."/> <br/> <br/>
         
