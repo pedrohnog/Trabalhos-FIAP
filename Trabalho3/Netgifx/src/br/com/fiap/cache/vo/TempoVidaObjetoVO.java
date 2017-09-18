@@ -6,11 +6,11 @@ import br.com.fiap.cache.constants.TempoVida;
 
 public class TempoVidaObjetoVO implements Serializable {
 
-	private static final long serialVersionUID = 5856490176596004929L;
+	private static final long serialVersionUID = -9055423054600893749L;
 	
-	public Long tempoVidaObjeto;
-	public TempoVida unidadeTempoVida;
-	public boolean expira = false;
+	private Long tempoVidaObjeto;
+	private TempoVida unidadeTempoVida;
+	private boolean expira = false;
 
 	public Long getTempoVidaObjeto() {
 		return tempoVidaObjeto;
@@ -45,11 +45,11 @@ public class TempoVidaObjetoVO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int PRIME = 31;
 		int result = 1;
-		result = prime * result + (expira ? 1231 : 1237);
-		result = prime * result + ((tempoVidaObjeto == null) ? 0 : tempoVidaObjeto.hashCode());
-		result = prime * result + ((unidadeTempoVida == null) ? 0 : unidadeTempoVida.hashCode());
+		result = PRIME * result + (expira ? 1231 : 1237);
+		result = PRIME * result + ((tempoVidaObjeto == null) ? 0 : tempoVidaObjeto.hashCode());
+		result = PRIME * result + ((unidadeTempoVida == null) ? 0 : unidadeTempoVida.hashCode());
 		return result;
 	}
 
@@ -75,9 +75,6 @@ public class TempoVidaObjetoVO implements Serializable {
 		} else if (!tempoVidaObjeto.equals(other.tempoVidaObjeto)) {
 			return false;
 		}
-		if (unidadeTempoVida != other.unidadeTempoVida) {
-			return false;
-		}
-		return true;
+		return unidadeTempoVida == other.unidadeTempoVida;
 	}
 }

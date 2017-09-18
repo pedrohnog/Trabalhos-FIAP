@@ -1,6 +1,5 @@
 package br.com.fiap.commands;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -15,10 +14,6 @@ import br.com.fiap.entity.Gif;
 import br.com.fiap.entity.Usuario;
 
 public class NetgifxCommand {
-
-	public void cadastrarUsuario(String nome, String apelido, String senha, String cpf, LocalDate dataNasc, String telefone, String email) {
-		(new UsuarioCommand()).cadastrarUsuario(nome, apelido, senha, cpf, dataNasc, telefone, email, true);
-	}
 
 	public void cadastrarUsuario(Usuario usuario) {
 		(new UsuarioCommand()).cadastrarUsuario(usuario);
@@ -75,12 +70,14 @@ public class NetgifxCommand {
 	public List<Categoria> listarCategorias() {
 		GerenciadorCache<String, Categoria[]> cache = CacheBuilderImpl.init(String.class, Categoria[].class).definirTamanhoMaximoMemoria(1L, TamanhoMemoria.MEGABYTES).definirTempoVida(1L, TempoVida.DIAS).build("LISTAR CATEGORIAS");
 		
-		if (cache.verificarExistencia("CHAVE")) {
-			return Arrays.asList(cache.recuperar("CHAVE"));
+		String chave = "CHAVE";
+		
+		if (cache.verificarExistencia(chave)) {
+			return Arrays.asList(cache.recuperar(chave));
 		} else {
 			List<Categoria> categorias = (new CategoriaCommand()).listarCategorias();
 			
-			cache.gravar("CHAVE", categorias.toArray(new Categoria[0]));
+			cache.gravar(chave, categorias.toArray(new Categoria[0]));
 			
 			return categorias;
 		}

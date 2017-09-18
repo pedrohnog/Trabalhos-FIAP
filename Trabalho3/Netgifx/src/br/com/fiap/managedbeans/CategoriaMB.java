@@ -16,12 +16,12 @@ import br.com.fiap.entity.Gif;
 @ViewScoped
 public class CategoriaMB implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 3779695316443811228L;
+	
 	private List<Categoria> categorias = new ArrayList<>();
 	private Gif gifSelecionado;
-	
-	private NetgifxCommand netgifxCommand = new NetgifxCommand();
+
+	private transient NetgifxCommand netgifxCommand = new NetgifxCommand();
 
 	@PostConstruct
 	public void init() {

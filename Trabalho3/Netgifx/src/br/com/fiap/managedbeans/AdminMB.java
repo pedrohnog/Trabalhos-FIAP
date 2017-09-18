@@ -9,22 +9,25 @@ import br.com.fiap.entity.Usuario;
 
 @ManagedBean
 @RequestScoped
-public class AdminMB {	
-	
-	public boolean validarAdmin(){
-		HttpSession  httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		return httpSession != null && httpSession.getAttribute("usuario") != null && 
-				((Usuario)httpSession.getAttribute("usuario")).getAdmin();
+public class AdminMB {
+
+	private static final String ATRIBUTOUSUARIO = "usuario";
+	private static final String PAINELADMIN = "webapp/protected/admin/admin.xhtml?faces-redirect=true";
+
+	public boolean validarAdmin() {
+		HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		
+		return httpSession != null && httpSession.getAttribute(ATRIBUTOUSUARIO) != null && ((Usuario) httpSession.getAttribute(ATRIBUTOUSUARIO)).getAdmin();
 	}
-	
-	public boolean validarUsuarioLogado(){
-		HttpSession  httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		return httpSession != null && httpSession.getAttribute("usuario") != null;
+
+	public boolean validarUsuarioLogado() {
+		HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		
+		return httpSession != null && httpSession.getAttribute(ATRIBUTOUSUARIO) != null;
 	}
-	
-	public String abrirPainel(){
-		System.out.println("Redirecionando pagina");
-		return "webapp/protected/admin/admin.xhtml?faces-redirect=true";
+
+	public String abrirPainel() {
+		return PAINELADMIN;
 	}
 
 }

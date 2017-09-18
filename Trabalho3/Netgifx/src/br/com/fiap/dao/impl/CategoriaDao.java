@@ -1,5 +1,6 @@
 package br.com.fiap.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -23,7 +24,10 @@ public class CategoriaDao extends  DaoGenerico<Categoria>{
 	}
 	
 	public Categoria buscarCategoria (String nome) {
-		TypedQuery<Categoria> query = super.em.createQuery("select c from Categoria c where nome = '" + nome + "'", Categoria.class);
+		StringBuilder sb = new StringBuilder();
+		sb.append("select c from Categoria c where nome = '").append(nome).append("'");
+		
+		TypedQuery<Categoria> query = super.em.createQuery(sb.toString(), Categoria.class);
 		try {
 			return query.getSingleResult();
 		} catch (NoResultException e) {
@@ -36,7 +40,7 @@ public class CategoriaDao extends  DaoGenerico<Categoria>{
 		try {
 			return query.getResultList();
 		} catch (NoResultException e) {
-			return null;
+			return new ArrayList<>();
 		}
 	}
 	

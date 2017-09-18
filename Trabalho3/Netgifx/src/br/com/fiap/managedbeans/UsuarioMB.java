@@ -9,6 +9,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.fiap.commands.NetgifxCommand;
 import br.com.fiap.entity.Gif;
 import br.com.fiap.entity.Usuario;
@@ -17,19 +20,21 @@ import br.com.fiap.entity.Usuario;
 @SessionScoped
 public class UsuarioMB implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3660026158447830700L;
+
+	protected transient Logger logger = LoggerFactory.getLogger(UsuarioMB.class);
 
 	private Usuario usuario = new Usuario();
-	private NetgifxCommand netgifxCommand = new NetgifxCommand();
+	private transient NetgifxCommand netgifxCommand = new NetgifxCommand();
 	
 	public String realizarLogin() {
-		Usuario usuario = netgifxCommand.buscarUsuario(this.usuario.getApelido());
+		Usuario usuarioBD = netgifxCommand.buscarUsuario(this.usuario.getApelido());
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		if (usuario != null && usuario.getSenha().equals(this.usuario.getSenha())) {
-			this.usuario = usuario;
+		if (usuarioBD != null && usuarioBD.getSenha().equals(this.usuario.getSenha())) {
+			this.usuario = usuarioBD;
 			
-			context.getExternalContext().getSessionMap().put("usuario", usuario);
+			context.getExternalContext().getSessionMap().put("usuario", usuarioBD);
 			
 			return "webapp/protected/main.xhtml?faces-redirect=true";
 		} else {
@@ -48,7 +53,7 @@ public class UsuarioMB implements Serializable {
 		try {
 			context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + "/index.xhtml");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return "webapp/login/login.xhtml?faces-redirect=true";
@@ -64,14 +69,12 @@ public class UsuarioMB implements Serializable {
 	}
 	
 	public void favoritarGif(Gif gif){
-			
 		NetgifxCommand command = new NetgifxCommand();		
 		usuario.getGifs().add(gif);									
 		command.atualizarDadosUsuario(usuario);
 	}
 
 	public void desfavoritarGif(Gif gif){
-			
 		NetgifxCommand command = new NetgifxCommand();		
 		usuario.getGifs().removeIf(g -> g.getIdGif() == gif.getIdGif());							
 		command.atualizarDadosUsuario(usuario);

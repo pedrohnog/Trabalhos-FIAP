@@ -72,7 +72,7 @@ public class Main {
 	}
 
 	private static Set<Gif> criarGifs() {
-		Set<Gif> gifs = new HashSet<Gif>();
+		Set<Gif> gifs;
 		
 		gifs = CadastroDeGifInicial.criarGifs();
 
@@ -84,7 +84,7 @@ public class Main {
 	}
 
 	private static List<Categoria> criarCategorias() {
-		List<Categoria> categorias = new ArrayList<Categoria>();
+		List<Categoria> categorias;
 		
 		categorias = CadastroDeCategoriaInicial.criarCategorias();
 		
@@ -120,7 +120,7 @@ public class Main {
 		for (int i = 0; i < gifs.size(); i++) {
 			Gif gif = gifs.get(i);
 			
-			int numeroGif = Integer.valueOf(gif.getCaminho().substring(gif.getCaminho().length() - 2));
+			int numeroGif = Integer.parseInt(gif.getCaminho().substring(gif.getCaminho().length() - 2));
 			
 			netgifxCommand.atualizarGifCategoria(gifs.get(i), AssociarCategoriaGifInicial.definirCategoria(numeroGif, categorias));
 		}

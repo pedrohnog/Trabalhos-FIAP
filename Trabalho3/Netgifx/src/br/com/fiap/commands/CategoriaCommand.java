@@ -13,10 +13,6 @@ public class CategoriaCommand {
 		
 		try (CategoriaDao categoriaDao = new CategoriaDao();) {
 			categorias = categoriaDao.listarCategorias();
-			
-			if(categorias == null) {
-				//throw new ContaInexistenteExcecao();
-			}
 		}
 		
 		return categorias;

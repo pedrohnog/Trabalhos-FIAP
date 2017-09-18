@@ -22,7 +22,7 @@ import br.com.fiap.utils.CriptografiaUtil;
 @Table(name = "USUARIO")
 public class Usuario implements Serializable {
 
-	private static final long serialVersionUID = 7149994243577908142L;
+	private static final long serialVersionUID = -5670405015551396491L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class Usuario implements Serializable {
 	private String cpf;
 
 	@Column(name = "dataNasc")
-	private LocalDate dataNasc;
+	private transient LocalDate dataNasc;
 
 	@Column(name = "telefone", length = 20)
 	private String telefone;

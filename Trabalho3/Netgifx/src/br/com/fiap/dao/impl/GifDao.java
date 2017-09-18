@@ -13,13 +13,6 @@ public class GifDao extends DaoGenerico<Gif>{
 		
 	}
 
-	/**
-	 * Cria um novo gif
-	 * 
-	 * @param gif Objeto Gif que será persistido em BD
-	 * 
-	 * @return <code>true</code> se o gif não existir e conseguir criar um novo, se não <code>false</code>
-	 */
 	public boolean cadastrarGif(Gif gif) {
 		if (this.buscarGif(gif.getNome()) == null) {
 			super.adicionar(gif);
@@ -29,7 +22,10 @@ public class GifDao extends DaoGenerico<Gif>{
 	}
 	
 	public Gif buscarGif(Integer id) {
-		TypedQuery<Gif> query = super.em.createQuery("select g from Gif g where idGif = '" + id + "'", Gif.class);
+		StringBuilder sb = new StringBuilder();
+		sb.append("select g from Gif g where idGif = '").append(id).append("'");
+		
+		TypedQuery<Gif> query = super.em.createQuery(sb.toString(), Gif.class);
 		try {
 			return query.getSingleResult();
 		} catch (NoResultException e) {
@@ -38,7 +34,10 @@ public class GifDao extends DaoGenerico<Gif>{
 	}
 	
 	public Gif buscarGif(String nome) {
-		TypedQuery<Gif> query = super.em.createQuery("select g from Gif g where nome = '" + nome + "'", Gif.class);
+		StringBuilder sb = new StringBuilder();
+		sb.append("select g from Gif g where nome = '").append(nome).append("'");
+		
+		TypedQuery<Gif> query = super.em.createQuery(sb.toString(), Gif.class);
 		try {
 			return query.getSingleResult();
 		} catch (NoResultException e) {

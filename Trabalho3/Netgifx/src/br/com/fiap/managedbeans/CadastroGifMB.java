@@ -69,9 +69,8 @@ public class CadastroGifMB {
 				InputStream in = new BufferedInputStream(arq.getInputstream());
 				
 				String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/static/img");
-				System.out.println("Arquivo imagens " + realPath);
 				
-				File file = new File(realPath + "/"	+ arq.getFileName());
+				File file = new File(realPath, arq.getFileName());
 				
 				gif.setCaminho("static/img/" + file.getName().replace(".gif", ""));
 				gif.setDataPublicacao(LocalDate.now());
@@ -91,7 +90,6 @@ public class CadastroGifMB {
 		                 "GIF cadastrado com sucesso!", "GIF cadastrado com sucesso!"));
 				
 			} catch (Exception ex) {
-				ex.printStackTrace();
 				FacesContext.getCurrentInstance().addMessage(
 		                 null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		                 "Ocorreu um erro ao tentar cadastrar o gif!", "Ocorreu um erro ao tentar cadastrar o gif!"));

@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class QuantidadeMaximaObjetoVO implements Serializable {
 
-	private static final long serialVersionUID = -5681282461613520902L;
-
-	public Long quantidadeMaximaObjetos;
+	private static final long serialVersionUID = -5566802178920933739L;
+	
+	private Long quantidadeMaximaObjetos;
 
 	public Long getQuantidadeMaximaObjetos() {
 		return quantidadeMaximaObjetos;
@@ -25,9 +25,9 @@ public class QuantidadeMaximaObjetoVO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int PRIME = 31;
 		int result = 1;
-		result = prime * result + ((quantidadeMaximaObjetos == null) ? 0 : quantidadeMaximaObjetos.hashCode());
+		result = PRIME * result + ((quantidadeMaximaObjetos == null) ? 0 : quantidadeMaximaObjetos.hashCode());
 		return result;
 	}
 

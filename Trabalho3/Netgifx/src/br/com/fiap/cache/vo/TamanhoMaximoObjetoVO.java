@@ -36,10 +36,10 @@ public class TamanhoMaximoObjetoVO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int PRIME = 31;
 		int result = 1;
-		result = prime * result + ((tamanhoMaximoObjeto == null) ? 0 : tamanhoMaximoObjeto.hashCode());
-		result = prime * result + ((unidadeTamanhoMemoria == null) ? 0 : unidadeTamanhoMemoria.hashCode());
+		result = PRIME * result + ((tamanhoMaximoObjeto == null) ? 0 : tamanhoMaximoObjeto.hashCode());
+		result = PRIME * result + ((unidadeTamanhoMemoria == null) ? 0 : unidadeTamanhoMemoria.hashCode());
 		return result;
 	}
 
@@ -62,10 +62,7 @@ public class TamanhoMaximoObjetoVO implements Serializable {
 		} else if (!tamanhoMaximoObjeto.equals(other.tamanhoMaximoObjeto)) {
 			return false;
 		}
-		if (unidadeTamanhoMemoria != other.unidadeTamanhoMemoria) {
-			return false;
-		}
-		return true;
+		return (unidadeTamanhoMemoria == other.unidadeTamanhoMemoria);
 	}
 
 }

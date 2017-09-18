@@ -6,9 +6,13 @@ import java.util.List;
 import br.com.fiap.entity.Categoria;
 
 public class CadastroDeCategoriaInicial {
+	
+	private CadastroDeCategoriaInicial() {
+		//Construtor
+	}
 
 	public static List<Categoria> criarCategorias() {
-		List<Categoria> categorias = new ArrayList<Categoria>();
+		List<Categoria> categorias = new ArrayList<>();
 		
 		categorias.add(criarCategoria("Comédia"));
 		categorias.add(criarCategoria("Esporte"));

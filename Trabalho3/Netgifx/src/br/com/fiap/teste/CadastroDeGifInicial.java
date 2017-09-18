@@ -8,8 +8,12 @@ import br.com.fiap.entity.Gif;
 
 public class CadastroDeGifInicial {
 	
+	private CadastroDeGifInicial() {
+		//Construtor
+	}
+	
 	public static Set<Gif> criarGifs() {
-		Set<Gif> gifs = new HashSet<Gif>();
+		Set<Gif> gifs = new HashSet<>();
 		
 		gifs.add(criarGif("Salto em altura", "01", "Mulher tenta fazer salto em altura e cai de costas no chão"));
 		gifs.add(criarGif("Bolada na cabeça", "02", "Jogador de baseball joga a bola para companheiro que estava distraído"));

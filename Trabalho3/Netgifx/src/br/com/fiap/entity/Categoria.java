@@ -67,10 +67,10 @@ public class Categoria implements Serializable{
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int PRIME = 31;
 		int result = 1;
-		result = prime * result + idCategoria;
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = PRIME * result + idCategoria;
+		result = PRIME * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
 

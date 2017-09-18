@@ -7,6 +7,10 @@ import javax.imageio.ImageIO;
 
 public class ConversorImagensUtil {
 	
+	private ConversorImagensUtil() {
+		//Construtor
+	}
+	
 	public static void converterGifParaPng(File entrada) throws IOException {
 		File saida = new File(entrada.getAbsolutePath().replace(".gif", ".png"));		
 		ImageIO.write(ImageIO.read(entrada), "png", saida);

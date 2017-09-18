@@ -5,17 +5,18 @@ import java.time.LocalDate;
 
 public class GifVO implements Serializable {
 
-	private static final long serialVersionUID = -1551243874329101537L;
+	private static final long serialVersionUID = 4412174721871991942L;
 	
 	private Integer idGif;
 	private String nome;
 	private String descricao;
-	private LocalDate dataPublicacao;
+	private transient LocalDate dataPublicacao;
 	private Double classificacao;
 	private String caminhoAnimado;
 	private String caminhoEstatico;
 
-	public GifVO(Integer idGif, String nome, String descricao, LocalDate dataPublicacao, Double classificacao, String caminhoAnimado, String caminhoEstatico) {
+	public GifVO(Integer idGif, String nome, String descricao, LocalDate dataPublicacao, Double classificacao,
+			String caminhoAnimado, String caminhoEstatico) {
 		this.idGif = idGif;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -83,31 +84,26 @@ public class GifVO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int PRIME = 31;
 		int result = 1;
-		result = prime * result + ((idGif == null) ? 0 : idGif.hashCode());
+		result = PRIME * result + ((idGif == null) ? 0 : idGif.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (!(obj instanceof GifVO)) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		GifVO other = (GifVO) obj;
 		if (idGif == null) {
-			if (other.idGif != null) {
+			if (other.idGif != null)
 				return false;
-			}
-		} else if (!idGif.equals(other.idGif)) {
+		} else if (!idGif.equals(other.idGif))
 			return false;
-		}
 		return true;
 	}
 

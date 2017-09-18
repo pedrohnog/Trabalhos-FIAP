@@ -149,7 +149,7 @@ public class GerenciadorCache<K, V> {
 	 * @param valor Valor à ser armazenado
 	 */
 	public void gravar(K chave, V valor) {
-		logger.info("Armazendo valor em cache: " + chave + " -> " + valor);
+		logger.info("Armazendo valor em cache: %s -> %s", chave, valor);
 		if (this.cache.containsKey(chave)) {
 			this.cache.replace(chave, valor);
 		} else {
